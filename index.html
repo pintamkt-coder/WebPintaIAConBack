@@ -1,0 +1,149 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pinta MKT | Transformamos Ideas en Negocios</title>
+    <meta name="description" content="Agencia Pinta MKT: Transformamos ideas en resultados tangibles con estrategia digital pura y creativa inspirada en la sinergia de la colmena.">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://pintamkt.com/">
+    <meta property="og:title" content="Pinta MKT | Transformamos Ideas en Negocios">
+    <meta property="og:description" content="Agencia Pinta MKT: Transformamos ideas en resultados tangibles con estrategia digital pura y creativa.">
+    <meta property="og:image" content="https://pintamkt.com/og-image.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://pintamkt.com/">
+    <meta property="twitter:title" content="Pinta MKT | Transformamos Ideas en Negocios">
+    <meta property="twitter:description" content="Agencia Pinta MKT: Transformamos ideas en resultados tangibles con estrategia digital pura y creativa.">
+    <meta property="twitter:image" content="https://pintamkt.com/og-image.jpg">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+        
+        /* Asegura que las secciones no queden ocultas bajo el header fijo */
+        section[id] {
+            scroll-margin-top: 80px;
+        }
+
+        .bee-path {
+            stroke-dasharray: 8 8;
+        }
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .animate-scroll {
+            display: flex;
+            width: max-content;
+            animation: scroll 30s linear infinite;
+        }
+        /* Deslizar hacia la derecha según pedido del usuario */
+        @keyframes scroll-right {
+            0% { transform: translateX(-50%); }
+            100% { transform: translateX(0); }
+        }
+        .animate-scroll-right {
+            display: flex;
+            width: max-content;
+            animation: scroll-right 40s linear infinite;
+        }
+
+        /* Nueva animación orgánica para la abeja */
+        @keyframes organic-flight {
+          0% { transform: translate(0, 0) rotate(0deg) scale(1); }
+          20% { transform: translate(15px, -25px) rotate(10deg) scale(1.05); }
+          40% { transform: translate(-10px, -45px) rotate(-15deg) scale(0.95); }
+          60% { transform: translate(25px, -20px) rotate(8deg) scale(1.02); }
+          80% { transform: translate(-15px, -10px) rotate(-5deg) scale(0.98); }
+          100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+        }
+        .animate-organic-flight {
+          animation: organic-flight 6s ease-in-out infinite;
+        }
+
+        /* Efecto de zumbido sutil */
+        @keyframes wing-buzz {
+          0%, 100% { opacity: 0.8; }
+          50% { opacity: 1; transform: scale(1.02); }
+        }
+        .animate-buzz {
+          animation: wing-buzz 0.1s linear infinite;
+        }
+
+        /* Animación para llamar la atención en CTAs */
+        @keyframes cta-attention {
+          0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(235, 227, 0, 0); }
+          50% { transform: scale(1.05); box-shadow: 0 0 30px 10px rgba(235, 227, 0, 0.4); }
+          100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(235, 227, 0, 0); }
+        }
+        .animate-cta-attention {
+          animation: cta-attention 2.5s infinite ease-in-out;
+        }
+
+        /* Rotación para el sticker circular */
+        @keyframes spin-slow {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+        .animate-spin-slow {
+          animation: spin-slow 12s linear infinite;
+        }
+
+        /* Wiggle para llamar la atención */
+        @keyframes wiggle {
+          0%, 100% { transform: rotate(-3deg); }
+          50% { transform: rotate(3deg); }
+        }
+        .animate-wiggle {
+          animation: wiggle 0.5s ease-in-out infinite;
+        }
+
+        /* Estilos de Panal / Hexágono */
+        .hexagon-shape {
+          clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+        }
+        
+        .honeycomb-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+          gap: 1rem;
+          padding: 2rem 0;
+        }
+
+        @media (min-width: 768px) {
+          .honeycomb-grid {
+             grid-template-columns: repeat(3, 1fr);
+             gap: 0;
+          }
+          .honeycomb-item:nth-child(3n-1) {
+            transform: translateY(50%);
+          }
+        }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react": "https://esm.sh/react@^19.2.3",
+    "lucide-react": "https://esm.sh/lucide-react@^0.563.0",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "@google/genai": "https://esm.sh/@google/genai@^1.39.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body class="bg-[#FDFCE6] text-[#1A1A1A] overflow-x-hidden">
+    <div id="root"></div>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>
