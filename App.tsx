@@ -25,11 +25,8 @@ import { GoogleGenAI } from "@google/genai";
 const isProduction = window.location.hostname.includes('ferozo.com') || 
                      window.location.hostname.includes('pintamkt');
 
-const API_BASE_URL = isProduction 
-  ? '' // En producción usamos ruta relativa
-  : 'https://l0090660.ferozo.com'; // En desarrollo apuntamos al servidor de DonWeb
-
-const API_ENDPOINT = `${API_BASE_URL}/api/contact.php`;
+                     
+const API_ENDPOINT = "https://l0090660.ferozo.com/api/contact.php";
 
 // --- Assets ---
 const LogoText: React.FC<{ className?: string }> = ({ className = "w-48 h-auto" }) => (
