@@ -372,25 +372,47 @@ const Header: React.FC<{ activeSection: string }> = ({ activeSection }) => {
 const Hero: React.FC = () => (
   <section id="home" className="relative min-h-screen flex flex-col items-center justify-center bg-[#1A1A1A] overflow-hidden px-4">
     <div className="z-10 text-center max-w-6xl mx-auto">
-      <div className="flex justify-center mb-12"><img src="https://img.icons8.com/ios-filled/100/EBE300/bee.png" alt="Abeja" className="w-16 h-16 md:w-24 md:h-24 animate-organic-flight" /></div>
-      <div className="mb-12 flex justify-center"><LogoText className="w-full max-w-[320px] sm:max-w-[500px] md:max-w-[700px] lg:max-w-[900px] text-[#EBE300]" /></div>
-      <h1 className="text-xl md:text-3xl lg:text-4xl font-[900] text-white uppercase tracking-tight max-w-4xl mx-auto opacity-90 leading-tight mb-12">Transformamos ideas en resultados. <br/><span className="text-[#EBE300] inline-block mt-2">Estrategia pura para tu negocio.</span></h1>
+      <div className="flex justify-center mb-12">
+        <img 
+          src="https://img.icons8.com/ios-filled/100/EBE300/bee.png" 
+          alt="Abeja" 
+          className="w-16 h-16 md:w-24 md:h-24 animate-organic-flight" 
+        />
+      </div>
+      <div className="mb-12 flex justify-center">
+        <LogoText className="w-full max-w-[320px] sm:max-w-[500px] md:max-w-[700px] lg:max-w-[900px] text-[#EBE300]" />
+      </div>
+      <h1 className="text-xl md:text-3xl lg:text-4xl font-[900] text-white uppercase tracking-tight max-w-4xl mx-auto opacity-90 leading-tight mb-12">
+        Transformamos ideas en resultados. <br/><span className="text-[#EBE300] inline-block mt-2">Estrategia pura para tu negocio.</span>
+      </h1>
       <a href="#about" className="inline-flex items-center gap-4 px-12 py-6 bg-[#EBE300] text-black font-[900] text-xl uppercase tracking-tighter hover:bg-white transition-all rounded-full shadow-lg">Descubrir <ArrowRight size={24} /></a>
     </div>
   </section>
 );
 
 const About: React.FC = () => (
-  <section id="about" className="py-24 bg-[#FDFCE6] px-4">
+  <section id="about" className="py-24 bg-[#FDFCE6] px-4 overflow-hidden">
     <div className="container mx-auto max-w-6xl">
       <div className="grid md:grid-cols-2 gap-16 items-center">
-        <div>
-          <span className="inline-block px-4 py-1 bg-black text-[#EBE300] font-black text-xs uppercase mb-6 rounded-full tracking-widest">NOSOTROS</span>
-          <SectionTitle>POTENCIA COLECTIVA</SectionTitle>
-          <p className="text-xl md:text-2xl text-gray-700 font-[900] mb-8 leading-tight uppercase">Mirada estratégica y humana.</p>
-          <div className="bg-white p-10 border-4 border-black rounded-[3rem] shadow-2xl relative overflow-hidden"><p className="text-lg md:text-xl font-bold leading-relaxed text-gray-800 italic relative z-10">"Organización milimétrica y sinergia pura. Donde otros venden ruido, nosotros entregamos resultados reales."</p></div>
+        <div className="group">
+          <span className="inline-block px-4 py-1 bg-black text-[#EBE300] font-black text-xs uppercase mb-6 rounded-full tracking-widest transition-transform group-hover:scale-110">NOSOTROS</span>
+          <SectionTitle className="group-hover:tracking-tight transition-all duration-500">POTENCIA COLECTIVA</SectionTitle>
+          <p className="text-xl md:text-2xl text-gray-700 font-[900] mb-8 leading-tight uppercase transition-colors group-hover:text-black">Mirada estratégica y humana.</p>
+          <div className="bg-white p-10 border-4 border-black rounded-[3rem] shadow-xl relative overflow-hidden transition-all duration-300 hover:shadow-[12px_12px_0px_0px_rgba(235,227,0,1)] hover:-translate-y-1">
+            <p className="text-lg md:text-xl font-bold leading-relaxed text-gray-800 italic relative z-10">
+              "Organización milimétrica y sinergia pura. Donde otros venden ruido, nosotros entregamos resultados reales."
+            </p>
+          </div>
         </div>
-        <div className="relative group"><img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=800" className="relative rounded-[3rem] border-4 border-black w-full aspect-square object-cover grayscale transition-all shadow-2xl" alt="Equipo Pinta MKT" /></div>
+        <div className="relative group">
+          {/* Fondo decorativo que reacciona al hover */}
+          <div className="absolute -inset-4 bg-[#EBE300] rounded-[3.5rem] opacity-0 group-hover:opacity-20 transition-all duration-500 scale-90 group-hover:scale-100 rotate-3" />
+          <img 
+            src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=800" 
+            className="relative rounded-[3rem] border-4 border-black w-full aspect-square object-cover grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:-translate-y-4 shadow-2xl z-10" 
+            alt="Equipo Pinta MKT" 
+          />
+        </div>
       </div>
     </div>
   </section>
