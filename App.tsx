@@ -398,18 +398,18 @@ const About: React.FC = () => (
           <span className="inline-block px-4 py-1 bg-black text-[#EBE300] font-black text-xs uppercase mb-6 rounded-full tracking-widest transition-transform group-hover:scale-110">NOSOTROS</span>
           <SectionTitle className="group-hover:tracking-tight transition-all duration-500">POTENCIA COLECTIVA</SectionTitle>
           <p className="text-xl md:text-2xl text-gray-700 font-[900] mb-8 leading-tight uppercase transition-colors group-hover:text-black">Mirada estratégica y humana.</p>
-          <div className="bg-white p-10 border-4 border-black rounded-[3rem] shadow-xl relative overflow-hidden transition-all duration-300 hover:shadow-[12px_12px_0px_0px_rgba(235,227,0,1)] hover:-translate-y-1">
-            <p className="text-lg md:text-xl font-bold leading-relaxed text-gray-800 italic relative z-10">
+          <div className="bg-white p-10 border-4 border-black rounded-[3rem] shadow-xl relative overflow-hidden transition-all duration-500 hover:shadow-[16px_16px_0px_0px_rgba(235,227,0,1)] hover:-translate-y-2 hover:rotate-1">
+            <p className="text-lg md:text-xl font-bold leading-relaxed text-gray-800 italic relative z-10 transition-transform group-hover:scale-105">
               "Organización milimétrica y sinergia pura. Donde otros venden ruido, nosotros entregamos resultados reales."
             </p>
           </div>
         </div>
         <div className="relative group">
           {/* Fondo decorativo que reacciona al hover */}
-          <div className="absolute -inset-4 bg-[#EBE300] rounded-[3.5rem] opacity-0 group-hover:opacity-20 transition-all duration-500 scale-90 group-hover:scale-100 rotate-3" />
+          <div className="absolute -inset-4 bg-[#EBE300] rounded-[3.5rem] opacity-0 group-hover:opacity-30 transition-all duration-700 scale-90 group-hover:scale-110 rotate-6" />
           <img 
             src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=800" 
-            className="relative rounded-[3rem] border-4 border-black w-full aspect-square object-cover grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:-translate-y-4 shadow-2xl z-10" 
+            className="relative rounded-[3rem] border-4 border-black w-full aspect-square object-cover grayscale transition-all duration-1000 group-hover:grayscale-0 group-hover:-translate-y-6 group-hover:rotate-[-2deg] shadow-2xl z-10" 
             alt="Equipo Pinta MKT" 
           />
         </div>
@@ -429,14 +429,52 @@ const WorksSection: React.FC<{ onOpenProject: (p: Project) => void }> = ({ onOpe
 
 const Teams: React.FC = () => (
   <section id="teams" className="py-32 bg-[#0A0A0A] text-white px-4 relative overflow-hidden">
+    {/* Fondo decorativo sutil con gradiente radial */}
+    <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(235,227,0,0.05),transparent_70%)] pointer-events-none" />
+    
     <div className="container mx-auto max-w-7xl relative z-10">
-      <div className="text-center mb-20">
-        <h2 className="text-5xl md:text-8xl font-[900] mb-8 tracking-tighter leading-[0.85] uppercase">TU EQUIPO <br/> <span className="text-[#EBE300]">ESTRATÉGICO</span></h2>
-        <p className="text-gray-400 font-black uppercase text-base md:text-xl tracking-[0.3em] max-w-2xl mx-auto leading-relaxed">NO SOMOS UNA AGENCIA EXTERNA, SOMOS EL MOTOR DE TU NEGOCIO.</p>
+      <div className="text-center mb-24 group">
+        <h2 className="text-5xl md:text-8xl lg:text-[7rem] font-[900] mb-8 tracking-tighter leading-[0.8] uppercase transition-all duration-500 group-hover:tracking-tight">
+          TU EQUIPO <br/> 
+          <span className="text-[#EBE300] drop-shadow-[0_0_20px_rgba(235,227,0,0.3)]">ESTRATÉGICO</span>
+        </h2>
+        <p className="text-gray-400 font-black uppercase text-base md:text-xl xl:text-2xl tracking-[0.2em] max-w-3xl mx-auto leading-relaxed border-t border-white/10 pt-8 mt-4">
+          NO SOMOS UNA AGENCIA EXTERNA, SOMOS EL MOTOR DE TU NEGOCIO.
+        </p>
       </div>
-      <div className="grid lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
-        <div className="bg-[#141414] p-12 rounded-[3rem] border border-white/10 group"><Zap className="text-[#EBE300] mb-6" size={40} /><h3 className="text-3xl font-[900] uppercase mb-4 text-[#EBE300] tracking-tighter">In-House Mindset</h3><p className="text-gray-400 font-bold text-lg leading-snug">Nos fusionamos con tu empresa para entender cada detalle del proceso y optimizar desde adentro.</p></div>
-        <div className="bg-[#EBE300] text-black p-12 rounded-[3rem] shadow-xl"><Award className="text-black mb-6" size={40} /><h3 className="text-3xl font-[900] uppercase mb-4 tracking-tighter">Impacto Real</h3><p className="font-bold text-lg leading-snug">Estrategia pura y dura diseñada para escalar tus resultados reales y facturación mes a mes.</p></div>
+
+      <div className="grid lg:grid-cols-2 gap-12 max-w-5xl mx-auto">
+        {/* Card 1: In-House Mindset (Dark) */}
+        <div className="group relative">
+          <div className="absolute inset-0 bg-[#EBE300] rounded-[3.5rem] translate-x-3 translate-y-3 opacity-0 group-hover:opacity-100 transition-all duration-300 -z-10" />
+          <div className="bg-[#141414] p-12 rounded-[3.5rem] border border-white/10 h-full flex flex-col transition-all duration-500 hover:-translate-y-4 hover:-translate-x-2 relative z-10 shadow-2xl">
+            <div className="mb-8 w-20 h-20 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center group-hover:bg-[#EBE300] transition-colors duration-500">
+              <Zap className="text-[#EBE300] group-hover:text-black transition-all duration-500 group-hover:scale-125" size={40} />
+            </div>
+            <h3 className="text-4xl font-[900] uppercase mb-6 text-white tracking-tighter leading-none transition-colors group-hover:text-[#EBE300]">
+              In-House <br/>Mindset
+            </h3>
+            <p className="text-gray-400 font-bold text-lg leading-snug flex-grow">
+              Nos fusionamos con tu empresa para entender cada detalle del proceso y optimizar desde adentro, como si fuéramos parte de tu propia planilla.
+            </p>
+          </div>
+        </div>
+
+        {/* Card 2: Impacto Real (Yellow) */}
+        <div className="group relative">
+          <div className="absolute inset-0 bg-white rounded-[3.5rem] translate-x-3 translate-y-3 opacity-0 group-hover:opacity-100 transition-all duration-300 -z-10" />
+          <div className="bg-[#EBE300] text-black p-12 rounded-[3.5rem] h-full flex flex-col transition-all duration-500 hover:-translate-y-4 hover:-translate-x-2 relative z-10 shadow-2xl">
+            <div className="mb-8 w-20 h-20 bg-black/5 border border-black/10 rounded-2xl flex items-center justify-center group-hover:bg-black transition-colors duration-500">
+              <Award className="text-black group-hover:text-[#EBE300] transition-all duration-500 group-hover:scale-125 group-hover:rotate-12" size={40} />
+            </div>
+            <h3 className="text-4xl font-[900] uppercase mb-6 tracking-tighter leading-none">
+              Impacto <br/>Real
+            </h3>
+            <p className="text-black/80 font-bold text-lg leading-snug flex-grow">
+              Estrategia pura y dura diseñada para escalar tus resultados reales, ventas y posicionamiento orgánico mes a mes con métricas claras.
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -612,15 +650,44 @@ const App: React.FC = () => {
   const [selectedService, setSelectedService] = useState<Service | null>(null);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [activeSection, setActiveSection] = useState('home');
+
   useEffect(() => {
-    const observer = new IntersectionObserver(entries => entries.forEach(e => { if (e.isIntersecting) setActiveSection(e.target.id); }), { rootMargin: '-80px 0px -60% 0px' });
-    ['home', 'about', 'works', 'services', 'clients', 'contact'].forEach(id => { const el = document.getElementById(id); if (el) observer.observe(el); });
+    const observerOptions = {
+      rootMargin: '-20% 0px -70% 0px',
+      threshold: [0, 0.25, 0.5, 0.75, 1.0]
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          let id = entry.target.id;
+          if (id === 'teams') id = 'about';
+          setActiveSection(id);
+        }
+      });
+    }, observerOptions);
+
+    const sections = ['home', 'about', 'works', 'teams', 'services', 'clients', 'contact'];
+    sections.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
     return () => observer.disconnect();
   }, []);
+
   return (
     <div className="min-h-screen bg-[#FDFCE6] selection:bg-[#EBE300] selection:text-black">
       <Header activeSection={activeSection} />
-      <main><Hero /><About /><WorksSection onOpenProject={setSelectedProject} /><Teams /><ServicesSection onOpenModal={setSelectedService} /><Clients /><Contact /></main>
+      <main>
+        <Hero />
+        <About />
+        <WorksSection onOpenProject={setSelectedProject} />
+        <Teams />
+        <ServicesSection onOpenModal={setSelectedService} />
+        <Clients />
+        <Contact />
+      </main>
       <Footer />
       {selectedService && <ContactModal service={selectedService} onClose={() => setSelectedService(null)} />}
       {selectedProject && <ProjectCampaignOverlay project={selectedProject} onClose={() => setSelectedProject(null)} />}
