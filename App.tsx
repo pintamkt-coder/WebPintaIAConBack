@@ -5,6 +5,7 @@ import {
   X, 
   ArrowRight, 
   Instagram, 
+  Linkedin, 
   Mail, 
   CheckCircle, 
   Zap, 
@@ -12,22 +13,23 @@ import {
   Globe, 
   Video, 
   Cpu, 
-  ExternalLink, 
-  MessageSquare,
-  Facebook,
-  Linkedin,
-  MessageCircle,
-  TrendingUp,
-  Award,
-  Users,
-  Loader2,
-  Sparkles,
-  Youtube
+  TrendingUp, 
+  Award, 
+  Users, 
+  MessageCircle 
 } from 'lucide-react';
 import { GoogleGenAI } from "@google/genai";
 
 // --- Configuration & API ---
-const API_ENDPOINT = 'https://i0090660.ferozo.com/api/contact.php';
+// Detectamos si estamos en producción en Ferozo/DonWeb para usar rutas relativas o el dominio correcto
+const isProduction = window.location.hostname.includes('ferozo.com') || 
+                     window.location.hostname.includes('pintamkt');
+
+const API_BASE_URL = isProduction 
+  ? '' // En producción usamos ruta relativa
+  : 'https://l0090660.ferozo.com'; // En desarrollo apuntamos al servidor de DonWeb
+
+const API_ENDPOINT = `${API_BASE_URL}/api/contact.php`;
 
 // --- Assets ---
 const LogoText: React.FC<{ className?: string }> = ({ className = "w-48 h-auto" }) => (
@@ -38,33 +40,10 @@ const LogoText: React.FC<{ className?: string }> = ({ className = "w-48 h-auto" 
 );
 
 // --- Types ---
-interface NavLink {
-  label: string;
-  href: string;
-}
-
-interface Service {
-  id: number;
-  title: string;
-  items: string[];
-  cta: string;
-  icon: React.ReactNode;
-  tag: string;
-}
-
-interface Project {
-  id: number;
-  title: string;
-  category: string;
-  image: string;
-  description: string;
-  results: { label: string; value: string; icon: React.ReactNode }[];
-}
-
-interface Client {
-  name: string;
-  logo: string;
-}
+interface NavLink { label: string; href: string; }
+interface Service { id: number; title: string; items: string[]; cta: string; icon: React.ReactNode; tag: string; }
+interface Project { id: number; title: string; category: string; image: string; description: string; results: { label: string; value: string; icon: React.ReactNode }[]; }
+interface Client { name: string; logo: string; }
 
 // --- Data ---
 const NAV_LINKS: NavLink[] = [
@@ -88,13 +67,7 @@ const SERVICES: Service[] = [
     title: 'MARKETING DIGITAL', 
     tag: 'ESTRATEGIA',
     icon: <Globe className="w-8 h-8 md:w-10 md:h-10" />,
-    items: [
-      'Branding y Posicionamiento',
-      'Meta y Google Ads',
-      'Gestión de Redes Sociales',
-      'Google My Business',
-      'Email Marketing'
-    ],
+    items: ['Branding y Posicionamiento', 'Meta y Google Ads', 'Gestión de Redes Sociales', 'Google My Business', 'Email Marketing'],
     cta: 'Potenciarme'
   },
   {
@@ -102,12 +75,7 @@ const SERVICES: Service[] = [
     title: 'PRODUCCIÓN AV',
     tag: 'CONTENIDO',
     icon: <Video className="w-8 h-8 md:w-10 md:h-10" />,
-    items: [
-      'Podcasts y Reels dinámicos',
-      'Spots Publicitarios',
-      'Documentales Corporativos',
-      'Streaming Profesional'
-    ],
+    items: ['Podcasts y Reels dinámicos', 'Spots Publicitarios', 'Documentales Corporativos', 'Streaming Profesional'],
     cta: 'Info Producción'
   },
   {
@@ -115,12 +83,7 @@ const SERVICES: Service[] = [
     title: 'WEB & AUTOMATIZACIÓN',
     tag: 'TECNOLOGÍA',
     icon: <Cpu className="w-8 h-8 md:w-10 md:h-10" />,
-    items: [
-      'Desarrollo Web / eCommerce',
-      'Chatbots con IA',
-      'Automatización de CRM',
-      'Soporte Técnico'
-    ],
+    items: ['Desarrollo Web / eCommerce', 'Chatbots con IA', 'Automatización de CRM', 'Soporte Técnico'],
     cta: 'Automatizar'
   }
 ];
@@ -149,18 +112,6 @@ const PROJECTS: Project[] = [
       { label: 'Tasa Rebote', value: '-30%', icon: <TrendingUp size={16}/> },
       { label: 'Mobile traffic', value: '75%', icon: <Users size={16}/> }
     ]
-  },
-  { 
-    id: 3, 
-    title: 'Burgery Reels', 
-    category: 'Producción AV', 
-    image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=800',
-    description: 'Serie de micro-contenidos dinámicos para redes sociales que viralizaron la nueva propuesta gastronómica.',
-    results: [
-      { label: 'Viralidad', value: '1M views', icon: <TrendingUp size={16}/> },
-      { label: 'Followers', value: '+12k', icon: <Users size={16}/> },
-      { label: 'Interacción', value: '+150%', icon: <Award size={16}/> }
-    ]
   }
 ];
 
@@ -178,17 +129,15 @@ const CLIENTS_LIST: Client[] = [
 // --- Helpers ---
 const analyzeLeadWithAI = async (name: string, vision: string) => {
   try {
+    // Correctly initialize GoogleGenAI as per guidelines
     const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
     const response = await ai.models.generateContent({
       model: 'gemini-3-flash-preview',
       contents: `Eres el estratega jefe de Pinta MKT. Un prospecto llamado ${name} ha enviado esta visión: "${vision}". Genera una respuesta de exactamente 20 palabras que sea inspiradora y mencione que su proyecto tiene un potencial enorme para ser el próximo gran éxito de la colmena.`,
-      config: {
-        systemInstruction: "Tu tono es profesional, audaz y profundamente optimista."
-      }
     });
-    return response.text;
+    // Use .text property directly
+    return response.text || "Tu visión tiene un potencial increíble. En Pinta MKT estamos listos para transformarla en resultados reales.";
   } catch (error) {
-    console.error("AI Analysis failed", error);
     return "Tu visión tiene un potencial increíble. En Pinta MKT estamos listos para transformarla en resultados reales muy pronto.";
   }
 };
@@ -203,72 +152,46 @@ const notifyBackend = async (data: any) => {
     const result = await response.json();
     return result.status === 'success';
   } catch (error) {
-    console.error("Backend communication failed", error);
+    console.error("Backend error:", error);
     return false;
   }
 };
 
-const SectionTitle: React.FC<{ children?: React.ReactNode, light?: boolean, className?: string }> = ({ children, light = false, className = "" }) => (
-  <h2 className={`text-3xl md:text-5xl lg:text-8xl font-[900] mb-6 md:mb-10 uppercase tracking-tighter leading-[0.85] ${light ? 'text-[#EBE300]' : 'text-[#1A1A1A]'} ${className}`}>
+// --- Components ---
+const SectionTitle: React.FC<{ children?: React.ReactNode, className?: string }> = ({ children, className = "" }) => (
+  <h2 className={`text-4xl md:text-6xl lg:text-8xl font-[900] mb-10 uppercase tracking-tighter leading-[0.85] text-[#1A1A1A] ${className}`}>
     {children}
   </h2>
 );
 
 const ProjectCard: React.FC<{ project: Project; onOpenProject: (p: Project) => void }> = ({ project, onOpenProject }) => (
-  <button 
-    onClick={() => onOpenProject(project)}
-    className="group relative aspect-[4/3] overflow-hidden rounded-[2.5rem] border-4 border-black shadow-xl text-left focus:outline-none"
-  >
-    <div className="w-full h-full overflow-hidden">
-      <img src={project.image} alt={project.title} className="w-full h-full object-cover grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-110" />
-    </div>
+  <button onClick={() => onOpenProject(project)} className="group relative aspect-[4/3] overflow-hidden rounded-[2.5rem] border-4 border-black shadow-xl text-left transition-transform hover:-translate-y-2">
+    <img src={project.image} alt={project.title} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
     <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent flex flex-col justify-end p-8">
       <span className="text-[#EBE300] text-xs font-black uppercase mb-2 tracking-widest">{project.category}</span>
       <h3 className="text-white text-2xl font-[900] uppercase tracking-tighter leading-none mb-4">{project.title}</h3>
-      <div className="flex items-center gap-2 text-white font-black text-[10px] uppercase tracking-widest bg-white/10 w-fit px-4 py-1.5 rounded-full border border-white/20">
-        Ver Campaña <ArrowRight size={12}/>
-      </div>
+      <div className="flex items-center gap-2 text-white font-black text-[10px] uppercase tracking-widest bg-white/10 w-fit px-4 py-1.5 rounded-full border border-white/20">Ver Campaña <ArrowRight size={12}/></div>
     </div>
   </button>
 );
 
 const ProjectCampaignOverlay: React.FC<{ project: Project; onClose: () => void }> = ({ project, onClose }) => {
-  useEffect(() => {
-    document.body.style.overflow = 'hidden';
-    return () => { document.body.style.overflow = 'auto'; };
-  }, []);
-
-  const handleLogoClick = () => {
-    onClose();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
+  useEffect(() => { document.body.style.overflow = 'hidden'; return () => { document.body.style.overflow = 'auto'; }; }, []);
   return (
     <div className="fixed inset-0 z-[300] bg-black overflow-y-auto animate-in fade-in duration-500">
       <div className="sticky top-0 z-[310] flex justify-between items-center p-6 bg-black/80 backdrop-blur-lg">
-        {/* Logo con acción de volver al inicio y cerrar */}
-        <button 
-          onClick={handleLogoClick}
-          className="hover:opacity-80 transition-opacity focus:outline-none"
-        >
-          <LogoText className="w-32 text-[#EBE300]" />
-        </button>
-        <button 
-          onClick={onClose} 
-          className="p-3 bg-[#EBE300] text-black rounded-full hover:scale-110 transition-transform flex items-center gap-2 font-black uppercase text-xs shadow-lg"
-        >
-          <X size={20} /> <span>Cerrar</span>
-        </button>
+        <button onClick={() => { onClose(); window.scrollTo({top:0, behavior:'smooth'}); }} className="hover:opacity-80 transition-opacity"><LogoText className="w-32 text-[#EBE300]" /></button>
+        <button onClick={onClose} className="p-3 bg-[#EBE300] text-black rounded-full hover:scale-110 transition-transform flex items-center gap-2 font-black uppercase text-xs shadow-lg"><X size={20} /> <span>Cerrar</span></button>
       </div>
       <div className="container mx-auto max-w-7xl px-4 py-12 md:py-20">
         <div className="grid lg:grid-cols-2 gap-8 md:gap-16 items-start">
           <div className="order-2 lg:order-1">
-            <span className="inline-block px-4 py-1.5 bg-[#EBE300] text-black font-black text-xs uppercase mb-6 rounded-full">CAMPAÑA ACTIVA</span>
+            <span className="inline-block px-4 py-1.5 bg-[#EBE300] text-black font-black text-xs uppercase mb-6 rounded-full tracking-widest">CAMPAÑA ACTIVA</span>
             <h1 className="text-4xl md:text-7xl lg:text-8xl font-[900] text-white uppercase tracking-tighter leading-[0.85] mb-8">{project.title}</h1>
             <p className="text-lg md:text-xl text-white/70 font-bold leading-snug max-w-xl mb-12">{project.description}</p>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               {project.results.map((res, i) => (
-                <div key={i} className="bg-white/5 border border-white/10 p-6 rounded-[2rem] hover:bg-white/10 transition-colors">
+                <div key={i} className="bg-white/5 border border-white/10 p-6 rounded-[2rem]">
                   <div className="text-[#EBE300] mb-3">{res.icon}</div>
                   <div className="text-2xl font-black text-white mb-1 tracking-tighter">{res.value}</div>
                   <div className="text-[10px] font-black uppercase tracking-widest text-white/40">{res.label}</div>
@@ -276,61 +199,13 @@ const ProjectCampaignOverlay: React.FC<{ project: Project; onClose: () => void }
               ))}
             </div>
           </div>
-          <div className="order-1 lg:order-2">
-            <img src={project.image} alt={project.title} className="w-full aspect-[4/3] lg:aspect-square object-cover rounded-[2rem] border-2 border-white/20 shadow-2xl" />
-          </div>
+          <div className="order-1 lg:order-2"><img src={project.image} alt={project.title} className="w-full aspect-[4/3] object-cover rounded-[2rem] border-2 border-white/20 shadow-2xl" /></div>
         </div>
       </div>
     </div>
   );
 };
 
-const ContactModal: React.FC<{ service: Service; onClose: () => void }> = ({ service, onClose }) => {
-  const [formState, setFormState] = useState({ name: '', email: '', details: '' });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
-  const [aiAnalysis, setAiAnalysis] = useState("");
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    const analysis = await analyzeLeadWithAI(formState.name, formState.details);
-    setAiAnalysis(analysis);
-    await notifyBackend({ ...formState, service: service.title, ai_analysis: analysis });
-    setIsSubmitting(false);
-    setSubmitted(true);
-  };
-  return (
-    <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-      <div className="relative w-full max-w-lg bg-white border-4 border-black rounded-[2rem] p-8 md:p-10 shadow-2xl">
-        <button onClick={onClose} className="absolute top-4 right-4 p-2 bg-black text-[#EBE300] rounded-full hover:scale-110">
-          <X size={20} />
-        </button>
-        {submitted ? (
-          <div className="text-center py-6">
-            <div className="bg-[#EBE300] w-16 h-16 rounded-full border-2 border-black flex items-center justify-center mx-auto mb-6">
-              <CheckCircle className="text-black w-8 h-8" />
-            </div>
-            <h3 className="text-2xl font-black uppercase mb-6 tracking-tighter">¡LISTO!</h3>
-            <p className="text-sm font-bold leading-relaxed text-black italic mb-8">"{aiAnalysis}"</p>
-            <button onClick={onClose} className="w-full py-4 bg-black text-white font-black uppercase rounded-full">Cerrar</button>
-          </div>
-        ) : (
-          <div className="space-y-6">
-            <h3 className="text-2xl font-black uppercase tracking-tight leading-none">{service.title}</h3>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <input type="text" placeholder="Tu nombre" required className="w-full p-4 border-2 border-black rounded-xl font-bold outline-none" onChange={(e) => setFormState({ ...formState, name: e.target.value })} />
-              <input type="email" placeholder="Tu mejor email" required className="w-full p-4 border-2 border-black rounded-xl font-bold outline-none" onChange={(e) => setFormState({ ...formState, email: e.target.value })} />
-              <textarea placeholder="Contanos tu visión..." required rows={3} className="w-full p-4 border-2 border-black rounded-xl font-bold resize-none outline-none" onChange={(e) => setFormState({ ...formState, details: e.target.value })} />
-              <button type="submit" disabled={isSubmitting} className="w-full py-4 bg-[#EBE300] text-black font-black text-xl uppercase tracking-tighter border-2 border-black rounded-full hover:bg-black hover:text-white transition-all">{isSubmitting ? 'Procesando...' : 'Enviar'}</button>
-            </form>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-};
-
-// --- Main Sections ---
 const Header: React.FC<{ activeSection: string }> = ({ activeSection }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -342,8 +217,7 @@ const Header: React.FC<{ activeSection: string }> = ({ activeSection }) => {
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
     setIsOpen(false);
-    const id = href.replace('#', '');
-    const element = document.getElementById(id);
+    const element = document.getElementById(href.replace('#', ''));
     if (element) window.scrollTo({ top: element.offsetTop - 80, behavior: 'smooth' });
   };
   return (
@@ -369,329 +243,183 @@ const Header: React.FC<{ activeSection: string }> = ({ activeSection }) => {
   );
 };
 
-const Hero: React.FC = () => (
-  <section id="home" className="relative min-h-screen flex flex-col items-center justify-center bg-[#1A1A1A] overflow-hidden px-4">
-    <div className="z-10 text-center max-w-6xl mx-auto">
-      <div className="flex justify-center mb-12">
-        <img 
-          src="https://img.icons8.com/ios-filled/100/EBE300/bee.png" 
-          alt="Abeja" 
-          className="w-16 h-16 md:w-24 md:h-24 animate-organic-flight" 
-        />
-      </div>
-      <div className="mb-12 flex justify-center">
-        <LogoText className="w-full max-w-[320px] sm:max-w-[500px] md:max-w-[700px] lg:max-w-[900px] text-[#EBE300]" />
-      </div>
-      <h1 className="text-xl md:text-3xl lg:text-4xl font-[900] text-white uppercase tracking-tight max-w-4xl mx-auto opacity-90 leading-tight mb-12">
-        Transformamos ideas en resultados. <br/><span className="text-[#EBE300] inline-block mt-2">Estrategia pura para tu negocio.</span>
-      </h1>
-      <a href="#about" className="inline-flex items-center gap-4 px-12 py-6 bg-[#EBE300] text-black font-[900] text-xl uppercase tracking-tighter hover:bg-white transition-all rounded-full shadow-lg">Descubrir <ArrowRight size={24} /></a>
-    </div>
-  </section>
-);
-
-const About: React.FC = () => (
-  <section id="about" className="py-24 bg-[#FDFCE6] px-4 overflow-hidden">
-    <div className="container mx-auto max-w-6xl">
-      <div className="grid md:grid-cols-2 gap-16 items-center">
-        <div className="group">
-          <span className="inline-block px-4 py-1 bg-black text-[#EBE300] font-black text-xs uppercase mb-6 rounded-full tracking-widest transition-transform group-hover:scale-110">NOSOTROS</span>
-          <SectionTitle className="group-hover:tracking-tight transition-all duration-500">POTENCIA COLECTIVA</SectionTitle>
-          <p className="text-xl md:text-2xl text-gray-700 font-[900] mb-8 leading-tight uppercase transition-colors group-hover:text-black">Mirada estratégica y humana.</p>
-          <div className="bg-white p-10 border-4 border-black rounded-[3rem] shadow-xl relative overflow-hidden transition-all duration-500 hover:shadow-[16px_16px_0px_0px_rgba(235,227,0,1)] hover:-translate-y-2 hover:rotate-1">
-            <p className="text-lg md:text-xl font-bold leading-relaxed text-gray-800 italic relative z-10 transition-transform group-hover:scale-105">
-              "Organización milimétrica y sinergia pura. Donde otros venden ruido, nosotros entregamos resultados reales."
-            </p>
-          </div>
-        </div>
-        <div className="relative group">
-          {/* Fondo decorativo que reacciona al hover */}
-          <div className="absolute -inset-4 bg-[#EBE300] rounded-[3.5rem] opacity-0 group-hover:opacity-30 transition-all duration-700 scale-90 group-hover:scale-110 rotate-6" />
-          <img 
-            src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=800" 
-            className="relative rounded-[3rem] border-4 border-black w-full aspect-square object-cover grayscale transition-all duration-1000 group-hover:grayscale-0 group-hover:-translate-y-6 group-hover:rotate-[-2deg] shadow-2xl z-10" 
-            alt="Equipo Pinta MKT" 
-          />
-        </div>
-      </div>
-    </div>
-  </section>
-);
-
-const WorksSection: React.FC<{ onOpenProject: (p: Project) => void }> = ({ onOpenProject }) => (
-  <section id="works" className="py-24 bg-white px-4">
-    <div className="container mx-auto max-w-7xl">
-      <div className="mb-20"><SectionTitle>NUESTRA COSECHA</SectionTitle><p className="text-gray-500 font-black uppercase text-sm tracking-[0.2em]">PROYECTOS QUE TRANSFORMARON NÉCTAR EN RESULTADOS.</p></div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">{PROJECTS.map((project) => (<ProjectCard key={project.id} project={project} onOpenProject={onOpenProject} />))}</div>
-    </div>
-  </section>
-);
-
-const Teams: React.FC = () => (
-  <section id="teams" className="py-32 bg-[#0A0A0A] text-white px-4 relative overflow-hidden">
-    {/* Fondo decorativo sutil con gradiente radial */}
-    <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(235,227,0,0.05),transparent_70%)] pointer-events-none" />
-    
-    <div className="container mx-auto max-w-7xl relative z-10">
-      <div className="text-center mb-24 group">
-        <h2 className="text-5xl md:text-8xl lg:text-[7rem] font-[900] mb-8 tracking-tighter leading-[0.8] uppercase transition-all duration-500 group-hover:tracking-tight">
-          TU EQUIPO <br/> 
-          <span className="text-[#EBE300] drop-shadow-[0_0_20px_rgba(235,227,0,0.3)]">ESTRATÉGICO</span>
-        </h2>
-        <p className="text-gray-400 font-black uppercase text-base md:text-xl xl:text-2xl tracking-[0.2em] max-w-3xl mx-auto leading-relaxed border-t border-white/10 pt-8 mt-4">
-          NO SOMOS UNA AGENCIA EXTERNA, SOMOS EL MOTOR DE TU NEGOCIO.
-        </p>
-      </div>
-
-      <div className="grid lg:grid-cols-2 gap-12 max-w-5xl mx-auto">
-        {/* Card 1: In-House Mindset (Dark) */}
-        <div className="group relative">
-          <div className="absolute inset-0 bg-[#EBE300] rounded-[3.5rem] translate-x-3 translate-y-3 opacity-0 group-hover:opacity-100 transition-all duration-300 -z-10" />
-          <div className="bg-[#141414] p-12 rounded-[3.5rem] border border-white/10 h-full flex flex-col transition-all duration-500 hover:-translate-y-4 hover:-translate-x-2 relative z-10 shadow-2xl">
-            <div className="mb-8 w-20 h-20 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center group-hover:bg-[#EBE300] transition-colors duration-500">
-              <Zap className="text-[#EBE300] group-hover:text-black transition-all duration-500 group-hover:scale-125" size={40} />
-            </div>
-            <h3 className="text-4xl font-[900] uppercase mb-6 text-white tracking-tighter leading-none transition-colors group-hover:text-[#EBE300]">
-              In-House <br/>Mindset
-            </h3>
-            <p className="text-gray-400 font-bold text-lg leading-snug flex-grow">
-              Nos fusionamos con tu empresa para entender cada detalle del proceso y optimizar desde adentro, como si fuéramos parte de tu propia planilla.
-            </p>
-          </div>
-        </div>
-
-        {/* Card 2: Impacto Real (Yellow) */}
-        <div className="group relative">
-          <div className="absolute inset-0 bg-white rounded-[3.5rem] translate-x-3 translate-y-3 opacity-0 group-hover:opacity-100 transition-all duration-300 -z-10" />
-          <div className="bg-[#EBE300] text-black p-12 rounded-[3.5rem] h-full flex flex-col transition-all duration-500 hover:-translate-y-4 hover:-translate-x-2 relative z-10 shadow-2xl">
-            <div className="mb-8 w-20 h-20 bg-black/5 border border-black/10 rounded-2xl flex items-center justify-center group-hover:bg-black transition-colors duration-500">
-              <Award className="text-black group-hover:text-[#EBE300] transition-all duration-500 group-hover:scale-125 group-hover:rotate-12" size={40} />
-            </div>
-            <h3 className="text-4xl font-[900] uppercase mb-6 tracking-tighter leading-none">
-              Impacto <br/>Real
-            </h3>
-            <p className="text-black/80 font-bold text-lg leading-snug flex-grow">
-              Estrategia pura y dura diseñada para escalar tus resultados reales, ventas y posicionamiento orgánico mes a mes con métricas claras.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-);
-
-const ServicesSection: React.FC<{ onOpenModal: (service: Service) => void }> = ({ onOpenModal }) => (
-  <section id="services" className="py-24 bg-[#FDFCE6] px-4">
-    <div className="container mx-auto max-w-7xl">
-      <div className="mb-20 text-center"><SectionTitle>CAPACIDADES</SectionTitle></div>
-      <div className="grid md:grid-cols-3 gap-10">
-        {SERVICES.map((service) => (
-          <div 
-            key={service.id} 
-            className="bg-white border-[6px] border-black rounded-[3.5rem] p-10 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] flex flex-col h-full transition-all duration-300 hover:-translate-y-3 hover:shadow-[16px_16px_0px_0px_rgba(0,0,0,1)] group"
-          >
-            <div className="mb-8 w-20 h-20 bg-[#EBE300] border-4 border-black rounded-2xl flex items-center justify-center group-hover:rotate-12 transition-transform">
-              {React.cloneElement(service.icon as any, { className: 'w-10 h-10 text-black' })}
-            </div>
-            <h3 className="text-3xl font-[900] uppercase mb-8 tracking-tighter leading-none group-hover:text-black transition-colors">{service.title}</h3>
-            <ul className="flex-grow space-y-4 mb-10">
-              {service.items.map((item, i) => (
-                <li key={i} className="flex items-center gap-4 font-black text-xs md:text-sm uppercase tracking-wider text-gray-800">
-                  <div className="w-2.5 h-2.5 bg-[#EBE300] rounded-full border border-black group-hover:scale-125 transition-transform" /> {item}
-                </li>
-              ))}
-            </ul>
-            <button 
-              onClick={() => onOpenModal(service)} 
-              className="w-full py-5 bg-black text-[#EBE300] font-[900] text-lg uppercase rounded-full hover:bg-[#EBE300] hover:text-black transition-all active:scale-95"
-            >
-              {service.cta}
-            </button>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-);
-
-const Clients: React.FC = () => (
-  <section id="clients" className="py-24 bg-black text-white overflow-hidden relative">
-    <div className="container mx-auto max-w-7xl px-4 mb-16 relative z-10 text-center md:text-left">
-      <h2 className="text-5xl md:text-7xl font-[900] uppercase tracking-tighter leading-none mb-4">MARCAS EN <br/> <span className="text-[#EBE300]">LA COLMENA</span></h2>
-    </div>
-    <div className="relative z-10 bg-[#141414] py-16 border-y-2 border-white/5">
-      <div className="flex animate-scroll-right gap-20 md:gap-32 items-center">
-        {[...CLIENTS_LIST, ...CLIENTS_LIST].map((client, i) => (
-          <div key={i} className="flex-shrink-0 group"><div className="h-16 w-48 flex items-center justify-center grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all transform group-hover:scale-110"><img src={client.logo} alt={client.name} className="max-h-full max-w-full object-contain" onError={(e) => { (e.target as any).style.display='none'; (e.target as any).parentElement.innerHTML += `<span class="text-white/30 group-hover:text-[#EBE300] font-[900] uppercase text-xl tracking-widest transition-colors">${client.name}</span>` }} /></div></div>
-        ))}
-      </div>
-    </div>
-  </section>
-);
-
-const Contact: React.FC = () => {
+const App: React.FC = () => {
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [activeSection, setActiveSection] = useState('home');
   const [formState, setFormState] = useState({ name: '', email: '', message: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [aiAnalysis, setAiAnalysis] = useState("");
+
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => { if (entry.isIntersecting) setActiveSection(entry.target.id); });
+    }, { rootMargin: '-20% 0px -70% 0px', threshold: [0, 0.5] });
+    ['home', 'about', 'works', 'services', 'clients', 'contact'].forEach(id => {
+      const el = document.getElementById(id); if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     const analysis = await analyzeLeadWithAI(formState.name, formState.message);
     setAiAnalysis(analysis);
-    await notifyBackend({ ...formState, service: 'General Contact', ai_analysis: analysis });
+    await notifyBackend({ ...formState, ai_analysis: analysis });
     setIsSubmitting(false);
     setSubmitted(true);
     setFormState({ name: '', email: '', message: '' });
   };
 
   return (
-    <section id="contact" className="py-24 md:py-32 bg-[#FDFCE6] px-4">
-      <div className="container mx-auto max-w-7xl">
-        <div className="flex flex-col lg:flex-row gap-12 lg:gap-24 items-start">
-          {/* Columna Izquierda: Ajuste de tamaño masivo */}
-          <div className="w-full lg:w-[55%] flex flex-col justify-start">
-            <h2 className="text-[14vw] lg:text-[7.5rem] xl:text-[8.5rem] font-[900] uppercase tracking-tighter leading-[0.8] mb-8 text-black">
-              HABLEMOS
-            </h2>
-            <p className="text-xl md:text-2xl xl:text-3xl font-[900] text-gray-500 uppercase tracking-tighter leading-none mb-16 italic">
-              ¿LISTO PARA QUE TU MARCA BRILLE?
-            </p>
-            
-            <div className="flex flex-col gap-12">
-              <a href="mailto:PINTAMKT@GMAIL.COM" className="flex items-center gap-6 group">
-                <div className="w-16 h-16 bg-black text-[#E0DC1A] rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-                  <Mail size={32} />
-                </div>
-                <span className="font-[900] text-2xl lg:text-3xl uppercase tracking-tighter text-black">PINTAMKT@GMAIL.COM</span>
-              </a>
-              
-              <div className="flex gap-5">
-                {SOCIAL_LINKS.map((s, i) => (
-                  <a 
-                    key={i} 
-                    href={s.href} 
-                    target="_blank" 
-                    className="w-16 h-16 bg-black text-[#E0DC1A] rounded-full flex items-center justify-center shadow-xl hover:scale-110 transition-transform"
-                  >
-                    {React.cloneElement(s.icon as any, { size: 28 })}
-                  </a>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Columna Derecha: Formulario compactado estilo Imagen */}
-          <div className="w-full lg:w-[45%] pt-4 lg:pt-8">
-            {submitted ? (
-              <div className="bg-white border-4 border-black p-12 rounded-[3rem] text-center shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] animate-in zoom-in duration-500">
-                <CheckCircle className="mx-auto mb-6 text-[#E0DC1A]" size={64} />
-                <h3 className="text-3xl font-[900] uppercase mb-4 tracking-tighter text-black">¡RECIBIDO!</h3>
-                <p className="text-lg font-bold italic text-gray-700">"{aiAnalysis}"</p>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="flex flex-col gap-6">
-                <input 
-                  type="text" 
-                  placeholder="TU NOMBRE" 
-                  required 
-                  className="w-full px-10 py-5 bg-white border-[4px] border-black rounded-full font-[900] text-lg uppercase tracking-tighter outline-none placeholder:text-gray-300 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] focus:translate-x-1 focus:translate-y-1 focus:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all" 
-                  onChange={(e) => setFormState({...formState, name: e.target.value})} 
-                />
-                <input 
-                  type="email" 
-                  placeholder="TU MEJOR EMAIL" 
-                  required 
-                  className="w-full px-10 py-5 bg-white border-[4px] border-black rounded-full font-[900] text-lg uppercase tracking-tighter outline-none placeholder:text-gray-300 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] focus:translate-x-1 focus:translate-y-1 focus:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all" 
-                  onChange={(e) => setFormState({...formState, email: e.target.value})} 
-                />
-                <textarea 
-                  placeholder="CONTANOS TU VISIÓN..." 
-                  required 
-                  rows={4} 
-                  className="w-full px-10 py-8 bg-white border-[4px] border-black rounded-[2.5rem] font-[900] text-lg uppercase tracking-tighter outline-none placeholder:text-gray-300 resize-none shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] focus:translate-x-1 focus:translate-y-1 focus:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all" 
-                  onChange={(e) => setFormState({...formState, message: e.target.value})} 
-                />
-                <button 
-                  type="submit" 
-                  disabled={isSubmitting} 
-                  className="group w-full py-7 bg-[#1A1A1A] text-[#E0DC1A] font-[900] text-3xl uppercase rounded-full hover:bg-black transition-all flex items-center justify-center gap-6 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.15)] mt-4 active:scale-95"
-                >
-                  {isSubmitting ? 'ENVIANDO...' : 'ENVIAR MENSAJE'} 
-                  {!isSubmitting && <Send size={36} className="group-hover:translate-x-2 group-hover:-translate-y-2 transition-transform" />}
-                </button>
-              </form>
-            )}
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-};
-
-const Footer: React.FC = () => (
-  <footer className="py-12 bg-black text-white px-4 border-t border-white/10">
-    <div className="container mx-auto max-w-7xl flex flex-col md:flex-row justify-between items-center gap-8">
-      <LogoText className="w-40 text-[#EBE300]" />
-      <div className="text-[11px] text-gray-500 font-black uppercase tracking-[0.4em] text-center">© {new Date().getFullYear()} PINTA MKT - ESTRATEGIA DIGITAL</div>
-      <div className="flex gap-6">
-        {SOCIAL_LINKS.map((s, i) => (
-          <a key={i} href={s.href} target="_blank" className="text-gray-500 hover:text-[#EBE300] transition-colors">
-            {React.cloneElement(s.icon as any, { size: 24 })}
-          </a>
-        ))}
-      </div>
-    </div>
-  </footer>
-);
-
-const App: React.FC = () => {
-  const [selectedService, setSelectedService] = useState<Service | null>(null);
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  const [activeSection, setActiveSection] = useState('home');
-
-  useEffect(() => {
-    const observerOptions = {
-      rootMargin: '-20% 0px -70% 0px',
-      threshold: [0, 0.25, 0.5, 0.75, 1.0]
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          let id = entry.target.id;
-          if (id === 'teams') id = 'about';
-          setActiveSection(id);
-        }
-      });
-    }, observerOptions);
-
-    const sections = ['home', 'about', 'works', 'teams', 'services', 'clients', 'contact'];
-    sections.forEach(id => {
-      const el = document.getElementById(id);
-      if (el) observer.observe(el);
-    });
-
-    return () => observer.disconnect();
-  }, []);
-
-  return (
     <div className="min-h-screen bg-[#FDFCE6] selection:bg-[#EBE300] selection:text-black">
       <Header activeSection={activeSection} />
-      <main>
-        <Hero />
-        <About />
-        <WorksSection onOpenProject={setSelectedProject} />
-        <Teams />
-        <ServicesSection onOpenModal={setSelectedService} />
-        <Clients />
-        <Contact />
-      </main>
-      <Footer />
-      {selectedService && <ContactModal service={selectedService} onClose={() => setSelectedService(null)} />}
+      
+      {/* Hero */}
+      <section id="home" className="relative min-h-screen flex flex-col items-center justify-center bg-[#1A1A1A] overflow-hidden px-4">
+        <div className="z-10 text-center max-w-6xl mx-auto">
+          <div className="flex justify-center mb-12"><img src="https://img.icons8.com/ios-filled/100/EBE300/bee.png" alt="Abeja" className="w-16 h-16 md:w-24 md:h-24 animate-organic-flight" /></div>
+          <div className="mb-12 flex justify-center"><LogoText className="w-full max-w-[900px] text-[#EBE300]" /></div>
+          <h1 className="text-xl md:text-3xl lg:text-4xl font-[900] text-white uppercase tracking-tight max-w-4xl mx-auto opacity-90 leading-tight mb-12">Transformamos ideas en resultados. <br/><span className="text-[#EBE300] inline-block mt-2">Estrategia pura para tu negocio.</span></h1>
+          <a href="#about" className="inline-flex items-center gap-4 px-12 py-6 bg-[#EBE300] text-black font-[900] text-xl uppercase tracking-tighter hover:bg-white transition-all rounded-full shadow-lg">Descubrir <ArrowRight size={24} /></a>
+        </div>
+      </section>
+
+      {/* About */}
+      <section id="about" className="py-24 bg-[#FDFCE6] px-4 overflow-hidden">
+        <div className="container mx-auto max-w-6xl">
+          <div className="grid md:grid-cols-2 gap-16 items-center">
+            <div className="group">
+              <span className="inline-block px-4 py-1 bg-black text-[#EBE300] font-black text-xs uppercase mb-6 rounded-full tracking-widest">NOSOTROS</span>
+              <SectionTitle>POTENCIA COLECTIVA</SectionTitle>
+              <p className="text-xl md:text-2xl text-gray-700 font-[900] mb-8 uppercase">Mirada estratégica y humana.</p>
+              <div className="bg-white p-10 border-4 border-black rounded-[3rem] shadow-xl hover:shadow-[16px_16px_0px_0px_rgba(0,0,0,1)] hover:-translate-y-2 transition-all duration-500">
+                <p className="text-lg md:text-xl font-bold leading-relaxed text-gray-800 italic">"Donde otros venden ruido, nosotros entregamos resultados reales. Sinergia pura."</p>
+              </div>
+            </div>
+            <div className="relative group">
+              <div className="absolute -inset-4 bg-[#EBE300] rounded-[3.5rem] opacity-0 group-hover:opacity-30 transition-all duration-700 scale-90 group-hover:scale-110 rotate-6" />
+              <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=800" className="relative rounded-[3rem] border-4 border-black w-full aspect-square object-cover grayscale group-hover:grayscale-0 group-hover:-translate-y-6 transition-all duration-1000 shadow-2xl z-10" alt="Equipo Pinta MKT" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Works */}
+      <section id="works" className="py-24 bg-white px-4">
+        <div className="container mx-auto max-w-7xl">
+          <SectionTitle>NUESTRA COSECHA</SectionTitle>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-10">
+            {PROJECTS.map((project) => (<ProjectCard key={project.id} project={project} onOpenProject={setSelectedProject} />))}
+          </div>
+        </div>
+      </section>
+
+      {/* Services */}
+      <section id="services" className="py-24 bg-[#FDFCE6] px-4">
+        <div className="container mx-auto max-w-7xl">
+          <div className="mb-20 text-center"><SectionTitle>CAPACIDADES</SectionTitle></div>
+          <div className="grid md:grid-cols-3 gap-10">
+            {SERVICES.map((service) => (
+              <div key={service.id} className="bg-white border-[6px] border-black rounded-[3.5rem] p-10 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] flex flex-col h-full transition-all hover:-translate-y-3 hover:shadow-[16px_16px_0px_0px_rgba(0,0,0,1)] group">
+                <div className="mb-8 w-20 h-20 bg-[#EBE300] border-4 border-black rounded-2xl flex items-center justify-center group-hover:rotate-12 transition-transform">
+                  {React.cloneElement(service.icon as any, { className: 'w-10 h-10 text-black' })}
+                </div>
+                <h3 className="text-3xl font-[900] uppercase mb-8 tracking-tighter leading-none">{service.title}</h3>
+                <ul className="flex-grow space-y-4 mb-10">
+                  {service.items.map((item, i) => (
+                    <li key={i} className="flex items-center gap-4 font-black text-xs md:text-sm uppercase tracking-wider text-gray-800">
+                      <div className="w-2.5 h-2.5 bg-[#EBE300] rounded-full border border-black" /> {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Clients */}
+      <section id="clients" className="py-24 bg-black text-white overflow-hidden relative">
+        <div className="container mx-auto max-w-7xl px-4 mb-16 text-center md:text-left">
+          <h2 className="text-5xl md:text-7xl font-[900] uppercase tracking-tighter text-[#EBE300]">MARCAS EN LA COLMENA</h2>
+        </div>
+        <div className="relative z-10 bg-[#141414] py-16 border-y-2 border-white/5">
+          <div className="flex animate-scroll-right gap-20 md:gap-32 items-center">
+            {[...CLIENTS_LIST, ...CLIENTS_LIST].map((client, i) => (
+              <div key={i} className="flex-shrink-0 flex items-center justify-center h-16 w-48 grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all">
+                <img 
+                  src={client.logo} 
+                  alt={client.name} 
+                  className="max-h-full max-w-full object-contain" 
+                  onError={(e) => { 
+                    (e.target as HTMLImageElement).style.display = 'none';
+                    const parent = (e.target as HTMLElement).parentElement;
+                    if(parent && !parent.querySelector('.fallback')) {
+                      const span = document.createElement('span');
+                      span.className = 'fallback text-white/30 font-black uppercase text-xl';
+                      span.innerText = client.name;
+                      parent.appendChild(span);
+                    }
+                  }} 
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Contact */}
+      <section id="contact" className="py-24 md:py-32 bg-[#FDFCE6] px-4">
+        <div className="container mx-auto max-w-7xl">
+          <div className="flex flex-col lg:flex-row gap-12 lg:gap-24 items-start">
+            <div className="w-full lg:w-[55%]">
+              <h2 className="text-[12vw] lg:text-[8rem] font-[900] uppercase tracking-tighter leading-[0.8] mb-8 text-black">HABLEMOS</h2>
+              <p className="text-2xl font-[900] text-gray-500 uppercase tracking-tighter mb-16 italic">¿LISTO PARA QUE TU MARCA BRILLE?</p>
+              <div className="flex flex-col gap-8">
+                <a href="mailto:PINTAMKT@GMAIL.COM" className="flex items-center gap-6 group">
+                  <div className="w-16 h-16 bg-black text-[#EBE300] rounded-full flex items-center justify-center group-hover:scale-110 transition-transform"><Mail size={32} /></div>
+                  <span className="font-[900] text-2xl lg:text-3xl uppercase tracking-tighter text-black">PINTAMKT@GMAIL.COM</span>
+                </a>
+              </div>
+            </div>
+
+            <div className="w-full lg:w-[45%]">
+              {submitted ? (
+                <div className="bg-white border-4 border-black p-12 rounded-[3rem] text-center shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] animate-in zoom-in duration-500">
+                  <CheckCircle className="mx-auto mb-6 text-[#EBE300]" size={64} />
+                  <h3 className="text-3xl font-[900] uppercase mb-4 tracking-tighter">¡RECIBIDO!</h3>
+                  <p className="text-lg font-bold italic text-gray-700">"{aiAnalysis}"</p>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+                  <input type="text" placeholder="TU NOMBRE" required className="w-full px-10 py-5 bg-white border-[4px] border-black rounded-full font-[900] text-lg uppercase outline-none shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]" onChange={(e) => setFormState({...formState, name: e.target.value})} />
+                  <input type="email" placeholder="TU EMAIL" required className="w-full px-10 py-5 bg-white border-[4px] border-black rounded-full font-[900] text-lg uppercase outline-none shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]" onChange={(e) => setFormState({...formState, email: e.target.value})} />
+                  <textarea placeholder="CONTANOS TU VISIÓN..." required rows={4} className="w-full px-10 py-8 bg-white border-[4px] border-black rounded-[2.5rem] font-[900] text-lg uppercase outline-none resize-none shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]" onChange={(e) => setFormState({...formState, message: e.target.value})} />
+                  <button type="submit" disabled={isSubmitting} className="group w-full py-7 bg-black text-[#EBE300] font-[900] text-3xl uppercase rounded-full hover:bg-[#EBE300] hover:text-black transition-all flex items-center justify-center gap-6 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.15)] mt-4 active:scale-95">
+                    {isSubmitting ? 'ENVIANDO...' : 'ENVIAR MENSAJE'} <Send size={36} />
+                  </button>
+                </form>
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer className="py-12 bg-black text-white px-4 border-t border-white/10">
+        <div className="container mx-auto max-w-7xl flex flex-col md:flex-row justify-between items-center gap-8 text-center">
+          <LogoText className="w-40 text-[#EBE300]" />
+          <div className="text-[11px] text-gray-500 font-black uppercase tracking-[0.4em]">© {new Date().getFullYear()} PINTA MKT - ESTRATEGIA DIGITAL</div>
+          <div className="flex gap-6">
+            {SOCIAL_LINKS.map((s, i) => (<a key={i} href={s.href} target="_blank" className="text-gray-500 hover:text-[#EBE300]">{s.icon}</a>))}
+          </div>
+        </div>
+      </footer>
+
       {selectedProject && <ProjectCampaignOverlay project={selectedProject} onClose={() => setSelectedProject(null)} />}
     </div>
   );
 };
+
 export default App;

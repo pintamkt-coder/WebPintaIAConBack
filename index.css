@@ -1,0 +1,9 @@
+
+/* Archivo de estilos base para Pinta MKT */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background-color: #FDFCE6;
+}
