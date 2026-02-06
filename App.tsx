@@ -21,12 +21,14 @@ import {
 import { GoogleGenAI } from "@google/genai";
 
 // --- Configuration & API ---
-// Detectamos si estamos en producción en Ferozo/DonWeb para usar rutas relativas o el dominio correcto
 const isProduction = window.location.hostname.includes('ferozo.com') || 
                      window.location.hostname.includes('pintamkt');
 
-                     
-const API_ENDPOINT = "https://l0090660.ferozo.com/api/contact.php";
+const API_BASE_URL = isProduction 
+  ? '' 
+  : 'https://l0090660.ferozo.com'; 
+
+const API_ENDPOINT = `${API_BASE_URL}/api/contact.php`;
 
 // --- Assets ---
 const LogoText: React.FC<{ className?: string }> = ({ className = "w-48 h-auto" }) => (
@@ -88,8 +90,8 @@ const SERVICES: Service[] = [
 const PROJECTS: Project[] = [
   { 
     id: 1, 
-    title: 'Samaco Campaign', 
-    category: 'Marketing Digital', 
+    title: 'SAMACO CAMPAIGN', 
+    category: 'MARKETING DIGITAL', 
     image: 'https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&q=80&w=800',
     description: 'Estrategia integral de pauta publicitaria y contenido orgánico que disparó el engagement y las ventas de unidades en tiempo récord.',
     results: [
@@ -100,14 +102,26 @@ const PROJECTS: Project[] = [
   },
   { 
     id: 2, 
-    title: 'Fenikks Web', 
-    category: 'Desarrollo Web', 
+    title: 'FENIKKS WEB', 
+    category: 'DESARROLLO WEB', 
     image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800',
     description: 'Rediseño de ecosistema digital con enfoque en UI/UX brutalista, optimizando el funnel de conversión.',
     results: [
       { label: 'Velocidad', value: '98/100', icon: <Zap size={16}/> },
       { label: 'Tasa Rebote', value: '-30%', icon: <TrendingUp size={16}/> },
       { label: 'Mobile traffic', value: '75%', icon: <Users size={16}/> }
+    ]
+  },
+  { 
+    id: 3, 
+    title: 'BURGERY REELS', 
+    category: 'PRODUCCIÓN AV', 
+    image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=800',
+    description: 'Estrategia de Reels dinámicos para Burgery que impulsó el tráfico al local físico y viralizó sus nuevos lanzamientos.',
+    results: [
+      { label: 'Views', value: '1M+', icon: <TrendingUp size={16}/> },
+      { label: 'Engagement', value: '+200%', icon: <Users size={16}/> },
+      { label: 'Ventas', value: '+40%', icon: <Award size={16}/> }
     ]
   }
 ];
@@ -126,13 +140,11 @@ const CLIENTS_LIST: Client[] = [
 // --- Helpers ---
 const analyzeLeadWithAI = async (name: string, vision: string) => {
   try {
-    // Correctly initialize GoogleGenAI as per guidelines
     const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
     const response = await ai.models.generateContent({
       model: 'gemini-3-flash-preview',
       contents: `Eres el estratega jefe de Pinta MKT. Un prospecto llamado ${name} ha enviado esta visión: "${vision}". Genera una respuesta de exactamente 20 palabras que sea inspiradora y mencione que su proyecto tiene un potencial enorme para ser el próximo gran éxito de la colmena.`,
     });
-    // Use .text property directly
     return response.text || "Tu visión tiene un potencial increíble. En Pinta MKT estamos listos para transformarla en resultados reales.";
   } catch (error) {
     return "Tu visión tiene un potencial increíble. En Pinta MKT estamos listos para transformarla en resultados reales muy pronto.";
@@ -162,46 +174,36 @@ const SectionTitle: React.FC<{ children?: React.ReactNode, className?: string }>
 );
 
 const ProjectCard: React.FC<{ project: Project; onOpenProject: (p: Project) => void }> = ({ project, onOpenProject }) => (
-  <button onClick={() => onOpenProject(project)} className="group relative aspect-[4/3] overflow-hidden rounded-[2.5rem] border-4 border-black shadow-xl text-left transition-transform hover:-translate-y-2">
-    <img src={project.image} alt={project.title} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
-    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent flex flex-col justify-end p-8">
-      <span className="text-[#EBE300] text-xs font-black uppercase mb-2 tracking-widest">{project.category}</span>
-      <h3 className="text-white text-2xl font-[900] uppercase tracking-tighter leading-none mb-4">{project.title}</h3>
-      <div className="flex items-center gap-2 text-white font-black text-[10px] uppercase tracking-widest bg-white/10 w-fit px-4 py-1.5 rounded-full border border-white/20">Ver Campaña <ArrowRight size={12}/></div>
+  <button 
+    onClick={() => onOpenProject(project)} 
+    className="group relative aspect-[4/3] overflow-hidden rounded-[2.5rem] border-[4px] border-black shadow-2xl text-left transition-transform hover:-translate-y-2"
+  >
+    {/* Imagen de fondo */}
+    <img 
+      src={project.image} 
+      alt={project.title} 
+      className="w-full h-full object-cover grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-110" 
+    />
+    
+    {/* Abejita flotante superior derecha (Sticker) */}
+    <div className="absolute top-6 right-6 z-20 w-12 h-12 md:w-16 md:h-16 bg-[#EBE300] border-2 border-black rounded-full flex items-center justify-center animate-organic-flight shadow-lg group-hover:scale-110 transition-transform">
+      <img src="https://img.icons8.com/ios-filled/50/000000/bee.png" alt="Bee" className="w-6 h-6 md:w-8 md:h-8" />
+    </div>
+
+    {/* Overlay con gradiente */}
+    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent flex flex-col justify-end p-8 md:p-10">
+      <span className="text-[#EBE300] text-sm md:text-base font-black uppercase mb-1 tracking-widest drop-shadow-md">
+        {project.category}
+      </span>
+      <h3 className="text-white text-3xl md:text-4xl lg:text-5xl font-[900] uppercase tracking-tighter leading-none mb-6 drop-shadow-lg">
+        {project.title}
+      </h3>
+      <div className="inline-flex items-center gap-3 px-6 py-2.5 bg-white/20 backdrop-blur-md border border-white/30 text-white font-black uppercase text-xs md:text-sm tracking-widest rounded-full transition-all group-hover:bg-[#EBE300] group-hover:text-black group-hover:border-black group-active:scale-95 w-fit">
+        Ver Campaña <ArrowRight size={16}/>
+      </div>
     </div>
   </button>
 );
-
-const ProjectCampaignOverlay: React.FC<{ project: Project; onClose: () => void }> = ({ project, onClose }) => {
-  useEffect(() => { document.body.style.overflow = 'hidden'; return () => { document.body.style.overflow = 'auto'; }; }, []);
-  return (
-    <div className="fixed inset-0 z-[300] bg-black overflow-y-auto animate-in fade-in duration-500">
-      <div className="sticky top-0 z-[310] flex justify-between items-center p-6 bg-black/80 backdrop-blur-lg">
-        <button onClick={() => { onClose(); window.scrollTo({top:0, behavior:'smooth'}); }} className="hover:opacity-80 transition-opacity"><LogoText className="w-32 text-[#EBE300]" /></button>
-        <button onClick={onClose} className="p-3 bg-[#EBE300] text-black rounded-full hover:scale-110 transition-transform flex items-center gap-2 font-black uppercase text-xs shadow-lg"><X size={20} /> <span>Cerrar</span></button>
-      </div>
-      <div className="container mx-auto max-w-7xl px-4 py-12 md:py-20">
-        <div className="grid lg:grid-cols-2 gap-8 md:gap-16 items-start">
-          <div className="order-2 lg:order-1">
-            <span className="inline-block px-4 py-1.5 bg-[#EBE300] text-black font-black text-xs uppercase mb-6 rounded-full tracking-widest">CAMPAÑA ACTIVA</span>
-            <h1 className="text-4xl md:text-7xl lg:text-8xl font-[900] text-white uppercase tracking-tighter leading-[0.85] mb-8">{project.title}</h1>
-            <p className="text-lg md:text-xl text-white/70 font-bold leading-snug max-w-xl mb-12">{project.description}</p>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              {project.results.map((res, i) => (
-                <div key={i} className="bg-white/5 border border-white/10 p-6 rounded-[2rem]">
-                  <div className="text-[#EBE300] mb-3">{res.icon}</div>
-                  <div className="text-2xl font-black text-white mb-1 tracking-tighter">{res.value}</div>
-                  <div className="text-[10px] font-black uppercase tracking-widest text-white/40">{res.label}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="order-1 lg:order-2"><img src={project.image} alt={project.title} className="w-full aspect-[4/3] object-cover rounded-[2rem] border-2 border-white/20 shadow-2xl" /></div>
-        </div>
-      </div>
-    </div>
-  );
-};
 
 const Header: React.FC<{ activeSection: string }> = ({ activeSection }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -307,8 +309,10 @@ const App: React.FC = () => {
       <section id="works" className="py-24 bg-white px-4">
         <div className="container mx-auto max-w-7xl">
           <SectionTitle>NUESTRA COSECHA</SectionTitle>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-10">
-            {PROJECTS.map((project) => (<ProjectCard key={project.id} project={project} onOpenProject={setSelectedProject} />))}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16">
+            {PROJECTS.map((project) => (
+              <ProjectCard key={project.id} project={project} onOpenProject={setSelectedProject} />
+            ))}
           </div>
         </div>
       </section>
@@ -373,12 +377,28 @@ const App: React.FC = () => {
           <div className="flex flex-col lg:flex-row gap-12 lg:gap-24 items-start">
             <div className="w-full lg:w-[55%]">
               <h2 className="text-[12vw] lg:text-[8rem] font-[900] uppercase tracking-tighter leading-[0.8] mb-8 text-black">HABLEMOS</h2>
-              <p className="text-2xl font-[900] text-gray-500 uppercase tracking-tighter mb-16 italic">¿LISTO PARA QUE TU MARCA BRILLE?</p>
-              <div className="flex flex-col gap-8">
-                <a href="mailto:PINTAMKT@GMAIL.COM" className="flex items-center gap-6 group">
-                  <div className="w-16 h-16 bg-black text-[#EBE300] rounded-full flex items-center justify-center group-hover:scale-110 transition-transform"><Mail size={32} /></div>
-                  <span className="font-[900] text-2xl lg:text-3xl uppercase tracking-tighter text-black">PINTAMKT@GMAIL.COM</span>
+              <p className="text-2xl font-[900] text-gray-500 uppercase tracking-tighter mb-16 italic drop-shadow-sm">¿LISTO PARA QUE TU MARCA BRILLE?</p>
+              
+              <div className="flex flex-col gap-10">
+                <a href="mailto:PINTAMKT@GMAIL.COM" className="flex items-center gap-6 group w-fit">
+                  <div className="w-16 h-16 bg-black text-[#EBE300] rounded-full flex items-center justify-center group-hover:scale-110 transition-transform shadow-xl">
+                    <Mail size={32} />
+                  </div>
+                  <span className="font-[900] text-xl md:text-2xl lg:text-3xl uppercase tracking-tighter text-black">PINTAMKT@GMAIL.COM</span>
                 </a>
+                
+                {/* Redes Sociales en Contacto */}
+                <div className="flex gap-6 items-center">
+                  <a href="https://www.instagram.com/pintamkt/" target="_blank" className="w-14 h-14 bg-black text-[#EBE300] rounded-full flex items-center justify-center hover:scale-110 hover:bg-[#EBE300] hover:text-black transition-all shadow-lg">
+                    <Instagram size={24} />
+                  </a>
+                  <a href="https://www.linkedin.com/company/pinta-marketing/" target="_blank" className="w-14 h-14 bg-black text-[#EBE300] rounded-full flex items-center justify-center hover:scale-110 hover:bg-[#EBE300] hover:text-black transition-all shadow-lg">
+                    <Linkedin size={24} />
+                  </a>
+                  <a href="https://wa.me/5492617007256" target="_blank" className="w-14 h-14 bg-black text-[#EBE300] rounded-full flex items-center justify-center hover:scale-110 hover:bg-[#EBE300] hover:text-black transition-all shadow-lg">
+                    <MessageCircle size={24} />
+                  </a>
+                </div>
               </div>
             </div>
 
@@ -391,11 +411,11 @@ const App: React.FC = () => {
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="flex flex-col gap-6">
-                  <input type="text" placeholder="TU NOMBRE" required className="w-full px-10 py-5 bg-white border-[4px] border-black rounded-full font-[900] text-lg uppercase outline-none shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]" onChange={(e) => setFormState({...formState, name: e.target.value})} />
-                  <input type="email" placeholder="TU EMAIL" required className="w-full px-10 py-5 bg-white border-[4px] border-black rounded-full font-[900] text-lg uppercase outline-none shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]" onChange={(e) => setFormState({...formState, email: e.target.value})} />
-                  <textarea placeholder="CONTANOS TU VISIÓN..." required rows={4} className="w-full px-10 py-8 bg-white border-[4px] border-black rounded-[2.5rem] font-[900] text-lg uppercase outline-none resize-none shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]" onChange={(e) => setFormState({...formState, message: e.target.value})} />
+                  <input type="text" placeholder="TU NOMBRE" required className="w-full px-10 py-5 bg-white border-[4px] border-black rounded-full font-[900] text-lg uppercase outline-none shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all focus:-translate-y-1" onChange={(e) => setFormState({...formState, name: e.target.value})} />
+                  <input type="email" placeholder="TU EMAIL" required className="w-full px-10 py-5 bg-white border-[4px] border-black rounded-full font-[900] text-lg uppercase outline-none shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all focus:-translate-y-1" onChange={(e) => setFormState({...formState, email: e.target.value})} />
+                  <textarea placeholder="CONTANOS TU VISIÓN..." required rows={4} className="w-full px-10 py-8 bg-white border-[4px] border-black rounded-[2.5rem] font-[900] text-lg uppercase outline-none resize-none shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all focus:-translate-y-1" onChange={(e) => setFormState({...formState, message: e.target.value})} />
                   <button type="submit" disabled={isSubmitting} className="group w-full py-7 bg-black text-[#EBE300] font-[900] text-3xl uppercase rounded-full hover:bg-[#EBE300] hover:text-black transition-all flex items-center justify-center gap-6 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.15)] mt-4 active:scale-95">
-                    {isSubmitting ? 'ENVIANDO...' : 'ENVIAR MENSAJE'} <Send size={36} />
+                    {isSubmitting ? 'ENVIANDO...' : 'ENVIAR MENSAJE'} <Send size={36} className="group-hover:translate-x-2 group-hover:-translate-y-1 transition-transform" />
                   </button>
                 </form>
               )}
@@ -409,12 +429,39 @@ const App: React.FC = () => {
           <LogoText className="w-40 text-[#EBE300]" />
           <div className="text-[11px] text-gray-500 font-black uppercase tracking-[0.4em]">© {new Date().getFullYear()} PINTA MKT - ESTRATEGIA DIGITAL</div>
           <div className="flex gap-6">
-            {SOCIAL_LINKS.map((s, i) => (<a key={i} href={s.href} target="_blank" className="text-gray-500 hover:text-[#EBE300]">{s.icon}</a>))}
+            {SOCIAL_LINKS.map((s, i) => (<a key={i} href={s.href} target="_blank" className="text-gray-500 hover:text-[#EBE300] transition-colors">{s.icon}</a>))}
           </div>
         </div>
       </footer>
 
-      {selectedProject && <ProjectCampaignOverlay project={selectedProject} onClose={() => setSelectedProject(null)} />}
+      {/* Modal de Campaña */}
+      {selectedProject && (
+        <div className="fixed inset-0 z-[300] bg-black overflow-y-auto animate-in fade-in duration-500">
+          <div className="sticky top-0 z-[310] flex justify-between items-center p-6 bg-black/80 backdrop-blur-lg">
+            <button onClick={() => { setSelectedProject(null); window.scrollTo({top:0, behavior:'smooth'}); }} className="hover:opacity-80 transition-opacity"><LogoText className="w-32 text-[#EBE300]" /></button>
+            <button onClick={() => setSelectedProject(null)} className="p-3 bg-[#EBE300] text-black rounded-full hover:scale-110 transition-transform flex items-center gap-2 font-black uppercase text-xs shadow-lg"><X size={20} /> <span>Cerrar</span></button>
+          </div>
+          <div className="container mx-auto max-w-7xl px-4 py-12 md:py-20">
+            <div className="grid lg:grid-cols-2 gap-8 md:gap-16 items-start">
+              <div className="order-2 lg:order-1">
+                <span className="inline-block px-4 py-1.5 bg-[#EBE300] text-black font-black text-xs uppercase mb-6 rounded-full tracking-widest">CAMPAÑA ACTIVA</span>
+                <h1 className="text-4xl md:text-7xl lg:text-8xl font-[900] text-white uppercase tracking-tighter leading-[0.85] mb-8">{selectedProject.title}</h1>
+                <p className="text-lg md:text-xl text-white/70 font-bold leading-snug max-w-xl mb-12">{selectedProject.description}</p>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  {selectedProject.results.map((res, i) => (
+                    <div key={i} className="bg-white/5 border border-white/10 p-6 rounded-[2rem]">
+                      <div className="text-[#EBE300] mb-3">{res.icon}</div>
+                      <div className="text-2xl font-black text-white mb-1 tracking-tighter">{res.value}</div>
+                      <div className="text-[10px] font-black uppercase tracking-widest text-white/40">{res.label}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="order-1 lg:order-2"><img src={selectedProject.image} alt={selectedProject.title} className="w-full aspect-[4/3] object-cover rounded-[2rem] border-2 border-white/20 shadow-2xl" /></div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

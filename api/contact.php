@@ -7,31 +7,25 @@
 
 // 1. CORS dinámico para permitir múltiples dominios de Pinta MKT
 $allowed_origins = [
-  "https://pintamkt.online",
-  "https://www.pintamkt.online",
-  "https://l0090660.ferozo.com",
-  "http://pintamkt.online",
-  "http://www.pintamkt.online"
+    "https://l0090660.ferozo.com",
+    "https://pintamkt.online",
+    "https://pintamkt.store"
 ];
 
 $origin = $_SERVER['HTTP_ORIGIN'] ?? '';
-if ($origin && in_array($origin, $allowed_origins, true)) {
-  header("Access-Control-Allow-Origin: $origin");
-  header("Vary: Origin");
+if (in_array($origin, $allowed_origins)) {
+    header("Access-Control-Allow-Origin: $origin");
 } else {
-  // Si no viene Origin (curl/postman) no pasa nada; si viene de otro, no habilites
-  // Podés dejarlo sin else para ser más estricto
+    header("Access-Control-Allow-Origin: *");
 }
 
 header("Access-Control-Allow-Methods: POST, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type, X-Requested-With");
-header("Access-Control-Max-Age: 86400");
+header("Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With");
 header("Content-Type: application/json; charset=UTF-8");
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-  http_response_code(200);
-  echo json_encode(["ok" => true]);
-  exit;
+    http_response_code(200);
+    exit;
 }
 
 // 2. Configuración
