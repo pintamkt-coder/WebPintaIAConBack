@@ -1,9 +1,4 @@
 <?php
-/**
- * Pinta MKT - Backend API for Lead Management
- * Optimized for DonWeb / Ferozo Deployment
- */
-
 header("Content-Type: application/json; charset=UTF-8");
 
 // 1) CORS
@@ -20,7 +15,6 @@ if ($origin && in_array($origin, $allowed_origins, true)) {
   header("Access-Control-Allow-Origin: $origin");
   header("Vary: Origin");
 }
-
 header("Access-Control-Allow-Methods: POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, X-Requested-With");
 header("Access-Control-Max-Age: 86400");
@@ -33,9 +27,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 // 2) Config
 $agency_emails = "pintamkt@gmail.com, Emilia@pintamkt.com";
-$log_file = __DIR__ . "/../data/leads.json";
+$log_dir  = __DIR__ . "/../data";
+$log_file = $log_dir . "/leads.json";
+$err_file = $log_dir . "/mail_errors.log";
 
-// IMPORTANTE: este From tiene que EXISTIR como casilla real en DonWeb
+// From real (según tu captura, existe)
 $from_email = "info@pintamkt.store";
 $from_name  = "Pinta MKT";
 
@@ -55,9 +51,9 @@ if (!$data) {
   exit;
 }
 
-$name       = trim((string)($data['name'] ?? ''));
-$email      = trim((string)($data['email'] ?? ''));
-$message    = trim((string)($data['message'] ?? ''));
+$name        = trim((string)($data['name'] ?? ''));
+$email       = trim((string)($data['email'] ?? ''));
+$message     = trim((string)($data['message'] ?? ''));
 $ai_analysis = trim((string)($data['ai_analysis'] ?? ''));
 
 if ($name === '' || $email === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -66,15 +62,15 @@ if ($name === '' || $email === '' || !filter_var($email, FILTER_VALIDATE_EMAIL))
   exit;
 }
 
-// Sanitizado básico para guardar/enviar
+// Sanitizado
 $name_s = filter_var($name, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 $email_s = filter_var($email, FILTER_SANITIZE_EMAIL);
 $message_s = filter_var($message, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 $ai_s = filter_var($ai_analysis, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
 // Persistencia
-if (!file_exists(__DIR__ . "/../data")) {
-  mkdir(__DIR__ . "/../data", 0755, true);
+if (!file_exists($log_dir)) {
+  mkdir($log_dir, 0755, true);
 }
 
 $entry = [
@@ -89,7 +85,6 @@ $entry = [
 $leads = file_exists($log_file) ? json_decode(file_get_contents($log_file), true) : [];
 if (!is_array($leads)) $leads = [];
 $leads[] = $entry;
-
 file_put_contents($log_file, json_encode($leads, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
 
 // Email
@@ -103,14 +98,21 @@ $body =
 
 $headers  = "From: {$from_name} <{$from_email}>\r\n";
 $headers .= "Reply-To: {$email_s}\r\n";
+$headers .= "MIME-Version: 1.0\r\n";
+$headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
 $headers .= "X-Mailer: PHP/" . phpversion();
 
-$sent = mail($agency_emails, $subject, $body, $headers);
+$sent = @mail($agency_emails, $subject, $body, $headers, "-f $from_email");
 
 if (!$sent) {
+  // log para diagnosticar
+  $line = date("c") . " MAIL FAILED | from={$from_email} | to={$agency_emails} | lead={$email_s}\n";
+  file_put_contents($err_file, $line, FILE_APPEND);
+
   http_response_code(500);
   echo json_encode(["status" => "error", "message" => "Mail failed"]);
   exit;
 }
 
 echo json_encode(["status" => "success", "message" => "Lead processed"]);
+exit;
