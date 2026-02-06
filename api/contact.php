@@ -1,6 +1,6 @@
 <?php
 /**
- * contact.php - Pinta MKT Backend API (Debug + Shutdown Logger)
+ * contact.php - Pinta MKT Backend API (No -f to avoid Snuffleupagus block)
  * DonWeb / Ferozo
  */
 
@@ -18,8 +18,8 @@ $data_dir   = __DIR__ . "/../data";
 $leads_file = $data_dir . "/leads.json";
 $debug_file = $data_dir . "/debug_contact.log";
 
-// Toggle: para probar si el 500 desaparece sin mail()
-$ENABLE_MAIL = true; // ponelo en false 1 minuto para validar
+// Toggle por si querés testear guardado sin mail
+$ENABLE_MAIL = true;
 
 // ====== HELPERS ======
 $__STAGE = "boot";
@@ -48,8 +48,7 @@ register_shutdown_function(function() use ($debug_file, &$__STAGE) {
 if (!file_exists($data_dir)) {
   @mkdir($data_dir, 0755, true);
 }
-$writable = is_dir($data_dir) && is_writable($data_dir);
-if (!$writable) {
+if (!is_dir($data_dir) || !is_writable($data_dir)) {
   respond(500, ["status" => "error", "message" => "Data dir not writable", "data_dir" => $data_dir]);
 }
 
@@ -149,7 +148,6 @@ $__STAGE = "mail";
 debug_log($debug_file, "stage=mail enable=" . ($ENABLE_MAIL ? "1" : "0"));
 
 if (!$ENABLE_MAIL) {
-  // Para testear: si esto devuelve 200 y desaparece el 500, el culpable es mail().
   respond(200, ["status" => "success", "message" => "Lead saved (mail disabled)", "stage" => "ok_no_mail"]);
 }
 
@@ -165,15 +163,10 @@ $headers  = "From: {$from_name} <{$from_email}>\r\n";
 $headers .= "Reply-To: {$email_s}\r\n";
 $headers .= "X-Mailer: PHP/" . phpversion();
 
-// Recomendado en hostings: envelope sender (-f)
-$extra_params = "-f{$from_email}";
-
-// Limitar tiempo por si mail() cuelga
 @set_time_limit(10);
-@ini_set("default_socket_timeout", "10");
 
 $start = microtime(true);
-$mail_sent = @mail($agency_emails, $subject, $body, $headers, $extra_params);
+$mail_sent = @mail($agency_emails, $subject, $body, $headers); // <-- SIN 5to parámetro
 $elapsed = round((microtime(true) - $start) * 1000);
 
 debug_log($debug_file, "mail_done sent=" . ($mail_sent ? "1" : "0") . " ms={$elapsed}");
