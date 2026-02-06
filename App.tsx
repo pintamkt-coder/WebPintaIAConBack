@@ -151,24 +151,19 @@ const notifyBackend = async (data: any) => {
     const response = await fetch(API_ENDPOINT, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
+      body: JSON.stringify(data)
     });
 
-    const text = await response.text();
-
-    // Intentar parsear JSON, pero sin romper si viene HTML/error vacío
-    let result: any = null;
-    try { result = JSON.parse(text); } catch {}
-
     if (!response.ok) {
-      console.error("Backend non-OK:", response.status, result || text);
-      return { ok: false, status: response.status, result: result || text };
+      throw new Error(`Backend ${response.status}`);
     }
 
-    return { ok: true, status: response.status, result };
+    const result = await response.json();
+    return result.status === 'success';
   } catch (error) {
     console.error("Backend error:", error);
-    return { ok: false, status: 0, result: String(error) };
+    alert("No se pudo enviar el formulario (backend). Revisá la consola para ver el error real.");
+    return false;
   }
 };
 
