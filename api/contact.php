@@ -97,7 +97,7 @@ try {
   $mail->addReplyTo($email, $name);
 
   $mail->isHTML(false);
-  $mail->Subject = "🐝 Nuevo contacto Pinta MKT – {$name}";
+  $mail->Subject = "Nuevo contacto de Pinta MKT";
   $mail->Body =
     "Nombre: {$name}\n" .
     "Email: {$email}\n\n" .

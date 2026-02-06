@@ -1,4 +1,3 @@
-// App.tsx (COMPLETO)
 
 import React, { useState, useEffect, useRef } from 'react';
 import { 
@@ -22,7 +21,14 @@ import {
 import { GoogleGenAI } from "@google/genai";
 
 // --- Configuration & API ---
-const API_ENDPOINT = "https://l0090660.ferozo.com/api/contact.php";
+const isProduction = window.location.hostname.includes('ferozo.com') || 
+                     window.location.hostname.includes('pintamkt');
+
+const API_BASE_URL = isProduction 
+  ? '' 
+  : 'https://l0090660.ferozo.com'; 
+
+const API_ENDPOINT = `${API_BASE_URL}/api/contact.php`;
 
 // --- Assets ---
 const LogoText: React.FC<{ className?: string }> = ({ className = "w-48 h-auto" }) => (
@@ -140,12 +146,11 @@ const analyzeLeadWithAI = async (name: string, vision: string) => {
       contents: `Eres el estratega jefe de Pinta MKT. Un prospecto llamado ${name} ha enviado esta visión: "${vision}". Genera una respuesta de exactamente 20 palabras que sea inspiradora y mencione que su proyecto tiene un potencial enorme para ser el próximo gran éxito de la colmena.`,
     });
     return response.text || "Tu visión tiene un potencial increíble. En Pinta MKT estamos listos para transformarla en resultados reales.";
-  } catch {
+  } catch (error) {
     return "Tu visión tiene un potencial increíble. En Pinta MKT estamos listos para transformarla en resultados reales muy pronto.";
   }
 };
 
-// ✅ CAMBIO CLAVE: robust parse + logs + no rompe por HTML/vacío
 const notifyBackend = async (data: any) => {
   try {
     const response = await fetch(API_ENDPOINT, {
@@ -153,20 +158,13 @@ const notifyBackend = async (data: any) => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
     });
-
-    if (!response.ok) {
-      throw new Error(`Backend ${response.status}`);
-    }
-
     const result = await response.json();
     return result.status === 'success';
   } catch (error) {
     console.error("Backend error:", error);
-    alert("No se pudo enviar el formulario (backend). Revisá la consola para ver el error real.");
     return false;
   }
 };
-
 
 // --- Components ---
 const SectionTitle: React.FC<{ children?: React.ReactNode, className?: string }> = ({ children, className = "" }) => (
@@ -188,8 +186,8 @@ const ProjectCard: React.FC<{ project: Project; onOpenProject: (p: Project) => v
         className="w-full h-full object-cover grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-105 will-change-transform" 
       />
     </div>
-
-    <div className="absolute top-7 right-7 z-20 w-12 h-12 md:w-16 md:h-16 bg-[#EBE300] border-[2.5px] border-black rounded-full flex items-center justify-center animate-organic-flight shadow-lg group-hover:scale-110 transition-transform">
+    
+    <div className="absolute top-7 right-7 z-20 w-12 h-12 md:w-16 md:h-16 bg-[#EBE300] border-[2.5px] border-black rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:-rotate-12 transition-transform duration-500">
       <img src="https://img.icons8.com/ios-filled/50/000000/bee.png" alt="Bee" className="w-6 h-6 md:w-8 md:h-8" />
     </div>
 
@@ -210,20 +208,17 @@ const ProjectCard: React.FC<{ project: Project; onOpenProject: (p: Project) => v
 const Header: React.FC<{ activeSection: string }> = ({ activeSection }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
     setIsOpen(false);
     const element = document.getElementById(href.replace('#', ''));
     if (element) window.scrollTo({ top: element.offsetTop - 80, behavior: 'smooth' });
   };
-
   return (
     <header className={`fixed w-full top-0 left-0 z-[100] transition-all duration-500 ${scrolled ? 'bg-black/95 py-3 shadow-2xl' : 'bg-transparent py-6'}`}>
       <div className="container mx-auto px-4 flex items-center justify-between">
@@ -247,6 +242,108 @@ const Header: React.FC<{ activeSection: string }> = ({ activeSection }) => {
   );
 };
 
+const ExtensionSection: React.FC = () => {
+  return (
+    <section className="py-24 bg-[#111111] text-white px-4 relative overflow-hidden">
+      <div className="container mx-auto max-w-7xl">
+        <div className="text-center mb-20 max-w-5xl mx-auto">
+          {/* H1 Optimizado para SEO y diseño ajustado */}
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-[900] uppercase tracking-tighter leading-[0.85] mb-8">
+            ¿BUSCANDO UNA EXTENSIÓN <br/> <span className="text-[#EBE300]">DE TU EQUIPO?</span>
+          </h1>
+          <p className="text-sm md:text-lg lg:text-xl font-black uppercase text-gray-500 tracking-[0.3em] max-w-3xl mx-auto leading-relaxed">
+            OLVÍDATE DEL OUTSOURCING TRADICIONAL. SOMOS PINTA MKT, <br/> TU ALIADO ESTRATÉGICO DIARIO.
+          </p>
+        </div>
+
+        <div className="grid lg:grid-cols-2 gap-10 items-stretch">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            {[
+              { label: "EQUIPO IN-HOUSE" },
+              { label: "CREATIVIDAD" },
+              { label: "CONSULTORÍA" },
+              { label: "RESULTADOS" }
+            ].map((card, i) => (
+              <div key={i} className="bg-[#1a1a1a] border-2 border-white/5 rounded-[2rem] p-8 flex flex-col justify-between min-h-[180px] hover:border-[#EBE300]/50 transition-all group cursor-default">
+                <div className="w-12 h-12 bg-black rounded-xl border border-white/10 flex items-center justify-center group-hover:scale-125 group-hover:rotate-12 transition-transform duration-500">
+                  <img src="https://img.icons8.com/ios-filled/50/EBE300/bee.png" alt="Bee" className="w-6 h-6" />
+                </div>
+                <h3 className="text-xl md:text-2xl font-[900] uppercase tracking-tighter leading-none mt-6">{card.label}</h3>
+              </div>
+            ))}
+          </div>
+
+          <div className="relative group">
+            <div className="bg-[#EBE300] text-black rounded-[2.5rem] p-10 md:p-16 h-full flex flex-col justify-between shadow-2xl relative overflow-hidden transition-transform group-hover:scale-[1.01]">
+              <div>
+                <span className="inline-block px-4 py-1.5 bg-black text-[#EBE300] font-black text-xs uppercase mb-10 rounded-full tracking-widest">NUESTRO VALOR</span>
+                <div className="flex items-center gap-2 mb-8 scale-110 origin-left">
+                  <LogoText className="w-48 h-auto" />
+                </div>
+                <p className="text-3xl md:text-5xl font-[900] uppercase tracking-tighter leading-[0.9] mb-12">
+                  ESCALAMOS TUS RESULTADOS SIN LAS COMPLICACIONES DE AGENCIAS TRADICIONALES.
+                </p>
+              </div>
+
+              <a href="#contact" className="w-full py-6 bg-black text-white font-[900] text-xl uppercase rounded-full flex items-center justify-center gap-4 hover:scale-[1.02] transition-transform">
+                Saber más <ArrowRight size={24} />
+              </a>
+
+              <div className="absolute bottom-6 -right-12 md:-right-6 rotate-[-5deg]">
+                <div className="bg-[#E2DE00] border-2 border-black rounded-full px-6 py-4 flex items-center gap-4 shadow-xl">
+                   <div className="text-[10px] font-black uppercase tracking-widest leading-none text-right">
+                     SI NO ES PINTA <br/> <span className="text-black/50">NOT MARKETING</span>
+                   </div>
+                   <div className="w-10 h-10 bg-black rounded-full flex items-center justify-center text-[#EBE300]">
+                     <MessageCircle size={20} fill="currentColor" />
+                   </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const SEOSection: React.FC = () => {
+  return (
+    <section className="py-24 bg-[#FDFCE6] px-4">
+      <div className="container mx-auto max-w-4xl">
+        <div className="space-y-8 text-gray-800">
+          <h2 className="text-3xl md:text-5xl font-[900] uppercase tracking-tighter leading-none text-black">
+            Potencia Colectiva: Marketing Digital en Mendoza con Propósito
+          </h2>
+          <p className="text-lg md:text-xl font-bold leading-relaxed">
+            En el dinámico ecosistema comercial de Cuyo, ser una <strong>agencia de marketing en Mendoza</strong> requiere más que solo presencia digital; exige una mentalidad de negocios. En <strong>Pinta MKT</strong>, entendemos que tu marca no es un número más, es el resultado de esfuerzo, visión y una búsqueda constante de excelencia.
+          </p>
+          
+          <h2 className="text-2xl md:text-3xl font-[900] uppercase tracking-tighter text-black mt-16">
+            Estrategia de Negocios que Transforma el Mercado Local
+          </h2>
+          <p className="text-md md:text-lg leading-relaxed text-gray-700">
+            Nuestra propuesta como agencia de <strong>marketing digital en Mendoza</strong> se aleja del humo corporativo. No vendemos métricas de vanidad ni <i>likes</i> que no se traducen en ventas. Nos enfocamos en la sinergia: la unión de tu conocimiento del sector con nuestra maestría técnica en performance, pauta publicitaria y branding.
+          </p>
+          <p className="text-md md:text-lg leading-relaxed text-gray-700">
+            Trabajar con nosotros significa integrar un equipo in-house que respira tu proyecto. Desde la Ciudad de Mendoza proyectamos marcas hacia todo el país, utilizando herramientas de vanguardia y análisis de datos real. Optimizamos cada peso invertido en Google Ads y Meta Ads para asegurar un ROI que permita el escalamiento sostenible de tu empresa.
+          </p>
+
+          <h2 className="text-2xl md:text-3xl font-[900] uppercase tracking-tighter text-black mt-16">
+            Tu Próximo Paso Estratégico con Pinta MKT
+          </h2>
+          <p className="text-md md:text-lg leading-relaxed text-gray-700">
+            ¿Por qué elegir a <strong>Pinta MKT</strong> frente a agencias tradicionales? Porque somos ágiles como la colmena y precisos como el vuelo de la abeja. Nuestra consultoría estratégica en Mendoza está diseñada para empresas reales que buscan soluciones reales. Si estás listo para dejar de "probar" y empezar a "dominar" tu mercado, estás en el lugar correcto.
+          </p>
+          <p className="text-md md:text-lg leading-relaxed text-gray-700 italic border-l-4 border-[#EBE300] pl-6 font-bold">
+            "No somos un servicio externo; somos la extensión de tu equipo que faltaba para convertir tu visión en un éxito comercial indiscutible en Mendoza y Argentina."
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+};
+
 const App: React.FC = () => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [activeSection, setActiveSection] = useState('home');
@@ -265,23 +362,13 @@ const App: React.FC = () => {
     return () => observer.disconnect();
   }, []);
 
-  // ✅ CAMBIO CLAVE: no marcar “RECIBIDO” si backend falla
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-
     const analysis = await analyzeLeadWithAI(formState.name, formState.message);
     setAiAnalysis(analysis);
-
-    const ok = await notifyBackend({ ...formState, ai_analysis: analysis });
-
+    await notifyBackend({ ...formState, ai_analysis: analysis });
     setIsSubmitting(false);
-
-    if (!ok) {
-      alert("No se pudo enviar el formulario (backend). Revisá la consola para ver el error real.");
-      return;
-    }
-
     setSubmitted(true);
     setFormState({ name: '', email: '', message: '' });
   };
@@ -290,43 +377,45 @@ const App: React.FC = () => {
     <div className="min-h-screen bg-[#FDFCE6] selection:bg-[#EBE300] selection:text-black">
       <Header activeSection={activeSection} />
       
-      {/* Hero */}
       <section id="home" className="relative min-h-screen flex flex-col items-center justify-center bg-[#1A1A1A] overflow-hidden px-4">
         <div className="z-10 text-center max-w-6xl mx-auto">
-          <div className="flex justify-center mb-12"><img src="https://img.icons8.com/ios-filled/100/EBE300/bee.png" alt="Abeja" className="w-16 h-16 md:w-24 md:h-24 animate-organic-flight" /></div>
+          <div className="flex justify-center mb-12">
+            <img 
+              src="https://img.icons8.com/ios-filled/100/EBE300/bee.png" 
+              alt="Abeja" 
+              className="w-16 h-16 md:w-24 md:h-24 transition-transform duration-700 hover:scale-125 hover:rotate-12 cursor-pointer" 
+            />
+          </div>
           <div className="mb-12 flex justify-center"><LogoText className="w-full max-w-[900px] text-[#EBE300]" /></div>
-          <h1 className="text-xl md:text-3xl lg:text-4xl font-[900] text-white uppercase tracking-tight max-w-4xl mx-auto opacity-90 leading-tight mb-12">Transformamos ideas en resultados. <br/><span className="text-[#EBE300] inline-block mt-2">Estrategia pura para tu negocio.</span></h1>
+          <h2 className="text-xl md:text-3xl lg:text-4xl font-[900] text-white uppercase tracking-tight max-w-4xl mx-auto opacity-90 leading-tight mb-12">Transformamos ideas en resultados. <br/><span className="text-[#EBE300] inline-block mt-2">Estrategia pura para tu negocio.</span></h2>
           <a href="#about" className="inline-flex items-center gap-4 px-12 py-6 bg-[#EBE300] text-black font-[900] text-xl uppercase tracking-tighter hover:bg-white transition-all rounded-full shadow-lg">Descubrir <ArrowRight size={24} /></a>
         </div>
       </section>
 
-      {/* About */}
       <section id="about" className="py-24 bg-[#FDFCE6] px-4 overflow-hidden">
         <div className="container mx-auto max-w-6xl">
           <div className="grid md:grid-cols-2 gap-16 items-center">
             <div className="group">
               <span className="inline-block px-4 py-1 bg-black text-[#EBE300] font-black text-xs uppercase mb-6 rounded-full tracking-widest">NOSOTROS</span>
               <SectionTitle>POTENCIA COLECTIVA</SectionTitle>
-              <p className="text-xl md:text-2xl text-gray-700 font-[900] mb-8 uppercase">Mirada estratégica y humana.</p>
+              <p className="text-xl md:text-2xl text-gray-700 font-[900] mb-8 uppercase">Mirada estratégica y humana en Mendoza.</p>
               <div className="bg-white p-10 border-4 border-black rounded-[3rem] shadow-xl hover:shadow-[16px_16px_0px_0px_rgba(0,0,0,1)] hover:-translate-y-2 transition-all duration-500">
-                <p className="text-lg md:text-xl font-bold leading-relaxed text-gray-800 italic">"Donde otros venden ruido, nosotros entregamos resultados reales. Sinergia pura."</p>
+                <p className="text-lg md:text-xl font-bold leading-relaxed text-gray-800 italic">"Donde otros venden ruido, nosotros entregamos resultados reales. Sinergia pura para tu marca."</p>
               </div>
             </div>
             <div className="relative group">
               <div className="absolute -inset-4 bg-[#EBE300] rounded-[3.5rem] opacity-0 group-hover:opacity-30 transition-all duration-700 scale-90 group-hover:scale-110 rotate-6" />
-              <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=800" className="relative rounded-[3rem] border-4 border-black w-full aspect-square object-cover grayscale group-hover:grayscale-0 group-hover:-translate-y-6 transition-all duration-1000 shadow-2xl z-10" alt="Equipo Pinta MKT" />
+              <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=800" className="relative rounded-[3rem] border-4 border-black w-full aspect-square object-cover grayscale group-hover:grayscale-0 group-hover:-translate-y-6 transition-all duration-1000 shadow-2xl z-10" alt="Agencia de Marketing Mendoza" />
             </div>
           </div>
         </div>
       </section>
 
-      {/* Works - Row Horizontal Estática */}
       <section id="works" className="py-24 bg-white px-4">
         <div className="container mx-auto max-w-7xl">
           <div className="text-center mb-20">
-            <SectionTitle>NUESTRA COSECHA</SectionTitle>
+            <h2 className="text-4xl md:text-6xl lg:text-8xl font-[900] mb-10 uppercase tracking-tighter leading-[0.85] text-[#1A1A1A]">NUESTRA COSECHA</h2>
           </div>
-          
           <div className="flex flex-wrap lg:flex-nowrap justify-center gap-6 md:gap-8 lg:gap-10">
             {PROJECTS.map((project) => (
               <ProjectCard key={project.id} project={project} onOpenProject={setSelectedProject} />
@@ -335,10 +424,16 @@ const App: React.FC = () => {
         </div>
       </section>
 
-      {/* Services */}
+      <ExtensionSection />
+
+      {/* SEO Section Integrada */}
+      <SEOSection />
+
       <section id="services" className="py-24 bg-[#FDFCE6] px-4">
         <div className="container mx-auto max-w-7xl">
-          <div className="mb-20 text-center"><SectionTitle>CAPACIDADES</SectionTitle></div>
+          <div className="mb-20 text-center">
+            <h2 className="text-4xl md:text-6xl lg:text-8xl font-[900] mb-10 uppercase tracking-tighter leading-[0.85] text-[#1A1A1A]">CAPACIDADES</h2>
+          </div>
           <div className="grid md:grid-cols-3 gap-10">
             {SERVICES.map((service) => (
               <div key={service.id} className="bg-white border-[6px] border-black rounded-[3.5rem] p-10 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] flex flex-col h-full transition-all hover:-translate-y-3 hover:shadow-[16px_16px_0px_0px_rgba(0,0,0,1)] group">
@@ -359,7 +454,6 @@ const App: React.FC = () => {
         </div>
       </section>
 
-      {/* Clients */}
       <section id="clients" className="py-24 bg-black text-white overflow-hidden relative">
         <div className="container mx-auto max-w-7xl px-4 mb-16 text-center md:text-left">
           <h2 className="text-5xl md:text-7xl font-[900] uppercase tracking-tighter text-[#EBE300]">MARCAS EN LA COLMENA</h2>
@@ -389,7 +483,6 @@ const App: React.FC = () => {
         </div>
       </section>
 
-      {/* Contact */}
       <section id="contact" className="py-24 md:py-32 bg-[#FDFCE6] px-4">
         <div className="container mx-auto max-w-7xl">
           <div className="flex flex-col lg:flex-row gap-12 lg:gap-24 items-start">
@@ -428,12 +521,9 @@ const App: React.FC = () => {
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="flex flex-col gap-6">
-                  <input type="text" placeholder="TU NOMBRE" required className="w-full px-10 py-5 bg-white border-[4px] border-black rounded-full font-[900] text-lg uppercase outline-none shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all focus:-translate-y-1"
-                    onChange={(e) => setFormState({...formState, name: e.target.value})} />
-                  <input type="email" placeholder="TU EMAIL" required className="w-full px-10 py-5 bg-white border-[4px] border-black rounded-full font-[900] text-lg uppercase outline-none shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all focus:-translate-y-1"
-                    onChange={(e) => setFormState({...formState, email: e.target.value})} />
-                  <textarea placeholder="CONTANOS TU VISIÓN..." required rows={4} className="w-full px-10 py-8 bg-white border-[4px] border-black rounded-[2.5rem] font-[900] text-lg uppercase outline-none resize-none shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all focus:-translate-y-1"
-                    onChange={(e) => setFormState({...formState, message: e.target.value})} />
+                  <input type="text" placeholder="TU NOMBRE" required className="w-full px-10 py-5 bg-white border-[4px] border-black rounded-full font-[900] text-lg uppercase outline-none shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all focus:-translate-y-1" onChange={(e) => setFormState({...formState, name: e.target.value})} />
+                  <input type="email" placeholder="TU EMAIL" required className="w-full px-10 py-5 bg-white border-[4px] border-black rounded-full font-[900] text-lg uppercase outline-none shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all focus:-translate-y-1" onChange={(e) => setFormState({...formState, email: e.target.value})} />
+                  <textarea placeholder="CONTANOS TU VISIÓN..." required rows={4} className="w-full px-10 py-8 bg-white border-[4px] border-black rounded-[2.5rem] font-[900] text-lg uppercase outline-none resize-none shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all focus:-translate-y-1" onChange={(e) => setFormState({...formState, message: e.target.value})} />
                   <button type="submit" disabled={isSubmitting} className="group w-full py-7 bg-black text-[#EBE300] font-[900] text-3xl uppercase rounded-full hover:bg-[#EBE300] hover:text-black transition-all flex items-center justify-center gap-6 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.15)] mt-4 active:scale-95">
                     {isSubmitting ? 'ENVIANDO...' : 'ENVIAR MENSAJE'} <Send size={36} className="group-hover:translate-x-2 group-hover:-translate-y-1 transition-transform" />
                   </button>
@@ -447,7 +537,7 @@ const App: React.FC = () => {
       <footer className="py-12 bg-black text-white px-4 border-t border-white/10">
         <div className="container mx-auto max-w-7xl flex flex-col md:flex-row justify-between items-center gap-8 text-center">
           <LogoText className="w-40 text-[#EBE300]" />
-          <div className="text-[11px] text-gray-500 font-black uppercase tracking-[0.4em]">© {new Date().getFullYear()} PINTA MKT - ESTRATEGIA DIGITAL</div>
+          <div className="text-[11px] text-gray-500 font-black uppercase tracking-[0.4em]">© {new Date().getFullYear()} PINTA MKT - ESTRATEGIA DIGITAL MENDOZA</div>
           <div className="flex gap-6">
             {SOCIAL_LINKS.map((s, i) => (<a key={i} href={s.href} target="_blank" className="text-gray-500 hover:text-[#EBE300] transition-colors">{s.icon}</a>))}
           </div>
@@ -464,7 +554,7 @@ const App: React.FC = () => {
             <div className="grid lg:grid-cols-2 gap-8 md:gap-16 items-start">
               <div className="order-2 lg:order-1">
                 <span className="inline-block px-4 py-1.5 bg-[#EBE300] text-black font-black text-xs uppercase mb-6 rounded-full tracking-widest">CAMPAÑA ACTIVA</span>
-                <h1 className="text-4xl md:text-7xl lg:text-8xl font-[900] text-white uppercase tracking-tighter leading-[0.85] mb-8">{selectedProject.title}</h1>
+                <h2 className="text-4xl md:text-7xl lg:text-8xl font-[900] text-white uppercase tracking-tighter leading-[0.85] mb-8">{selectedProject.title}</h2>
                 <p className="text-lg md:text-xl text-white/70 font-bold leading-snug max-w-xl mb-12">{selectedProject.description}</p>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   {selectedProject.results.map((res, i) => (
