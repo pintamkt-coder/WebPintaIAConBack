@@ -19,7 +19,7 @@ $leads_file = $data_dir . "/leads.json";
 $debug_file = $data_dir . "/debug_contact.log";
 
 // Toggle: para probar si el 500 desaparece sin mail()
-$ENABLE_MAIL = false; // ponelo en false 1 minuto para validar
+$ENABLE_MAIL = true; // ponelo en false 1 minuto para validar
 
 // ====== HELPERS ======
 $__STAGE = "boot";
