@@ -1,66 +1,32 @@
 <?php
 /**
- * contact.php - Pinta MKT Backend API (No -f to avoid Snuffleupagus block)
- * DonWeb / Ferozo
+ * Pinta MKT - Contact API (DonWeb/Ferozo)
+ * - CORS OK
+ * - Guarda lead en /api/data/leads.json
+ * - Envía email por SMTP (PHPMailer) para evitar bloqueo de mail()
  */
 
 header("Content-Type: application/json; charset=UTF-8");
 
-// ====== CONFIG ======
-$agency_emails = "pintamkt@gmail.com, Emilia@pintamkt.com";
-
-// From debe EXISTIR como casilla real en el hosting
-$from_email = "info@pintamkt.store";
-$from_name  = "Pinta MKT";
-
-// Rutas
-$data_dir   = __DIR__ . "/../data";
-$leads_file = $data_dir . "/leads.json";
-$debug_file = $data_dir . "/debug_contact.log";
-
-// Toggle por si querés testear guardado sin mail
-$ENABLE_MAIL = true;
-
-// ====== HELPERS ======
-$__STAGE = "boot";
-
-function debug_log($file, $msg) {
-  @file_put_contents($file, date("c") . " | " . $msg . "\n", FILE_APPEND);
+// ======================
+// 0) DEBUG LOG (opcional)
+// ======================
+$debug_log = __DIR__ . "/debug_contact.log";
+function dlog($msg) {
+  global $debug_log;
+  @file_put_contents($debug_log, date("c") . " | " . $msg . "\n", FILE_APPEND);
 }
+dlog("HIT method=" . ($_SERVER['REQUEST_METHOD'] ?? 'unknown'));
 
-function respond($code, $payload) {
-  http_response_code($code);
-  echo json_encode($payload, JSON_UNESCAPED_UNICODE);
-  exit;
-}
-
-// Loguear fatal errors aunque el script muera
-register_shutdown_function(function() use ($debug_file, &$__STAGE) {
-  $err = error_get_last();
-  if ($err) {
-    debug_log($debug_file, "FATAL stage={$__STAGE} type={$err['type']} msg={$err['message']} file={$err['file']} line={$err['line']}");
-  } else {
-    debug_log($debug_file, "SHUTDOWN stage={$__STAGE} ok");
-  }
-});
-
-// ====== Ensure data dir ======
-if (!file_exists($data_dir)) {
-  @mkdir($data_dir, 0755, true);
-}
-if (!is_dir($data_dir) || !is_writable($data_dir)) {
-  respond(500, ["status" => "error", "message" => "Data dir not writable", "data_dir" => $data_dir]);
-}
-
-debug_log($debug_file, "HIT method=" . ($_SERVER['REQUEST_METHOD'] ?? ''));
-
-// ====== CORS ======
+// ======================
+// 1) CORS
+// ======================
 $allowed_origins = [
   "https://pintamkt.online",
   "https://www.pintamkt.online",
-  "https://l0090660.ferozo.com",
   "https://pintamkt.store",
   "https://www.pintamkt.store",
+  "https://l0090660.ferozo.com",
 ];
 
 $origin = $_SERVER['HTTP_ORIGIN'] ?? '';
@@ -73,58 +39,82 @@ header("Access-Control-Allow-Methods: POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, X-Requested-With");
 header("Access-Control-Max-Age: 86400");
 
-if (($_SERVER['REQUEST_METHOD'] ?? '') === 'OPTIONS') {
-  respond(200, ["ok" => true]);
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+  http_response_code(200);
+  echo json_encode(["ok" => true]);
+  exit;
 }
 
-if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
-  respond(405, ["status" => "error", "message" => "Method not allowed"]);
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+  http_response_code(405);
+  echo json_encode(["status" => "error", "message" => "Method not allowed"]);
+  exit;
 }
 
-// ====== Read body ======
-$__STAGE = "read_body";
-debug_log($debug_file, "stage=read_body");
+// ======================
+// 2) CONFIG
+// ======================
+$agency_emails = ["pintamkt@gmail.com", "Emilia@pintamkt.com"];
+$log_dir = __DIR__ . "/data";
+$log_file = $log_dir . "/leads.json";
 
-$raw = file_get_contents("php://input");
-if ($raw === false || trim($raw) === "") {
-  respond(400, ["status" => "error", "message" => "Empty body", "stage" => "read_body"]);
+// Remitente (tiene que existir como casilla real)
+$from_email = "info@pintamkt.store";
+$from_name  = "Pinta MKT";
+
+// SMTP (COMPLETAR CON DATOS REALES)
+$SMTP_HOST = "mail.pintamkt.store";   // <- EJEMPLO (cambialo por el real si es otro)
+$SMTP_PORT = 587;                    // 587 (STARTTLS) o 465 (SSL)
+$SMTP_USER = "info@pintamkt.store";  // casilla real
+$SMTP_PASS = "PONER_PASSWORD_AQUI";  // password real
+$SMTP_SECURE = "tls";                // "tls" para 587, "ssl" para 465
+
+dlog("stage=read_body");
+
+// ======================
+// 3) READ BODY
+// ======================
+$json = file_get_contents('php://input');
+$data = json_decode($json, true);
+
+if (!$data) {
+  http_response_code(400);
+  echo json_encode(["status" => "error", "message" => "Invalid JSON received"]);
+  exit;
 }
-
-$data = json_decode($raw, true);
-if (!is_array($data)) {
-  debug_log($debug_file, "json_fail raw=" . substr($raw, 0, 300));
-  respond(400, ["status" => "error", "message" => "Invalid JSON", "stage" => "json_decode"]);
-}
-
-// ====== Validate ======
-$__STAGE = "validate";
-debug_log($debug_file, "stage=validate");
 
 $name        = trim((string)($data['name'] ?? ''));
 $email       = trim((string)($data['email'] ?? ''));
 $message     = trim((string)($data['message'] ?? ''));
 $ai_analysis = trim((string)($data['ai_analysis'] ?? ''));
 
+dlog("stage=validate");
+
+// ======================
+// 4) VALIDATE
+// ======================
 if ($name === '' || $email === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-  respond(422, ["status" => "error", "message" => "Fields required", "stage" => "validate"]);
+  http_response_code(422);
+  echo json_encode(["status" => "error", "message" => "Fields required"]);
+  exit;
 }
 
+// Sanitizado
 $name_s    = filter_var($name, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 $email_s   = filter_var($email, FILTER_SANITIZE_EMAIL);
 $message_s = filter_var($message, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 $ai_s      = filter_var($ai_analysis, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-// ====== Save lead ======
-$__STAGE = "save_lead";
-debug_log($debug_file, "stage=save_lead");
+dlog("stage=save_lead");
 
-$leads = [];
-if (file_exists($leads_file)) {
-  $tmp = json_decode(@file_get_contents($leads_file), true);
-  if (is_array($tmp)) $leads = $tmp;
+// ======================
+// 5) SAVE LEAD
+// ======================
+if (!file_exists($log_dir)) {
+  mkdir($log_dir, 0755, true);
 }
 
-$leads[] = [
+$entry = [
   "id" => uniqid(),
   "date" => date("Y-m-d H:i:s"),
   "name" => $name_s,
@@ -133,23 +123,21 @@ $leads[] = [
   "ai_analysis" => $ai_s
 ];
 
-$write_ok = @file_put_contents(
-  $leads_file,
-  json_encode($leads, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)
-);
+$leads = file_exists($log_file) ? json_decode(file_get_contents($log_file), true) : [];
+if (!is_array($leads)) $leads = [];
+$leads[] = $entry;
 
-if ($write_ok === false) {
-  debug_log($debug_file, "save_lead_fail leads_file={$leads_file}");
-  respond(500, ["status" => "error", "message" => "Failed writing leads.json", "stage" => "save_lead"]);
-}
+file_put_contents($log_file, json_encode($leads, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
 
-// ====== Mail ======
-$__STAGE = "mail";
-debug_log($debug_file, "stage=mail enable=" . ($ENABLE_MAIL ? "1" : "0"));
+dlog("stage=mail_smtp");
 
-if (!$ENABLE_MAIL) {
-  respond(200, ["status" => "success", "message" => "Lead saved (mail disabled)", "stage" => "ok_no_mail"]);
-}
+// ======================
+// 6) SEND EMAIL (SMTP)
+// ======================
+require_once __DIR__ . "/vendor/autoload.php";
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 $subject = "🐝 PINTA MKT - NUEVO CONTACTO: " . $name_s;
 $body =
@@ -159,25 +147,47 @@ $body =
 "Mensaje: {$message_s}\n\n" .
 "--- IA ---\n{$ai_s}\n";
 
-$headers  = "From: {$from_name} <{$from_email}>\r\n";
-$headers .= "Reply-To: {$email_s}\r\n";
-$headers .= "X-Mailer: PHP/" . phpversion();
+try {
+  $mail = new PHPMailer(true);
 
-@set_time_limit(10);
+  // Debug SMTP si querés (dejar en 0 normalmente)
+  $mail->SMTPDebug = 0;
 
-$start = microtime(true);
-$mail_sent = @mail($agency_emails, $subject, $body, $headers); // <-- SIN 5to parámetro
-$elapsed = round((microtime(true) - $start) * 1000);
+  $mail->isSMTP();
+  $mail->Host       = $SMTP_HOST;
+  $mail->SMTPAuth   = true;
+  $mail->Username   = $SMTP_USER;
+  $mail->Password   = $SMTP_PASS;
+  $mail->SMTPSecure = $SMTP_SECURE;
+  $mail->Port       = $SMTP_PORT;
 
-debug_log($debug_file, "mail_done sent=" . ($mail_sent ? "1" : "0") . " ms={$elapsed}");
+  // From / Reply-To
+  $mail->setFrom($from_email, $from_name);
+  $mail->addReplyTo($email_s, $name_s);
 
-if (!$mail_sent) {
-  respond(500, [
+  // Destinatarios
+  foreach ($agency_emails as $to) {
+    $mail->addAddress($to);
+  }
+
+  // Contenido
+  $mail->Subject = $subject;
+  $mail->Body    = $body;
+
+  $mail->send();
+
+  dlog("mail_done sent=1");
+
+  echo json_encode(["status" => "success", "message" => "Lead processed"]);
+  exit;
+
+} catch (Exception $e) {
+  dlog("FATAL smtp_error=" . $mail->ErrorInfo);
+  http_response_code(500);
+  echo json_encode([
     "status" => "error",
-    "message" => "Mail failed",
-    "stage" => "mail",
-    "from" => $from_email
+    "message" => "SMTP failed",
+    "detail" => $mail->ErrorInfo
   ]);
+  exit;
 }
-
-respond(200, ["status" => "success", "message" => "Lead processed", "stage" => "ok"]);

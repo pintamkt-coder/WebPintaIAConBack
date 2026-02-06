@@ -151,21 +151,24 @@ const notifyBackend = async (data: any) => {
     const response = await fetch(API_ENDPOINT, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
+      body: JSON.stringify(data),
     });
 
     const text = await response.text();
 
+    // Intentar parsear JSON, pero sin romper si viene HTML/error vacío
+    let result: any = null;
+    try { result = JSON.parse(text); } catch {}
+
     if (!response.ok) {
-      console.error("Backend non-OK:", response.status, text);
-      return false;
+      console.error("Backend non-OK:", response.status, result || text);
+      return { ok: false, status: response.status, result: result || text };
     }
 
-    const result = text ? JSON.parse(text) : null;
-    return result?.status === 'success';
+    return { ok: true, status: response.status, result };
   } catch (error) {
     console.error("Backend error:", error);
-    return false;
+    return { ok: false, status: 0, result: String(error) };
   }
 };
 
