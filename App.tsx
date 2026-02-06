@@ -1,3 +1,4 @@
+// App.tsx (COMPLETO)
 
 import React, { useState, useEffect, useRef } from 'react';
 import { 
@@ -21,8 +22,8 @@ import {
 import { GoogleGenAI } from "@google/genai";
 
 // --- Configuration & API ---
-
 const API_ENDPOINT = "https://l0090660.ferozo.com/api/contact.php";
+
 // --- Assets ---
 const LogoText: React.FC<{ className?: string }> = ({ className = "w-48 h-auto" }) => (
   <svg viewBox="0 0 459 64" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
@@ -139,11 +140,12 @@ const analyzeLeadWithAI = async (name: string, vision: string) => {
       contents: `Eres el estratega jefe de Pinta MKT. Un prospecto llamado ${name} ha enviado esta visión: "${vision}". Genera una respuesta de exactamente 20 palabras que sea inspiradora y mencione que su proyecto tiene un potencial enorme para ser el próximo gran éxito de la colmena.`,
     });
     return response.text || "Tu visión tiene un potencial increíble. En Pinta MKT estamos listos para transformarla en resultados reales.";
-  } catch (error) {
+  } catch {
     return "Tu visión tiene un potencial increíble. En Pinta MKT estamos listos para transformarla en resultados reales muy pronto.";
   }
 };
 
+// ✅ CAMBIO CLAVE: robust parse + logs + no rompe por HTML/vacío
 const notifyBackend = async (data: any) => {
   try {
     const response = await fetch(API_ENDPOINT, {
@@ -151,8 +153,22 @@ const notifyBackend = async (data: any) => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
     });
-    const result = await response.json();
-    return result.status === 'success';
+
+    const text = await response.text();
+
+    let result: any = null;
+    try {
+      result = JSON.parse(text);
+    } catch {
+      // si el backend devuelve HTML o vacío, igual lo logueamos abajo
+    }
+
+    if (!response.ok) {
+      console.error("Backend non-OK:", response.status, text);
+      return false;
+    }
+
+    return result?.status === 'success';
   } catch (error) {
     console.error("Backend error:", error);
     return false;
@@ -172,7 +188,6 @@ const ProjectCard: React.FC<{ project: Project; onOpenProject: (p: Project) => v
     className="group relative w-full sm:w-[48%] lg:w-[31%] max-w-[400px] aspect-[14/11] overflow-hidden rounded-[2.5rem] border-[5px] border-black shadow-xl text-left transition-all hover:-translate-y-3 hover:shadow-[0_30px_50px_-15px_rgba(0,0,0,0.3)] isolate"
     style={{ transform: 'translateZ(0)' }}
   >
-    {/* Imagen de fondo - Se reduce ligeramente el escalado y se aplica overflow estricto para evitar fugas de píxeles en hover */}
     <div className="absolute inset-0 w-full h-full overflow-hidden rounded-[2.3rem] z-0">
       <img 
         src={project.image} 
@@ -180,13 +195,11 @@ const ProjectCard: React.FC<{ project: Project; onOpenProject: (p: Project) => v
         className="w-full h-full object-cover grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-105 will-change-transform" 
       />
     </div>
-    
-    {/* Abejita flotante superior derecha (Sticker) */}
+
     <div className="absolute top-7 right-7 z-20 w-12 h-12 md:w-16 md:h-16 bg-[#EBE300] border-[2.5px] border-black rounded-full flex items-center justify-center animate-organic-flight shadow-lg group-hover:scale-110 transition-transform">
       <img src="https://img.icons8.com/ios-filled/50/000000/bee.png" alt="Bee" className="w-6 h-6 md:w-8 md:h-8" />
     </div>
 
-    {/* Overlay con gradiente */}
     <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent flex flex-col justify-end p-8 md:p-10 z-10">
       <span className="text-[#EBE300] text-xs md:text-sm font-black uppercase mb-1 tracking-[0.2em] drop-shadow-md">
         {project.category}
@@ -204,17 +217,20 @@ const ProjectCard: React.FC<{ project: Project; onOpenProject: (p: Project) => v
 const Header: React.FC<{ activeSection: string }> = ({ activeSection }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
     setIsOpen(false);
     const element = document.getElementById(href.replace('#', ''));
     if (element) window.scrollTo({ top: element.offsetTop - 80, behavior: 'smooth' });
   };
+
   return (
     <header className={`fixed w-full top-0 left-0 z-[100] transition-all duration-500 ${scrolled ? 'bg-black/95 py-3 shadow-2xl' : 'bg-transparent py-6'}`}>
       <div className="container mx-auto px-4 flex items-center justify-between">
@@ -256,13 +272,23 @@ const App: React.FC = () => {
     return () => observer.disconnect();
   }, []);
 
+  // ✅ CAMBIO CLAVE: no marcar “RECIBIDO” si backend falla
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+
     const analysis = await analyzeLeadWithAI(formState.name, formState.message);
     setAiAnalysis(analysis);
-    await notifyBackend({ ...formState, ai_analysis: analysis });
+
+    const ok = await notifyBackend({ ...formState, ai_analysis: analysis });
+
     setIsSubmitting(false);
+
+    if (!ok) {
+      alert("No se pudo enviar el formulario (backend). Revisá la consola para ver el error real.");
+      return;
+    }
+
     setSubmitted(true);
     setFormState({ name: '', email: '', message: '' });
   };
@@ -386,7 +412,6 @@ const App: React.FC = () => {
                   <span className="font-[900] text-xl md:text-2xl lg:text-3xl uppercase tracking-tighter text-black">PINTAMKT@GMAIL.COM</span>
                 </a>
                 
-                {/* Redes Sociales en Contacto */}
                 <div className="flex gap-6 items-center">
                   <a href="https://www.instagram.com/pintamkt/" target="_blank" className="w-14 h-14 bg-black text-[#EBE300] rounded-full flex items-center justify-center hover:scale-110 hover:bg-[#EBE300] hover:text-black transition-all shadow-lg">
                     <Instagram size={24} />
@@ -410,9 +435,12 @@ const App: React.FC = () => {
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="flex flex-col gap-6">
-                  <input type="text" placeholder="TU NOMBRE" required className="w-full px-10 py-5 bg-white border-[4px] border-black rounded-full font-[900] text-lg uppercase outline-none shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all focus:-translate-y-1" onChange={(e) => setFormState({...formState, name: e.target.value})} />
-                  <input type="email" placeholder="TU EMAIL" required className="w-full px-10 py-5 bg-white border-[4px] border-black rounded-full font-[900] text-lg uppercase outline-none shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all focus:-translate-y-1" onChange={(e) => setFormState({...formState, email: e.target.value})} />
-                  <textarea placeholder="CONTANOS TU VISIÓN..." required rows={4} className="w-full px-10 py-8 bg-white border-[4px] border-black rounded-[2.5rem] font-[900] text-lg uppercase outline-none resize-none shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all focus:-translate-y-1" onChange={(e) => setFormState({...formState, message: e.target.value})} />
+                  <input type="text" placeholder="TU NOMBRE" required className="w-full px-10 py-5 bg-white border-[4px] border-black rounded-full font-[900] text-lg uppercase outline-none shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all focus:-translate-y-1"
+                    onChange={(e) => setFormState({...formState, name: e.target.value})} />
+                  <input type="email" placeholder="TU EMAIL" required className="w-full px-10 py-5 bg-white border-[4px] border-black rounded-full font-[900] text-lg uppercase outline-none shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all focus:-translate-y-1"
+                    onChange={(e) => setFormState({...formState, email: e.target.value})} />
+                  <textarea placeholder="CONTANOS TU VISIÓN..." required rows={4} className="w-full px-10 py-8 bg-white border-[4px] border-black rounded-[2.5rem] font-[900] text-lg uppercase outline-none resize-none shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all focus:-translate-y-1"
+                    onChange={(e) => setFormState({...formState, message: e.target.value})} />
                   <button type="submit" disabled={isSubmitting} className="group w-full py-7 bg-black text-[#EBE300] font-[900] text-3xl uppercase rounded-full hover:bg-[#EBE300] hover:text-black transition-all flex items-center justify-center gap-6 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.15)] mt-4 active:scale-95">
                     {isSubmitting ? 'ENVIANDO...' : 'ENVIAR MENSAJE'} <Send size={36} className="group-hover:translate-x-2 group-hover:-translate-y-1 transition-transform" />
                   </button>
@@ -433,7 +461,6 @@ const App: React.FC = () => {
         </div>
       </footer>
 
-      {/* Modal de Campaña */}
       {selectedProject && (
         <div className="fixed inset-0 z-[300] bg-black overflow-y-auto animate-in fade-in duration-500">
           <div className="sticky top-0 z-[310] flex justify-between items-center p-6 bg-black/80 backdrop-blur-lg">
