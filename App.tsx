@@ -156,24 +156,19 @@ const notifyBackend = async (data: any) => {
 
     const text = await response.text();
 
-    let result: any = null;
-    try {
-      result = JSON.parse(text);
-    } catch {
-      // si el backend devuelve HTML o vacío, igual lo logueamos abajo
-    }
-
     if (!response.ok) {
       console.error("Backend non-OK:", response.status, text);
       return false;
     }
 
+    const result = text ? JSON.parse(text) : null;
     return result?.status === 'success';
   } catch (error) {
     console.error("Backend error:", error);
     return false;
   }
 };
+
 
 // --- Components ---
 const SectionTitle: React.FC<{ children?: React.ReactNode, className?: string }> = ({ children, className = "" }) => (
