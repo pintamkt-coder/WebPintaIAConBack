@@ -23,7 +23,11 @@ import { GoogleGenAI } from "@google/genai";
 
 // --- Configuration & API ---
 <<<<<<< HEAD
+<<<<<<< HEAD
 const API_ENDPOINT = "https://api.pintamkt.online/contact.php";
+=======
+const API_ENDPOINT = "https://c2801498.ferozo.com/api/contact.php";
+>>>>>>> 617de37 (Resolve merge conflict + fix API endpoint)
 =======
 const API_ENDPOINT = "https://c2801498.ferozo.com/api/contact.php";
 >>>>>>> 617de37 (Resolve merge conflict + fix API endpoint)
