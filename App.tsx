@@ -22,7 +22,7 @@ import {
 import { GoogleGenAI } from "@google/genai";
 
 // --- Configuration & API ---
-const API_ENDPOINT = "https://l0090660.ferozo.com/api/contact.php";
+const API_ENDPOINT = "https://api.pintamkt.online/contact.php";
 
 // --- Assets ---
 const LogoText: React.FC<{ className?: string }> = ({ className = "w-48 h-auto" }) => (

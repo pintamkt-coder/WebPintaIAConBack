@@ -11,10 +11,7 @@ header("Content-Type: application/json; charset=UTF-8");
 // ===== CORS =====
 $allowed_origins = [
   "https://pintamkt.online",
-  "https://www.pintamkt.online",
-  "https://pintamkt.store",
-  "https://www.pintamkt.store",
-  "https://l0090660.ferozo.com",
+  "https://www.pintamkt.online"
 ];
 
 $origin = $_SERVER['HTTP_ORIGIN'] ?? '';
@@ -84,20 +81,20 @@ file_put_contents($log_file, json_encode($leads, JSON_PRETTY_PRINT | JSON_UNESCA
 try {
   $mail = new PHPMailer(true);
   $mail->isSMTP();
-  $mail->Host       = "l0090660.ferozo.com";
+  $mail->Host       = "c2801498.ferozo.com";
   $mail->SMTPAuth   = true;
-  $mail->Username   = "info@pintamkt.store";
-  $mail->Password   = "/FBZrit1";
+  $mail->Username   = "info@pintamkt.online";
+  $mail->Password   = "zly*3W68bM";
   $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
   $mail->Port       = 465;
 
-  $mail->setFrom("info@pintamkt.store", "Pinta MKT");
+  $mail->setFrom("info@pintamkt.online", "Pinta MKT");
   $mail->addAddress("pintamkt@gmail.com");
   $mail->addAddress("Emilia@pintamkt.com");
   $mail->addReplyTo($email, $name);
 
   $mail->isHTML(false);
-  $mail->Subject = "🐝 Nuevo contacto Pinta MKT – {$name}";
+  $mail->Subject = "Nuevo contacto de Pinta MKT";
   $mail->Body =
     "Nombre: {$name}\n" .
     "Email: {$email}\n\n" .
