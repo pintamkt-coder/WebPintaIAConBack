@@ -94,7 +94,7 @@ try {
   $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
   $mail->Port       = 465;
 
-  $mail->setFrom("info@pintamkt.online", "Pinta MKT");
+  $mail->setFrom("info@c2801498.ferozo.com", "Pinta MKT");
   $mail->addAddress("pintamkt@gmail.com");
   $mail->addAddress("Emilia@pintamkt.com");
   $mail->addReplyTo($email, $name);
