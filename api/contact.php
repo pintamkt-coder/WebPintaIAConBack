@@ -95,8 +95,8 @@ try {
   $mail->Port       = 465;
 
   $mail->setFrom("info@c2801498.ferozo.com", "Pinta MKT");
-  $mail->addAddress("pintamkt@gmail.com");
-  $mail->addAddress("Emilia@pintamkt.com");
+  $mail->addAddress("ezemoreno.chris08@gmail.com");
+
   $mail->addReplyTo($email, $name);
 
   $mail->isHTML(false);
