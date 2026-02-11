@@ -1,4 +1,10 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 0);
+ini_set('log_errors', 1);
+
+// Asegurate que exista /api/data y que tenga permisos de escritura
+ini_set('error_log', __DIR__ . '/data/php_errors.log.txt');
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
