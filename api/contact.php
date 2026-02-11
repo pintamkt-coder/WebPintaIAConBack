@@ -106,6 +106,10 @@ try {
     "Email: {$email}\n\n" .
     "Mensaje:\n{$msg}\n\n" .
     "--- IA ---\n{$ai}\n";
+$mail->SMTPDebug = 2;
+$mail->Debugoutput = function($str, $level) {
+  file_put_contents(__DIR__ . '/data/php_errors.log.txt', $str . PHP_EOL, FILE_APPEND);
+};
 
   $mail->send();
 
