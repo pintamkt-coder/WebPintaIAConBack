@@ -94,6 +94,17 @@ try {
   $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
   $mail->Port       = 465;
 
+  $mail->CharSet = 'UTF-8';
+  $mail->Encoding = 'base64';
+
+  $mail->SMTPOptions = [
+    'ssl' => [
+      'verify_peer' => false,
+      'verify_peer_name' => false,
+      'allow_self_signed' => true
+    ]
+  ];
+
   $mail->setFrom("info@pintamkt.online", "Pinta MKT");
   $mail->addAddress("pintamkt@gmail.com");
   $mail->addAddress("Emilia@pintamkt.com");
