@@ -124,6 +124,15 @@ $mail->Debugoutput = function($str, $level) {
 
   $mail->send();
 
+
+$sent_id = $mail->getLastMessageID();
+echo json_encode([
+  "status" => "success",
+  "message" => "Lead processed",
+  "message_id" => $sent_id
+]);
+exit;
+
 } catch (Exception $e) {
   http_response_code(500);
   echo json_encode([
@@ -134,4 +143,4 @@ $mail->Debugoutput = function($str, $level) {
   exit;
 }
 
-echo json_encode(["status" => "success", "message" => "Lead processed"]);
+
