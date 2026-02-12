@@ -86,6 +86,11 @@ file_put_contents($log_file, json_encode($leads, JSON_PRETTY_PRINT | JSON_UNESCA
 // ===== SEND EMAIL (SMTP) =====
 try {
   $mail = new PHPMailer(true);
+  $mail->CharSet = 'UTF-8';
+  $mail->SMTPDebug = 2;
+  $mail->Debugoutput = function($str, $level) {
+  error_log("SMTP[$level]: $str");
+};
   $mail->isSMTP();
   $mail->Host       = "c2801498.ferozo.com";
   $mail->SMTPAuth   = true;
