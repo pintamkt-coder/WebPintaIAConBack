@@ -199,7 +199,10 @@ const CLIENTS_LIST: Client[] = [
   { name: "Burgery", logo: "/clients/Burgery.png" },
   { name: "Bermúdez Moya", logo: "/clients/Bermúdez_Moya.png" },
   { name: "GrandBar", logo: "/clients/GrandBar.png" },
-  { name: "Teatro del Bicentenario", logo: "/clients/Teatro_del_Bicentenario.png" },
+  {
+    name: "Teatro del Bicentenario",
+    logo: "/clients/Teatro_del_Bicentenario.png",
+  },
 ];
 
 // --- Helpers ---
@@ -692,12 +695,12 @@ const App: React.FC = () => {
             {[...CLIENTS_LIST, ...CLIENTS_LIST].map((client, i) => (
               <div
                 key={i}
-                className="flex-shrink-0 flex items-center justify-center h-16 w-48 grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all"
+                className="flex-shrink-0 flex items-center justify-center h-24 md:h-28 w-56 md:w-72 opacity-70 hover:opacity-100 transition-all"
               >
                 <img
                   src={client.logo}
                   alt={client.name}
-                  className="max-h-12 w-auto object-contain opacity-50 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0"
+                  className="h-full w-full object-contain"
                 />
               </div>
             ))}
