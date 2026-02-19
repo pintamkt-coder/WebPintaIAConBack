@@ -695,8 +695,8 @@ const App: React.FC = () => {
             {[...CLIENTS_LIST, ...CLIENTS_LIST].map((client, i) => (
               <div className="flex-shrink-0 flex items-center justify-center h-44 md:h-52 w-[480px] md:w-[640px] opacity-70 hover:opacity-100 transition-all">
                 <img
-                  alt={`Logo de ${client.name}, cliente de Pinta MKT`}
-                  loading="lazy"
+                  src={client.logo}
+                  alt={client.name}
                   className="h-full w-full object-contain scale-[1.25] md:scale-[1.45]"
                 />
               </div>
@@ -953,4 +953,3 @@ const App: React.FC = () => {
 };
 
 export default App;
-
