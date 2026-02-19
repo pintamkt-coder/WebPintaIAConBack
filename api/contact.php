@@ -14,6 +14,8 @@ use PHPMailer\PHPMailer\Exception;
 
 header("Content-Type: application/json; charset=UTF-8");
 
+//clave del recaptcha
+$RECAPTCHA_SECRET = "6LcYA3EsAAAAAD-RqgqpHRq2qGkstFZFmzW9HpR6";
 // ===== CORS =====
 $allowed_origins = [
   "https://pintamkt.online",
@@ -58,10 +60,43 @@ $name  = trim($data['name'] ?? '');
 $email = trim($data['email'] ?? '');
 $msg   = trim($data['message'] ?? '');
 $ai    = trim($data['ai_analysis'] ?? '');
+$token = trim($data['recaptcha_token'] ?? '');
+if ($token === '') {
+  http_response_code(422);
+  echo json_encode(["status" => "error", "message" => "Missing recaptcha token"]);
+  exit;
+}
 
 if ($name === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
   http_response_code(422);
   echo json_encode(["status" => "error", "message" => "Invalid fields"]);
+  exit;
+}
+
+
+$verifyUrl = "https://www.google.com/recaptcha/api/siteverify";
+$payload = [
+  "secret" => $RECAPTCHA_SECRET,
+  "response" => $token,
+  "remoteip" => $_SERVER["REMOTE_ADDR"] ?? ""
+];
+
+$ch = curl_init($verifyUrl);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_POST, true);
+curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($payload));
+$result = curl_exec($ch);
+curl_close($ch);
+
+$captcha = json_decode($result, true);
+
+if (!isset($captcha["success"]) || $captcha["success"] !== true) {
+  http_response_code(403);
+  echo json_encode([
+    "status" => "error",
+    "message" => "Recaptcha failed",
+    "detail" => $captcha
+  ]);
   exit;
 }
 
