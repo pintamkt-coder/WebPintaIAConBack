@@ -19,9 +19,8 @@ import {
   Users,
   MessageCircle,
 } from "lucide-react";
+
 // import { GoogleGenAI } from "@google/genai";
-
-
 
 // --- Configuration & API ---
 const API_ENDPOINT = "/api/contact.php";
@@ -193,14 +192,14 @@ const PROJECTS: Project[] = [
 ];
 
 const CLIENTS_LIST: Client[] = [
-  { name: "Samaco", logo: "samaco.png" },
-  { name: "Fenikks", logo: "fenikks.png" },
-  { name: "Teatro del Bicentenario", logo: "bicentenario.png" },
-  { name: "Científica Cuyo", logo: "cientifica.png" },
-  { name: "Cubos de Chacras", logo: "cubos.png" },
-  { name: "Bermúdez Moya", logo: "bermudez.png" },
-  { name: "Teatro Sarmiento", logo: "sarmiento.png" },
-  { name: "Mendoza Plaza Shopping", logo: "shopping.png" },
+  { name: "ProBands", logo: "clients/MARCAS P WEB-15.png" },
+  { name: "Teatro Sarmiento", logo: "clients/MARCAS P WEB-16.png" },
+  { name: "Cubos de Chacras", logo: "clients/MARCAS P WEB-17.png" },
+  { name: "Científica Cuyo", logo: "clients/MARCAS P WEB-18.png" },
+  { name: "Burgery", logo: "clients/MARCAS P WEB-19.png" },
+  { name: "Bermúdez Moya", logo: "clients/MARCAS P WEB-20.png" },
+  { name: "GrandBar", logo: "clients/MARCAS P WEB-21.png" },
+  { name: "Teatro del Bicentenario", logo: "clients/MARCAS P WEB-22.png" },
 ];
 
 // --- Helpers ---
@@ -272,9 +271,6 @@ const ProjectCard: React.FC<{
     </div>
   </button>
 );
-
-
-
 
 const Header: React.FC<{ activeSection: string }> = ({ activeSection }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -371,72 +367,72 @@ const App: React.FC = () => {
 
   // use effect nuevo
   useEffect(() => {
-  if (!showRecaptcha) return;
+    if (!showRecaptcha) return;
 
-  const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
-  if (!siteKey) {
-    alert("Falta VITE_RECAPTCHA_SITE_KEY en el entorno.");
-    setShowRecaptcha(false);
-    return;
-  }
-
-  const timer = setInterval(() => {
-    // @ts-ignore
-    const grecaptcha = window.grecaptcha;
-
-    if (grecaptcha && recaptchaDivRef.current) {
-      if (widgetIdRef.current === null) {
-        widgetIdRef.current = grecaptcha.render(recaptchaDivRef.current, {
-          sitekey: siteKey,
-          callback: (token: string) => setRecaptchaToken(token),
-          "expired-callback": () => setRecaptchaToken(""),
-          "error-callback": () => setRecaptchaToken(""),
-        });
-      }
-      clearInterval(timer);
+    const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
+    if (!siteKey) {
+      alert("Falta VITE_RECAPTCHA_SITE_KEY en el entorno.");
+      setShowRecaptcha(false);
+      return;
     }
-  }, 100);
 
-  return () => clearInterval(timer);
-}, [showRecaptcha]);
+    const timer = setInterval(() => {
+      // @ts-ignore
+      const grecaptcha = window.grecaptcha;
 
-// ✅ Enviar formulario (cuando apretás "CONFIRMAR Y ENVIAR")
-const sendFormNow = async () => {
-  if (!recaptchaToken) return;
+      if (grecaptcha && recaptchaDivRef.current) {
+        if (widgetIdRef.current === null) {
+          widgetIdRef.current = grecaptcha.render(recaptchaDivRef.current, {
+            sitekey: siteKey,
+            callback: (token: string) => setRecaptchaToken(token),
+            "expired-callback": () => setRecaptchaToken(""),
+            "error-callback": () => setRecaptchaToken(""),
+          });
+        }
+        clearInterval(timer);
+      }
+    }, 100);
 
-  setIsSubmitting(true);
+    return () => clearInterval(timer);
+  }, [showRecaptcha]);
 
-  const analysis = await analyzeLeadWithAI(formState.name, formState.message);
-  setAiAnalysis(analysis);
+  // ✅ Enviar formulario (cuando apretás "CONFIRMAR Y ENVIAR")
+  const sendFormNow = async () => {
+    if (!recaptchaToken) return;
 
-  const ok = await notifyBackend({
-    ...formState,
-    ai_analysis: analysis,
-    recaptcha_token: recaptchaToken,
-  });
+    setIsSubmitting(true);
 
-  setIsSubmitting(false);
+    const analysis = await analyzeLeadWithAI(formState.name, formState.message);
+    setAiAnalysis(analysis);
 
-  if (!ok) {
-    alert("No se pudo enviar el formulario. Intentá nuevamente.");
-    return;
-  }
+    const ok = await notifyBackend({
+      ...formState,
+      ai_analysis: analysis,
+      recaptcha_token: recaptchaToken,
+    });
 
-  setSubmitted(true);
-  setFormState({ name: "", email: "", message: "" });
+    setIsSubmitting(false);
 
-  // cerrar modal y limpiar token
-  setShowRecaptcha(false);
-  setRecaptchaToken("");
+    if (!ok) {
+      alert("No se pudo enviar el formulario. Intentá nuevamente.");
+      return;
+    }
 
-  // reset widget
-  // @ts-ignore
-  if (window.grecaptcha && widgetIdRef.current !== null) {
+    setSubmitted(true);
+    setFormState({ name: "", email: "", message: "" });
+
+    // cerrar modal y limpiar token
+    setShowRecaptcha(false);
+    setRecaptchaToken("");
+
+    // reset widget
     // @ts-ignore
-    window.grecaptcha.reset(widgetIdRef.current);
-  }
-  widgetIdRef.current = null;
-};
+    if (window.grecaptcha && widgetIdRef.current !== null) {
+      // @ts-ignore
+      window.grecaptcha.reset(widgetIdRef.current);
+    }
+    widgetIdRef.current = null;
+  };
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -698,9 +694,11 @@ const sendFormNow = async () => {
                 key={i}
                 className="flex-shrink-0 flex items-center justify-center h-16 w-48 grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all"
               >
-                <span className="text-white/30 font-black uppercase text-xl">
-                  {client.name}
-                </span>
+                <img
+                  src={client.logo}
+                  alt={client.name}
+                  className="max-h-12 w-auto object-contain opacity-50 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0"
+                />
               </div>
             ))}
           </div>
