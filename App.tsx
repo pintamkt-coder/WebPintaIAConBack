@@ -693,14 +693,11 @@ const App: React.FC = () => {
         <div className="relative z-10 bg-[#141414] py-16 border-y-2 border-white/5">
           <div className="flex animate-scroll-right gap-20 md:gap-32 items-center">
             {[...CLIENTS_LIST, ...CLIENTS_LIST].map((client, i) => (
-              <div
-                key={i}
-                className="flex-shrink-0 flex items-center justify-center h-36 md:h-44 w-[420px] md:w-[520px] opacity-70 hover:opacity-100 transition-all"
-              >
+              <div className="flex-shrink-0 flex items-center justify-center h-44 md:h-52 w-[480px] md:w-[640px] opacity-70 hover:opacity-100 transition-all">
                 <img
                   src={client.logo}
                   alt={client.name}
-                  className="h-full w-full object-contain scale-125 md:scale-140"
+                  className="h-full w-full object-contain scale-[1.25] md:scale-[1.45]"
                 />
               </div>
             ))}
