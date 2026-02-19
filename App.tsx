@@ -192,14 +192,14 @@ const PROJECTS: Project[] = [
 ];
 
 const CLIENTS_LIST: Client[] = [
-  { name: "ProBands", logo: "/public/clients/ProBands.png" },
-  { name: "Teatro Sarmiento", logo: "/public/Clients/Teatro_Sarmiento.png" },
-  { name: "Cubos de Chacras", logo: "/public/clients/Cubos_de_Chacras.png" },
-  { name: "Científica Cuyo", logo: "/public/clients/Científica_Cuyo.png" },
-  { name: "Burgery", logo: "/public/clients/Burgery.png" },
-  { name: "Bermúdez Moya", logo: "/public/clients/Bermúdez_Moya.png" },
-  { name: "GrandBar", logo: "/public/clients/GrandBar.png" },
-  { name: "Teatro del Bicentenario", logo: "/public/clients/Teatro_del_Bicentenario.png" },
+  { name: "ProBands", logo: "/clients/ProBands.png" },
+  { name: "Teatro Sarmiento", logo: "/clients/Teatro_Sarmiento.png" },
+  { name: "Cubos de Chacras", logo: "/clients/Cubos_de_Chacras.png" },
+  { name: "Científica Cuyo", logo: "/clients/Científica_Cuyo.png" },
+  { name: "Burgery", logo: "/clients/Burgery.png" },
+  { name: "Bermúdez Moya", logo: "/clients/Bermúdez_Moya.png" },
+  { name: "GrandBar", logo: "/clients/GrandBar.png" },
+  { name: "Teatro del Bicentenario", logo: "/clients/Teatro_del_Bicentenario.png" },
 ];
 
 // --- Helpers ---
