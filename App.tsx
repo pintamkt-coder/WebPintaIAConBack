@@ -57,7 +57,7 @@ const SOCIAL_LINKS = [
 const SERVICES: Service[] = [
   { 
     id: 1, 
-    title: 'MARKETING DIGITAL', 
+    title: 'MARKETING DIGITAL Y TRADICIONAL', 
     tag: 'ESTRATEGIA',
     icon: <Globe className="w-8 h-8 md:w-10 md:h-10" />,
     items: [
@@ -74,7 +74,7 @@ const SERVICES: Service[] = [
   },
   {
     id: 2,
-    title: 'PRODUCCIÓN AV',
+    title: 'PRODUCCIÓN AUDIOVISUAL & STREAMING',
     tag: 'CONTENIDO',
     icon: <Video className="w-8 h-8 md:w-10 md:h-10" />,
     items: [
@@ -88,7 +88,7 @@ const SERVICES: Service[] = [
   },
   {
     id: 3, 
-    title: 'WEB & AUTOMATIZACIÓN',
+    title: 'DESAROLLO WEB, AUTOMATIZACIÓN Y CHAT BOT',
     tag: 'TECNOLOGÍA',
     icon: <Cpu className="w-8 h-8 md:w-10 md:h-10" />,
     items: ['Desarrollo Web / eCommerce', 'Chatbots con IA', 'Automatización de CRM', 'Soporte Técnico'],
