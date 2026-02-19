@@ -10,11 +10,11 @@ use PHPMailer\PHPMailer\Exception;
 header("Content-Type: application/json; charset=UTF-8");
 
 // ===== LOAD SECRETS =====
-// Opción A (fuera de public_html) - ajustá el path real si aplica:
-$secretsPathA = dirname($_SERVER['DOCUMENT_ROOT']) . "/pinta_secrets.php";
+// A) fuera de public_html (raíz del hosting)
+$secretsPathA = dirname(__DIR__, 2) . "/pinta_secrets.php";
 
-// Opción B (dentro de /api):
-$secretsPathB = __DIR__ . "/secrets.php";
+// B) dentro de /api (si algún día querés moverlo acá)
+$secretsPathB = __DIR__ . "/pinta_secrets.php";
 
 $secretsFile = file_exists($secretsPathA) ? $secretsPathA : $secretsPathB;
 
