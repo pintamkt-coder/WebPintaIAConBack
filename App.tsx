@@ -19,7 +19,7 @@ import {
   Users,
   MessageCircle,
 } from "lucide-react";
-import { GoogleGenAI } from "@google/genai";
+// import { GoogleGenAI } from "@google/genai";
 
 
 
@@ -204,20 +204,8 @@ const CLIENTS_LIST: Client[] = [
 ];
 
 // --- Helpers ---
-const analyzeLeadWithAI = async (name: string, vision: string) => {
-  try {
-    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-    const response = await ai.models.generateContent({
-      model: "gemini-3-flash-preview",
-      contents: `Eres el estratega jefe de Pinta MKT. Un prospecto llamado ${name} ha enviado esta visión: "${vision}". Genera una respuesta de exactamente 20 palabras que sea inspiradora y mencione que su proyecto tiene un potencial enorme para ser el próximo gran éxito de la colmena.`,
-    });
-    return (
-      response.text ||
-      "Tu visión tiene un potencial increíble. En Pinta MKT estamos listos para transformarla en resultados reales."
-    );
-  } catch {
-    return "Tu visión tiene un potencial increíble. En Pinta MKT estamos listos para transformarla en resultados reales muy pronto.";
-  }
+const analyzeLeadWithAI = async () => {
+  return "Tu visión tiene un potencial increíble. En Pinta MKT estamos listos para transformarla en resultados reales.";
 };
 
 const notifyBackend = async (data: any) => {
@@ -285,73 +273,8 @@ const ProjectCard: React.FC<{
   </button>
 );
 
-//----- useEffect ----
-useEffect(() => {
-  if (!showRecaptcha) return;
 
-  const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
-  if (!siteKey) {
-    alert("Falta VITE_RECAPTCHA_SITE_KEY en el entorno.");
-    setShowRecaptcha(false);
-    return;
-  }
 
-  const timer = setInterval(() => {
-    // @ts-ignore
-    const grecaptcha = window.grecaptcha;
-
-    if (grecaptcha && recaptchaDivRef.current) {
-      if (widgetIdRef.current === null) {
-        widgetIdRef.current = grecaptcha.render(recaptchaDivRef.current, {
-          sitekey: siteKey,
-          callback: (token: string) => setRecaptchaToken(token),
-          "expired-callback": () => setRecaptchaToken(""),
-          "error-callback": () => setRecaptchaToken(""),
-        });
-      }
-      clearInterval(timer);
-    }
-  }, 100);
-
-  return () => clearInterval(timer);
-}, [showRecaptcha]);
-
-// funcion para enviar el formulario con recaptch
-
-const sendFormNow = async () => {
-  if (!recaptchaToken) return;
-
-  setIsSubmitting(true);
-
-  const analysis = await analyzeLeadWithAI(formState.name, formState.message);
-  setAiAnalysis(analysis);
-
-  const ok = await notifyBackend({
-    ...formState,
-    ai_analysis: analysis,
-    recaptcha_token: recaptchaToken,
-  });
-
-  setIsSubmitting(false);
-
-  if (!ok) {
-    alert("No se pudo enviar el formulario. Intentá nuevamente.");
-    return;
-  }
-
-  setSubmitted(true);
-  setFormState({ name: "", email: "", message: "" });
-
-  setShowRecaptcha(false);
-  setRecaptchaToken("");
-
-  // @ts-ignore
-  if (window.grecaptcha && widgetIdRef.current !== null) {
-    // @ts-ignore
-    window.grecaptcha.reset(widgetIdRef.current);
-  }
-  widgetIdRef.current = null;
-};
 
 const Header: React.FC<{ activeSection: string }> = ({ activeSection }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -440,6 +363,80 @@ const App: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [aiAnalysis, setAiAnalysis] = useState("");
+  //--- Estados nuevos agregados ---
+  const [showRecaptcha, setShowRecaptcha] = useState(false);
+  const [recaptchaToken, setRecaptchaToken] = useState<string>("");
+  const recaptchaDivRef = useRef<HTMLDivElement | null>(null);
+  const widgetIdRef = useRef<number | null>(null);
+
+  // use effect nuevo
+  useEffect(() => {
+  if (!showRecaptcha) return;
+
+  const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
+  if (!siteKey) {
+    alert("Falta VITE_RECAPTCHA_SITE_KEY en el entorno.");
+    setShowRecaptcha(false);
+    return;
+  }
+
+  const timer = setInterval(() => {
+    // @ts-ignore
+    const grecaptcha = window.grecaptcha;
+
+    if (grecaptcha && recaptchaDivRef.current) {
+      if (widgetIdRef.current === null) {
+        widgetIdRef.current = grecaptcha.render(recaptchaDivRef.current, {
+          sitekey: siteKey,
+          callback: (token: string) => setRecaptchaToken(token),
+          "expired-callback": () => setRecaptchaToken(""),
+          "error-callback": () => setRecaptchaToken(""),
+        });
+      }
+      clearInterval(timer);
+    }
+  }, 100);
+
+  return () => clearInterval(timer);
+}, [showRecaptcha]);
+
+// ✅ Enviar formulario (cuando apretás "CONFIRMAR Y ENVIAR")
+const sendFormNow = async () => {
+  if (!recaptchaToken) return;
+
+  setIsSubmitting(true);
+
+  const analysis = await analyzeLeadWithAI(formState.name, formState.message);
+  setAiAnalysis(analysis);
+
+  const ok = await notifyBackend({
+    ...formState,
+    ai_analysis: analysis,
+    recaptcha_token: recaptchaToken,
+  });
+
+  setIsSubmitting(false);
+
+  if (!ok) {
+    alert("No se pudo enviar el formulario. Intentá nuevamente.");
+    return;
+  }
+
+  setSubmitted(true);
+  setFormState({ name: "", email: "", message: "" });
+
+  // cerrar modal y limpiar token
+  setShowRecaptcha(false);
+  setRecaptchaToken("");
+
+  // reset widget
+  // @ts-ignore
+  if (window.grecaptcha && widgetIdRef.current !== null) {
+    // @ts-ignore
+    window.grecaptcha.reset(widgetIdRef.current);
+  }
+  widgetIdRef.current = null;
+};
 
   useEffect(() => {
     const observer = new IntersectionObserver(
