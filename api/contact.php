@@ -2,20 +2,42 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 0);
 ini_set('log_errors', 1);
-
-// Asegurate que exista /api/data y que tenga permisos de escritura
 ini_set('error_log', __DIR__ . '/data/php_errors.log.txt');
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-/**
- * Pinta MKT – Contact API (SMTP via PHPMailer)
- */
-
 header("Content-Type: application/json; charset=UTF-8");
 
-//clave del recaptcha
-$RECAPTCHA_SECRET = "6LcYA3EsAAAAAD-RqgqpHRq2qGkstFZFmzW9HpR6";
+// ===== LOAD SECRETS =====
+// Opción A (fuera de public_html) - ajustá el path real si aplica:
+$secretsPathA = dirname($_SERVER['DOCUMENT_ROOT']) . "/pinta_secrets.php";
+
+// Opción B (dentro de /api):
+$secretsPathB = __DIR__ . "/secrets.php";
+
+$secretsFile = file_exists($secretsPathA) ? $secretsPathA : $secretsPathB;
+
+if (!file_exists($secretsFile)) {
+  http_response_code(500);
+  echo json_encode(["status" => "error", "message" => "Secrets file missing"]);
+  exit;
+}
+
+$SECRETS = require $secretsFile;
+
+$RECAPTCHA_SECRET = $SECRETS["RECAPTCHA_SECRET"] ?? null;
+$SMTP_HOST = $SECRETS["SMTP_HOST"] ?? null;
+$SMTP_USER = $SECRETS["SMTP_USER"] ?? null;
+$SMTP_PASS = $SECRETS["SMTP_PASS"] ?? null;
+$SMTP_PORT = (int)($SECRETS["SMTP_PORT"] ?? 465);
+
+if (!$RECAPTCHA_SECRET || !$SMTP_HOST || !$SMTP_USER || !$SMTP_PASS) {
+  http_response_code(500);
+  echo json_encode(["status" => "error", "message" => "Secrets not configured"]);
+  exit;
+}
+
 // ===== CORS =====
 $allowed_origins = [
   "https://pintamkt.online",
@@ -61,6 +83,7 @@ $email = trim($data['email'] ?? '');
 $msg   = trim($data['message'] ?? '');
 $ai    = trim($data['ai_analysis'] ?? '');
 $token = trim($data['recaptcha_token'] ?? '');
+
 if ($token === '') {
   http_response_code(422);
   echo json_encode(["status" => "error", "message" => "Missing recaptcha token"]);
@@ -73,7 +96,7 @@ if ($name === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
   exit;
 }
 
-
+// ===== VERIFY RECAPTCHA =====
 $verifyUrl = "https://www.google.com/recaptcha/api/siteverify";
 $payload = [
   "secret" => $RECAPTCHA_SECRET,
@@ -122,18 +145,16 @@ file_put_contents($log_file, json_encode($leads, JSON_PRETTY_PRINT | JSON_UNESCA
 try {
   $mail = new PHPMailer(true);
   $mail->CharSet = 'UTF-8';
-  $mail->SMTPDebug = 0;
   $mail->isSMTP();
-  $mail->Host       = "c2801498.ferozo.com";
+  $mail->SMTPDebug = 0; // IMPORTANTE: 0 en producción
+  $mail->Host       = $SMTP_HOST;
   $mail->SMTPAuth   = true;
-  $mail->Username   = "info@pintamkt.online";
-  $mail->Password   = "zly*3W68bM";
+  $mail->Username   = $SMTP_USER;
+  $mail->Password   = $SMTP_PASS;
   $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
-  $mail->Port       = 465;
+  $mail->Port       = $SMTP_PORT;
 
-  $mail->CharSet = 'UTF-8';
   $mail->Encoding = 'base64';
-
   $mail->SMTPOptions = [
     'ssl' => [
       'verify_peer' => false,
@@ -142,7 +163,7 @@ try {
     ]
   ];
 
-  $mail->setFrom("info@pintamkt.online", "Pinta MKT");
+  $mail->setFrom($SMTP_USER, "Pinta MKT");
   $mail->addAddress("pintamkt@gmail.com");
   $mail->addAddress("Emilia@pintamkt.com");
   $mail->addReplyTo($email, $name);
@@ -154,21 +175,14 @@ try {
     "Email: {$email}\n\n" .
     "Mensaje:\n{$msg}\n\n" .
     "--- IA ---\n{$ai}\n";
-$mail->SMTPDebug = 2;
-$mail->Debugoutput = function($str, $level) {
-  file_put_contents(__DIR__ . '/data/php_errors.log.txt', $str . PHP_EOL, FILE_APPEND);
-};
 
   $mail->send();
 
-
-$sent_id = $mail->getLastMessageID();
-echo json_encode([
-  "status" => "success",
-  "message" => "Lead processed",
-  "message_id" => $sent_id
-]);
-exit;
+  echo json_encode([
+    "status" => "success",
+    "message" => "Lead processed"
+  ]);
+  exit;
 
 } catch (Exception $e) {
   http_response_code(500);
@@ -179,5 +193,3 @@ exit;
   ]);
   exit;
 }
-
-
