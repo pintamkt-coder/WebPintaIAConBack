@@ -695,12 +695,12 @@ const App: React.FC = () => {
             {[...CLIENTS_LIST, ...CLIENTS_LIST].map((client, i) => (
               <div
                 key={i}
-                className="flex-shrink-0 flex items-center justify-center h-24 md:h-28 w-56 md:w-72 opacity-70 hover:opacity-100 transition-all"
+                className="flex-shrink-0 flex items-center justify-center h-36 md:h-44 w-[420px] md:w-[520px] opacity-70 hover:opacity-100 transition-all"
               >
                 <img
                   src={client.logo}
                   alt={client.name}
-                  className="h-full w-full object-contain"
+                  className="h-full w-full object-contain scale-125 md:scale-140"
                 />
               </div>
             ))}
