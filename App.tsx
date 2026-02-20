@@ -572,7 +572,7 @@ const App: React.FC = () => {
               EQUIPO?
             </h2>
             <p className="text-sm md:text-base font-black text-white/50 uppercase tracking-[0.2em] max-w-2xl mx-auto">
-              OLVÍDATE DEL OUTSOURCING TRADICIONAL. SOMOS PINTA MKT, TU ALIADO
+              OLVÍDATE DEL OUTSOURCING TRADICIONAL. <br> SOMOS PINTA MKT, TU ALIADO
               ESTRATÉGICO DIARIO.
             </p>
           </div>
