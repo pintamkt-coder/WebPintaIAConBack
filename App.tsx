@@ -406,6 +406,7 @@ const App: React.FC = () => {
     setIsSubmitting(true);
 
     const analysis = await analyzeLeadWithAI(formState.name, formState.message);
+    
     setAiAnalysis(analysis);
 
     const ok = await notifyBackend({
@@ -505,6 +506,16 @@ const App: React.FC = () => {
           </h1>
           <a
             href="#contact"
+            onClick={(e) => {
+              e.preventDefault();
+              const el = document.getElementById("contact");
+              if (el) {
+                window.scrollTo({
+                  top: el.offsetTop - 80, // altura del header
+                  behavior: "smooth",
+                });
+              }
+            }}
             className="inline-flex items-center gap-4 px-12 py-6 bg-[#EBE300] text-black font-[900] text-xl uppercase tracking-tighter hover:bg-white transition-all rounded-full shadow-lg"
           >
             Descubrir <ArrowRight size={24} />
@@ -577,7 +588,7 @@ const App: React.FC = () => {
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-8 items-stretch">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2 items-stretch">
             {/* 2x2 Grid with info cards */}
             <div className="grid grid-cols-2 gap-4 md:gap-6">
               {[
@@ -621,6 +632,16 @@ const App: React.FC = () => {
                 </p>
                 <a
                   href="#contact"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    const el = document.getElementById("contact");
+                    if (el) {
+                      window.scrollTo({
+                        top: el.offsetTop - 80, // altura del header
+                        behavior: "smooth",
+                      });
+                    }
+                  }}
                   className="inline-flex items-center gap-4 px-10 py-5 bg-black text-white font-black text-base uppercase tracking-widest rounded-full hover:scale-105 transition-transform group shadow-xl"
                 >
                   Saber más{" "}
@@ -693,7 +714,10 @@ const App: React.FC = () => {
         <div className="relative z-10 bg-[#141414] py-16 border-y-2 border-white/5">
           <div className="flex animate-scroll-right gap-20 md:gap-32 items-center">
             {[...CLIENTS_LIST, ...CLIENTS_LIST].map((client, i) => (
-              <div className="flex-shrink-0 flex items-center justify-center h-44 md:h-52 w-[480px] md:w-[640px] opacity-70 hover:opacity-100 transition-all">
+              <div
+                key={i}
+                className="flex-shrink-0 flex items-center justify-center h-44 md:h-52 w-[480px] md:w-[640px] opacity-70 hover:opacity-100 transition-all"
+              >
                 <img
                   src={client.logo}
                   alt={client.name}
@@ -710,7 +734,7 @@ const App: React.FC = () => {
         <div className="container mx-auto max-w-7xl">
           <div className="flex flex-col lg:flex-row gap-12 lg:gap-24 items-start">
             <div className="w-full lg:w-[55%]">
-              <h2 className="text-[12vw] lg:text-[8rem] font-[900] uppercase tracking-tighter leading-[0.8] mb-12 text-black">
+              <h2 className="text-[12vw] lg:text-[7rem] font-[900] uppercase tracking-tighter leading-[0.8] mb-12 text-black">
                 HABLEMOS
               </h2>
               <p className="text-2xl font-[900] text-gray-500 uppercase tracking-[0.6px]  mb-16 italic drop-shadow-sm ">
@@ -719,115 +743,313 @@ const App: React.FC = () => {
               </p>
 
               <div className="flex flex-col gap-8">
-                {/* Email Highlight */}
-                <a
-                  href="mailto:PINTAMKT@GMAIL.COM"
-                  className="flex items-center gap-6 group w-fit"
-                >
-                  <div className="w-16 h-16 bg-black text-[#EBE300] rounded-full flex items-center justify-center group-hover:scale-110 transition-transform shadow-xl">
-                    <Mail size={32} />
-                  </div>
-                  <span className="font-[900] text-xl md:text-2xl lg:text-3xl uppercase tracking-tighter text-black">
-                    PINTAMKT@GMAIL.COM
-                  </span>
-                </a>
+                
+                {/* Contact Cards: WhatsApp destacado + IG/LinkedIn prolijos */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                  {/* WhatsApp (destacado, horizontal, ocupa todo) */}
+                  <a
+                    href="https://wa.me/5492617007256"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="
+      min-h-[110px]
+      sm:col-span-2
+      group
+      bg-white
+      border-[4px] border-black
+      rounded-[2.5rem]
+      shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]
+      p-6 md:p-7
+      flex items-center justify-between gap-6
+      transition-all
+      hover:-translate-y-1
+      active:scale-[0.99]
+    "
+                  >
+                    <div className="flex items-center gap-5">
+                      <div
+                        className="
+          w-16 h-16
+          bg-[#EBE300]
+          border-[4px] border-black
+          rounded-2xl
+          flex items-center justify-center
+          shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]
+          group-hover:rotate-6 transition-transform
+          flex-shrink-0
+        "
+                      >
+                        <MessageCircle size={30} className="text-black" />
+                      </div>
 
-                {/* Social Networks Icons - Now Before WhatsApp */}
-                <div className="flex gap-6 items-center pt-2">
+                      <div className="leading-tight">
+                        <div className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-500">
+                          WhatsApp Directo
+                        </div>
+                        <div className="font-[900] text-xl md:text-2xl uppercase tracking-tighter text-black">
+                          +54 9 261 700 7256
+                        </div>
+                      </div>
+                    </div>
+
+                    <div
+                      className="
+        hidden md:flex
+        items-center gap-3
+        px-6 py-3
+        bg-black text-[#EBE300]
+        rounded-full
+        font-black uppercase text-xs tracking-widest
+        group-hover:bg-[#EBE300] group-hover:text-black
+        border-2 border-black
+        transition-all
+        flex-shrink-0
+      "
+                    >
+                      Abrir WhatsApp <ArrowRight size={16} />
+                    </div>
+                  </a>
+{/* Email Highlight */}
+                <a
+  href="mailto:PINTAMKT@GMAIL.COM"
+  className="
+    min-h-[110px]
+    sm:col-span-2
+    group
+    bg-white
+    border-[4px] border-black
+    rounded-[2.5rem]
+    shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]
+    p-6 md:p-7
+    flex items-center gap-6
+    transition-all
+    hover:-translate-y-1
+    active:scale-[0.99]
+  "
+>
+  <div
+    className="
+      w-16 h-16
+      bg-[#EBE300]
+      border-[4px] border-black
+      rounded-2xl
+      flex items-center justify-center
+      shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]
+      flex-shrink-0
+    "
+  >
+    <Mail size={30} className="text-black" />
+  </div>
+
+  <div className="font-[900] text-xl md:text-2xl uppercase tracking-tighter text-black">
+    PINTAMKT@GMAIL.COM
+  </div>
+</a>
+                  {/* Instagram (mini card) */}
                   <a
                     href="https://www.instagram.com/pintamkt/"
                     target="_blank"
-                    className="w-14 h-14 bg-black text-[#EBE300] rounded-full flex items-center justify-center hover:scale-110 hover:bg-[#EBE300] hover:text-black transition-all shadow-lg"
+                    rel="noreferrer"
+                    className="
+      h-full min-h-[92px]
+      group
+      bg-black text-[#FFFFFF]
+      border-[4px] border-black
+      rounded-[2rem]
+      p-5
+      flex items-center justify-between gap-4
+      shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]
+      transition-all
+      hover:-translate-y-1
+      hover:bg-[#EBE300] hover:text-black
+      active:scale-[0.99]
+    "
                   >
-                    <Instagram size={24} />
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 rounded-2xl border-2 border-black flex items-center justify-center bg-white/10 group-hover:bg-black/10">
+                        <Instagram size={22} />
+                      </div>
+                      <div className="leading-tight">
+                        <div className="text-[10px] font-black uppercase tracking-[0.2em] opacity-70">
+                          Seguinos
+                        </div>
+                        <div className="font-[900] uppercase tracking-tighter">
+                          Instagram
+                        </div>
+                      </div>
+                    </div>
+                    <ArrowRight
+                      size={18}
+                      className="opacity-80 group-hover:opacity-100"
+                    />
                   </a>
+
+                  {/* LinkedIn (mini card) */}
                   <a
-                    href="https://www.linkedin.com/company/pinta-marketing/"
+                    href="https://www.linkedin.com/company/pinta-marketing/?viewAsMember=true"
                     target="_blank"
-                    className="w-14 h-14 bg-black text-[#EBE300] rounded-full flex items-center justify-center hover:scale-110 hover:bg-[#EBE300] hover:text-black transition-all shadow-lg"
+                    rel="noreferrer"
+                    className="
+      h-full min-h-[92px]
+      group
+      bg-black text-[#FFFFFF]
+      border-[4px] border-black
+      rounded-[2rem]
+      p-5
+      flex items-center justify-between gap-4
+      shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]
+      transition-all
+      hover:-translate-y-1
+      hover:bg-[#EBE300] hover:text-black
+      active:scale-[0.99]
+    "
                   >
-                    <Linkedin size={24} />
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 rounded-2xl border-2 border-black flex items-center justify-center bg-white/10 group-hover:bg-black/10">
+                        <Linkedin size={22} />
+                      </div>
+                      <div className="leading-tight">
+                        <div className="text-[10px] font-black uppercase tracking-[0.2em] opacity-70">
+                          Conectemos
+                        </div>
+                        <div className="font-[900] uppercase tracking-tighter">
+                          LinkedIn
+                        </div>
+                      </div>
+                    </div>
+                    <ArrowRight
+                      size={18}
+                      className="opacity-80 group-hover:opacity-100"
+                    />
                   </a>
                 </div>
-
-                {/* WhatsApp Highlighted - Below Social Networks */}
-                <a
-                  href="https://wa.me/5492617007256"
-                  target="_blank"
-                  className="flex items-center gap-6 group w-fit pt-2"
-                >
-                  <div className="w-16 h-16 bg-[#EBE300] text-black border-4 border-black rounded-full flex items-center justify-center group-hover:scale-110 transition-transform shadow-[0_20px_40px_-10px_rgba(235,227,0,0.4)]">
-                    <MessageCircle size={32} fill="black" />
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 mb-1">
-                      WhatsApp Directo
-                    </span>
-                    <span className="font-[900] text-xl md:text-2xl lg:text-3xl uppercase tracking-tighter text-black">
-                      +54 9 261 700 7256
-                    </span>
-                  </div>
-                </a>
               </div>
             </div>
 
-            <div className="w-full lg:w-[45%]">
-              {submitted ? (
-                <div className="bg-white border-4 border-black p-12 rounded-[3rem] text-center shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] animate-in zoom-in duration-500">
-                  <CheckCircle
-                    className="mx-auto mb-6 text-[#EBE300]"
-                    size={64}
-                  />
-                  <h3 className="text-3xl font-[900] uppercase mb-4 tracking-tighter">
-                    ¡RECIBIDO!
-                  </h3>
-                  <p className="text-lg font-bold italic text-gray-700">
-                    "{aiAnalysis}"
-                  </p>
-                </div>
-              ) : (
-                <form onSubmit={handleSubmit} className="flex flex-col gap-6">
-                  <input
-                    type="text"
-                    placeholder="TU NOMBRE"
-                    required
-                    className="w-full px-10 py-5 bg-white border-[4px] border-black rounded-full font-[900] text-lg uppercase outline-none shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all focus:-translate-y-1"
-                    onChange={(e) =>
-                      setFormState({ ...formState, name: e.target.value })
-                    }
-                  />
-                  <input
-                    type="email"
-                    placeholder="TU EMAIL"
-                    required
-                    className="w-full px-10 py-5 bg-white border-[4px] border-black rounded-full font-[900] text-lg uppercase outline-none shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all focus:-translate-y-1"
-                    onChange={(e) =>
-                      setFormState({ ...formState, email: e.target.value })
-                    }
-                  />
-                  <textarea
-                    placeholder="CONTANOS TU VISIÓN..."
-                    required
-                    rows={4}
-                    className="w-full px-10 py-8 bg-white border-[4px] border-black rounded-[2.5rem] font-[900] text-lg uppercase outline-none resize-none shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all focus:-translate-y-1"
-                    onChange={(e) =>
-                      setFormState({ ...formState, message: e.target.value })
-                    }
-                  />
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="group w-full py-7 bg-black text-[#EBE300] font-[900] text-3xl uppercase rounded-full hover:bg-[#EBE300] hover:text-black transition-all flex items-center justify-center gap-6 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.15)] mt-4 active:scale-95"
-                  >
-                    {isSubmitting ? "ENVIANDO..." : "ENVIAR MENSAJE"}{" "}
-                    <Send
-                      size={36}
-                      className="group-hover:translate-x-2 group-hover:-translate-y-1 transition-transform"
-                    />
-                  </button>
-                </form>
-              )}
-            </div>
+           <div className="w-full lg:w-[45%]">
+  {submitted ? (
+    <div className="bg-white border-4 border-black p-12 rounded-[3rem] text-center shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] animate-in zoom-in duration-500">
+      <CheckCircle className="mx-auto mb-6 text-[#EBE300]" size={64} />
+      <h3 className="text-3xl font-[900] uppercase mb-4 tracking-tighter">
+        ¡RECIBIDO!
+      </h3>
+      <p className="text-lg font-bold italic text-gray-700">"{aiAnalysis}"</p>
+    </div>
+  ) : (
+    // ✅ CONTENEDOR “PIEZA GRÁFICA” (refinado)
+    <div
+      className="
+        relative
+        bg-[#EBE300]
+        border-[4px] border-black
+        rounded-[3.5rem]
+        p-10 md:p-12
+        shadow-[10px_10px_0px_0px_rgba(0,0,0,1)]
+        overflow-hidden
+      "
+    >
+      {/* overlay sutil para profundidad */}
+      <div className="pointer-events-none absolute inset-0 bg-black/5 rounded-[3.5rem]" />
+
+      <div className="relative">
+        {/* tag superior (estructura editorial) */}
+        <span className="inline-block px-4 py-1 bg-black text-[#EBE300] font-black text-xs uppercase tracking-widest rounded-full mb-6">
+          FORMULARIO
+        </span>
+
+        <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+          <input
+            type="text"
+            placeholder="TU NOMBRE"
+            required
+            className="
+              w-full px-10 py-5
+              bg-[#FDFCE6]
+              border-[4px] border-black
+              rounded-full
+              font-[900] text-lg uppercase
+              outline-none
+              shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]
+              transition-all
+              focus:-translate-y-1
+              focus:shadow-[10px_10px_0px_0px_rgba(0,0,0,1)]
+            "
+            onChange={(e) =>
+              setFormState({ ...formState, name: e.target.value })
+            }
+          />
+
+          <input
+            type="email"
+            placeholder="TU EMAIL"
+            required
+            className="
+              w-full px-10 py-5
+              bg-[#FDFCE6]
+              border-[4px] border-black
+              rounded-full
+              font-[900] text-lg uppercase
+              outline-none
+              shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]
+              transition-all
+              focus:-translate-y-1
+              focus:shadow-[10px_10px_0px_0px_rgba(0,0,0,1)]
+            "
+            onChange={(e) =>
+              setFormState({ ...formState, email: e.target.value })
+            }
+          />
+
+          <textarea
+            placeholder="CONTANOS TU VISIÓN..."
+            required
+            rows={4}
+            className="
+              w-full px-10 py-8
+              bg-[#FDFCE6]
+              border-[4px] border-black
+              rounded-[2.5rem]
+              font-[900] text-lg uppercase
+              outline-none resize-none
+              shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]
+              transition-all
+              focus:-translate-y-1
+              focus:shadow-[10px_10px_0px_0px_rgba(0,0,0,1)]
+            "
+            onChange={(e) =>
+              setFormState({ ...formState, message: e.target.value })
+            }
+          />
+
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="
+              group w-full py-7
+              bg-black text-[#EBE300]
+              font-[900] text-3xl uppercase
+              rounded-full
+              transition-all
+              flex items-center justify-center gap-6
+              shadow-[10px_10px_0px_0px_rgba(0,0,0,1)]
+              hover:-translate-y-1
+              hover:shadow-[14px_14px_0px_0px_rgba(0,0,0,1)]
+              hover:bg-white hover:text-black
+              active:scale-95
+              disabled:opacity-50 disabled:cursor-not-allowed
+            "
+          >
+            {isSubmitting ? "ENVIANDO..." : "ENVIAR MENSAJE"}{" "}
+            <Send
+              size={36}
+              className="group-hover:translate-x-2 group-hover:-translate-y-1 transition-transform"
+            />
+          </button>
+        </form>
+      </div>
+    </div>
+  )}
+</div>
           </div>
         </div>
       </section>
