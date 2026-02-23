@@ -406,7 +406,7 @@ const App: React.FC = () => {
     setIsSubmitting(true);
 
     const analysis = await analyzeLeadWithAI(formState.name, formState.message);
-    
+
     setAiAnalysis(analysis);
 
     const ok = await notifyBackend({
@@ -531,14 +531,24 @@ const App: React.FC = () => {
               <span className="inline-block px-4 py-1 bg-black text-[#EBE300] font-black text-xs uppercase mb-6 rounded-full tracking-widest">
                 NOSOTROS
               </span>
-              <SectionTitle>POTENCIA COLECTIVA</SectionTitle>
-              <p className="text-xl md:text-2xl text-gray-700 font-[900] mb-8 uppercase">
-                Mirada estratégica y humana.
+              <SectionTitle
+                className="
+    font-[900]
+    tracking-[-0.03em]
+    leading-[0.95]
+    text-balance
+    max-w-[17ch]
+  "
+              >
+                EN PINTA CONTAMOS CON UN EQUIPO
+              </SectionTitle>
+              <p className="text-xl md:text-2xl text-gray-700 font-[900] mb-8 uppercase ">
+                ÁGIL, FLEXIBLE Y ESTRATEGICO
               </p>
               <div className="bg-white p-10 border-4 border-black rounded-[3rem] shadow-xl hover:shadow-[16px_16px_0px_0px_rgba(0,0,0,1)] transition-all duration-500">
                 <p className="text-lg md:text-xl font-bold leading-relaxed text-gray-800 italic">
-                  "En pinta contamos con un equipo ágil, flexible y
-                  estrategico."
+                  "Donde otros venden ruido, nosotros entregamos resultados
+                  reales. Sinergia pura."
                 </p>
               </div>
             </div>
@@ -737,13 +747,16 @@ const App: React.FC = () => {
               <h2 className="text-[12vw] lg:text-[7rem] font-[900] uppercase tracking-tighter leading-[0.8] mb-12 text-black">
                 HABLEMOS
               </h2>
-              <p className="text-2xl font-[900] text-gray-500 uppercase tracking-[0.6px]  mb-16 italic drop-shadow-sm ">
-                ¿ESTAS LISTO PARA TRANSFORMAR TU MARCA? Conectemos y hagamos
-                crecer tu colmena
+              <p className="text-2xl font-[900] text-gray-500 uppercase tracking-[0.6px] mb-16 italic drop-shadow-sm">
+                <span className="block">
+                  ¿ESTÁS LISTO PARA TRANSFORMAR TU MARCA?
+                </span>
+                <span className="block mt-4">
+                  CONECTEMOS Y HAGAMOS CRECER TU COLMENA
+                </span>
               </p>
 
               <div className="flex flex-col gap-8">
-                
                 {/* Contact Cards: WhatsApp destacado + IG/LinkedIn prolijos */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
                   {/* WhatsApp (destacado, horizontal, ocupa todo) */}
@@ -809,10 +822,10 @@ const App: React.FC = () => {
                       Abrir WhatsApp <ArrowRight size={16} />
                     </div>
                   </a>
-{/* Email Highlight */}
-                <a
-  href="mailto:PINTAMKT@GMAIL.COM"
-  className="
+                  {/* Email Highlight */}
+                  <a
+                    href="mailto:PINTAMKT@GMAIL.COM"
+                    className="
     min-h-[110px]
     sm:col-span-2
     group
@@ -826,9 +839,9 @@ const App: React.FC = () => {
     hover:-translate-y-1
     active:scale-[0.99]
   "
->
-  <div
-    className="
+                  >
+                    <div
+                      className="
       w-16 h-16
       bg-[#EBE300]
       border-[4px] border-black
@@ -837,14 +850,14 @@ const App: React.FC = () => {
       shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]
       flex-shrink-0
     "
-  >
-    <Mail size={30} className="text-black" />
-  </div>
+                    >
+                      <Mail size={30} className="text-black" />
+                    </div>
 
-  <div className="font-[900] text-xl md:text-2xl uppercase tracking-tighter text-black">
-    PINTAMKT@GMAIL.COM
-  </div>
-</a>
+                    <div className="font-[900] text-xl md:text-2xl uppercase tracking-tighter text-black">
+                      PINTAMKT@GMAIL.COM
+                    </div>
+                  </a>
                   {/* Instagram (mini card) */}
                   <a
                     href="https://www.instagram.com/pintamkt/"
@@ -926,19 +939,24 @@ const App: React.FC = () => {
               </div>
             </div>
 
-           <div className="w-full lg:w-[45%]">
-  {submitted ? (
-    <div className="bg-white border-4 border-black p-12 rounded-[3rem] text-center shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] animate-in zoom-in duration-500">
-      <CheckCircle className="mx-auto mb-6 text-[#EBE300]" size={64} />
-      <h3 className="text-3xl font-[900] uppercase mb-4 tracking-tighter">
-        ¡RECIBIDO!
-      </h3>
-      <p className="text-lg font-bold italic text-gray-700">"{aiAnalysis}"</p>
-    </div>
-  ) : (
-    // ✅ CONTENEDOR “PIEZA GRÁFICA” (refinado)
-    <div
-      className="
+            <div className="w-full lg:w-[45%]">
+              {submitted ? (
+                <div className="bg-white border-4 border-black p-12 rounded-[3rem] text-center shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] animate-in zoom-in duration-500">
+                  <CheckCircle
+                    className="mx-auto mb-6 text-[#EBE300]"
+                    size={64}
+                  />
+                  <h3 className="text-3xl font-[900] uppercase mb-4 tracking-tighter">
+                    ¡RECIBIDO!
+                  </h3>
+                  <p className="text-lg font-bold italic text-gray-700">
+                    "{aiAnalysis}"
+                  </p>
+                </div>
+              ) : (
+                // ✅ CONTENEDOR “PIEZA GRÁFICA” (refinado)
+                <div
+                  className="
         relative
         bg-[#EBE300]
         border-[4px] border-black
@@ -947,22 +965,25 @@ const App: React.FC = () => {
         shadow-[10px_10px_0px_0px_rgba(0,0,0,1)]
         overflow-hidden
       "
-    >
-      {/* overlay sutil para profundidad */}
-      <div className="pointer-events-none absolute inset-0 bg-black/5 rounded-[3.5rem]" />
+                >
+                  {/* overlay sutil para profundidad */}
+                  <div className="pointer-events-none absolute inset-0 bg-black/5 rounded-[3.5rem]" />
 
-      <div className="relative">
-        {/* tag superior (estructura editorial) */}
-        <span className="inline-block px-4 py-1 bg-black text-[#EBE300] font-black text-xs uppercase tracking-widest rounded-full mb-6">
-          FORMULARIO
-        </span>
+                  <div className="relative">
+                    {/* tag superior (estructura editorial) */}
+                    <span className="inline-block px-4 py-1 bg-black text-[#EBE300] font-black text-xs uppercase tracking-widest rounded-full mb-6">
+                      FORMULARIO
+                    </span>
 
-        <form onSubmit={handleSubmit} className="flex flex-col gap-6">
-          <input
-            type="text"
-            placeholder="TU NOMBRE"
-            required
-            className="
+                    <form
+                      onSubmit={handleSubmit}
+                      className="flex flex-col gap-6"
+                    >
+                      <input
+                        type="text"
+                        placeholder="TU NOMBRE"
+                        required
+                        className="
               w-full px-10 py-5
               bg-[#FDFCE6]
               border-[4px] border-black
@@ -974,16 +995,16 @@ const App: React.FC = () => {
               focus:-translate-y-1
               focus:shadow-[10px_10px_0px_0px_rgba(0,0,0,1)]
             "
-            onChange={(e) =>
-              setFormState({ ...formState, name: e.target.value })
-            }
-          />
+                        onChange={(e) =>
+                          setFormState({ ...formState, name: e.target.value })
+                        }
+                      />
 
-          <input
-            type="email"
-            placeholder="TU EMAIL"
-            required
-            className="
+                      <input
+                        type="email"
+                        placeholder="TU EMAIL"
+                        required
+                        className="
               w-full px-10 py-5
               bg-[#FDFCE6]
               border-[4px] border-black
@@ -995,16 +1016,16 @@ const App: React.FC = () => {
               focus:-translate-y-1
               focus:shadow-[10px_10px_0px_0px_rgba(0,0,0,1)]
             "
-            onChange={(e) =>
-              setFormState({ ...formState, email: e.target.value })
-            }
-          />
+                        onChange={(e) =>
+                          setFormState({ ...formState, email: e.target.value })
+                        }
+                      />
 
-          <textarea
-            placeholder="CONTANOS TU VISIÓN..."
-            required
-            rows={4}
-            className="
+                      <textarea
+                        placeholder="CONTANOS TU VISIÓN..."
+                        required
+                        rows={4}
+                        className="
               w-full px-10 py-8
               bg-[#FDFCE6]
               border-[4px] border-black
@@ -1016,15 +1037,18 @@ const App: React.FC = () => {
               focus:-translate-y-1
               focus:shadow-[10px_10px_0px_0px_rgba(0,0,0,1)]
             "
-            onChange={(e) =>
-              setFormState({ ...formState, message: e.target.value })
-            }
-          />
+                        onChange={(e) =>
+                          setFormState({
+                            ...formState,
+                            message: e.target.value,
+                          })
+                        }
+                      />
 
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="
+                      <button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className="
               group w-full py-7
               bg-black text-[#EBE300]
               font-[900] text-3xl uppercase
@@ -1038,18 +1062,18 @@ const App: React.FC = () => {
               active:scale-95
               disabled:opacity-50 disabled:cursor-not-allowed
             "
-          >
-            {isSubmitting ? "ENVIANDO..." : "ENVIAR MENSAJE"}{" "}
-            <Send
-              size={36}
-              className="group-hover:translate-x-2 group-hover:-translate-y-1 transition-transform"
-            />
-          </button>
-        </form>
-      </div>
-    </div>
-  )}
-</div>
+                      >
+                        {isSubmitting ? "ENVIANDO..." : "ENVIAR MENSAJE"}{" "}
+                        <Send
+                          size={36}
+                          className="group-hover:translate-x-2 group-hover:-translate-y-1 transition-transform"
+                        />
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </section>
