@@ -481,7 +481,7 @@ const App: React.FC = () => {
             <img
               src="https://img.icons8.com/ios-filled/100/EBE300/bee.png"
               alt="Abeja"
-              className="w-16 h-16 md:w-24 md:h-24"
+              className="w-16 h-16 md:w-24 md:h-24 animate-bee"
             />
           </div>
           <div className="mb-12 flex justify-center">

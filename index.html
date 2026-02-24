@@ -140,7 +140,50 @@
       .animate-buzz {
         animation: wing-buzz 0.1s linear infinite;
       }
+      /*Animación para la abeja*/
+      @keyframes bee-float {
+        0%,
+        100% {
+          transform: translate3d(0, 0, 0) rotate(-2deg);
+        }
+        50% {
+          transform: translate3d(0, -10px, 0) rotate(2deg);
+        }
+      }
 
+      @keyframes bee-wiggle {
+        0%,
+        100% {
+          transform: translate3d(0, 0, 0) rotate(-1deg);
+        }
+        50% {
+          transform: translate3d(2px, -6px, 0) rotate(1deg);
+        }
+      }
+
+      /* una sola clase lista para usar */
+      .animate-bee {
+        animation: bee-float 3.6s ease-in-out infinite;
+        will-change: transform;
+      }
+
+      /* si querés una variante más “voladora” pero sutil */
+      .animate-bee-wiggle {
+        animation: bee-wiggle 2.8s ease-in-out infinite;
+        will-change: transform;
+      }
+
+      /* accesibilidad: si el user tiene reduced motion, apagamos */
+      @media (prefers-reduced-motion: reduce) {
+        .animate-bee,
+        .animate-bee-wiggle {
+          animation: none !important;
+        }
+      }
+
+
+
+      
       /* Animación para llamar la atención en CTAs */
       @keyframes cta-attention {
         0% {
