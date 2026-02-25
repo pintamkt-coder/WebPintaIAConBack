@@ -602,8 +602,7 @@ const App: React.FC = () => {
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-[900] uppercase tracking-tighter leading-tight mb-6">
               ¿BUSCANDO UNA{" "}
-              <span className="text-[#EBE300]">EXTENSIÓN DE TU</span>
-              <br />
+              <span className="text-[#EBE300]"><br />EXTENSIÓN  DE TU </span>
               EQUIPO?
             </h2>
             <p className="text-sm md:text-base font-black text-white/50 uppercase tracking-[0.2em] max-w-2xl mx-auto">
