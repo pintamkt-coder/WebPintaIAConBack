@@ -302,7 +302,7 @@ const Header: React.FC<{ activeSection: string }> = ({ activeSection }) => {
     >
       <div className="container mx-auto px-4 flex items-center justify-between">
         <a href="#home" onClick={(e) => handleNavClick(e, "#home")}>
-          <LogoText className="w-32 md:w-48 text-[#EBE300]" />
+          <LogoText className="w-24 md:w-32 text-[#EBE300]" />
         </a>
         <nav className="hidden lg:flex items-center gap-10">
           {NAV_LINKS.map((link) => (
@@ -477,25 +477,38 @@ const App: React.FC = () => {
         className="relative min-h-screen flex flex-col items-center justify-center bg-[#1A1A1A] overflow-hidden px-4"
       >
         <div className="z-10 text-center max-w-6xl mx-auto">
-          <div className="flex justify-center mb-12">
+          <div className="flex justify-center mb-10">
+            {" "}
+            {/* Reducido el margen inferior (mb-12)*/}
             <img
               src="https://img.icons8.com/ios-filled/100/EBE300/bee.png"
               alt="Abeja"
-              className="w-16 h-16 md:w-24 md:h-24 animate-bee"
+              className="w-8 h-8 md:w-16 md:h-16 animate-bee" /* Reducido tamaño (w-16 h-16 md:w-24 md:h-24) */
             />
           </div>
-          <div className="mb-12 flex justify-center">
-            <LogoText className="w-full max-w-[900px] text-[#EBE300]" />
+          <div className="mb-8 flex justify-center">
+            {" "}
+            {/* Reducido el margen (mb-12 flex justify-center)*/}
+            <LogoText className="w-90 md:w-120 text-[#EBE300]" />{" "}
+            {/* Ajuste en el tamaño ("w-full max-w-[900px] text-[#EBE300])*/}
           </div>
-          <h1
-            className="
-  text-xl md:text-3xl lg:text-4xl
+
+          {/* H1 anterior
+          text-xl md:text-3xl lg:text-4xl 
   font-[900] uppercase
   tracking-tight leading-[1.1]
   text-center mx-auto max-w-[980px]
   opacity-90 mb-12
-  whitespace-pre-line
-"
+  whitespace-pre-line */}
+          <h1
+            className="
+    text-lg md:text-2xl lg:text-3xl
+    font-[800] uppercase
+    tracking-tight leading-tight
+    text-center mx-auto max-w-[960px]
+    opacity-95 mb-8
+    whitespace-pre-line
+  "
           >
             <span className="text-white">
               {"COMO LAS ABEJAS TRANSFORMAN NECTAR\nEN MIEL, "}
@@ -516,36 +529,34 @@ const App: React.FC = () => {
                 });
               }
             }}
-            className="inline-flex items-center gap-4 px-12 py-6 bg-[#EBE300] text-black font-[900] text-xl uppercase tracking-tighter hover:bg-white transition-all rounded-full shadow-lg"
+            className="inline-flex items-center gap-4 px-8 py-5 bg-[#EBE300] text-black font-[800] text-xl uppercase tracking-tighter hover:bg-white transition-all rounded-full shadow-lg"
           >
+            {/*inline-flex items-center gap-4 px-12 py-6 bg-[#EBE300] text-black font-[900] text-xl uppercase tracking-tighter hover:bg-white transition-all rounded-full shadow-lg"*/}
             Descubrir <ArrowRight size={24} />
           </a>
         </div>
       </section>
 
       {/* About */}
-      <section id="about" className="py-24 bg-[#FDFCE6] px-4 overflow-hidden">
+      <section
+        id="about"
+        className="py-24 bg-[#FDFCE6] px-4 overflow-hidden mb-24 mb-24  "
+      >
         <div className="container mx-auto max-w-6xl">
           <div className="grid md:grid-cols-2 gap-16 items-center">
             <div className="group">
               <span className="inline-block px-4 py-1 bg-black text-[#EBE300] font-black text-xs uppercase mb-6 rounded-full tracking-widest">
                 NOSOTROS
               </span>
-              <SectionTitle
-                className="
-    font-[900]
-    tracking-[-0.03em]
-    leading-[0.95]
-    text-balance
-    max-w-[17ch]
-  "
-              >
-                EN PINTA CONTAMOS CON UN EQUIPO
-              </SectionTitle>
-              <p className="text-xl md:text-2xl text-gray-700 font-[900] mb-8 uppercase ">
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-[800] tracking-tight leading-[1.1] text-[#1A1A1A] max-w-[18ch] whitespace-nowrap">
+                EN PINTA CONTAMOS
+                <br />
+                CON UN EQUIPO
+              </h2>
+              <p className="text-lg md:text-xl text-gray-700 font-[800] mb-6 uppercase mt-6">
                 ÁGIL, FLEXIBLE Y ESTRATEGICO
               </p>
-              <div className="bg-white p-10 border-4 border-black rounded-[3rem] shadow-xl hover:shadow-[16px_16px_0px_0px_rgba(0,0,0,1)] transition-all duration-500">
+              <div className="bg-white p-6 border-4 border-black rounded-[2rem] shadow-xl hover:scale-100 hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] transition-all duration-500">
                 <p className="text-lg md:text-xl font-bold leading-relaxed text-gray-800 italic">
                   "Donde otros venden ruido, nosotros entregamos resultados
                   reales. Sinergia pura."
@@ -556,7 +567,7 @@ const App: React.FC = () => {
               <div className="absolute -inset-4 bg-[#EBE300] rounded-[3.5rem] opacity-0 group-hover:opacity-30 transition-all duration-700 scale-90 group-hover:scale-110 rotate-6" />
               <img
                 src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=800"
-                className="relative rounded-[3rem] border-4 border-black w-full aspect-square object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 shadow-2xl z-10"
+                className="relative rounded-[3rem] border-4 border-black w-full max-w-[400px] md:max-w-[500px] aspect-auto object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 shadow-2xl z-10"
                 alt="Equipo Pinta MKT"
               />
             </div>
@@ -568,7 +579,9 @@ const App: React.FC = () => {
       <section id="works" className="py-24 bg-white px-4">
         <div className="container mx-auto max-w-7xl">
           <div className="text-center mb-20">
-            <SectionTitle>PROYECTOS</SectionTitle>
+            <SectionTitle className="text-3xl md:text-4xl lg:text-5xl font-[800] tracking-tight leading-[1.1] text-[#1A1A1A] max-w-[18ch]">
+              PROYECTOS
+            </SectionTitle>
           </div>
           <div className="flex flex-wrap lg:flex-nowrap justify-center gap-6 md:gap-8 lg:gap-10">
             {PROJECTS.map((project) => (
@@ -576,6 +589,7 @@ const App: React.FC = () => {
                 key={project.id}
                 project={project}
                 onOpenProject={setSelectedProject}
+                className="w-full max-w-[280px] md:max-w-[350px] p-4" // Ajuste del tamaño de las tarjetas
               />
             ))}
           </div>
@@ -586,15 +600,15 @@ const App: React.FC = () => {
       <section id="extension" className="py-24 bg-black text-white px-4">
         <div className="container mx-auto max-w-7xl">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-6xl lg:text-7xl font-[900] uppercase tracking-tighter leading-none mb-6">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-[900] uppercase tracking-tighter leading-tight mb-6">
               ¿BUSCANDO UNA{" "}
               <span className="text-[#EBE300]">EXTENSIÓN DE TU</span>
               <br />
               EQUIPO?
             </h2>
             <p className="text-sm md:text-base font-black text-white/50 uppercase tracking-[0.2em] max-w-2xl mx-auto">
-              OLVÍDATE DEL OUTSOURCING TRADICIONAL. SOMOS PINTA MKT, TU ALIADO
-              ESTRATÉGICO DIARIO.
+              OLVÍDATE DEL OUTSOURCING TRADICIONAL. <br />
+              SOMOS PINTA MKT, TU ALIADO ESTRATÉGICO DIARIO.
             </p>
           </div>
 
@@ -609,16 +623,16 @@ const App: React.FC = () => {
               ].map((card, i) => (
                 <div
                   key={i}
-                  className="bg-[#141414] border border-white/5 p-8 rounded-[2rem] flex flex-col justify-between hover:bg-white/5 transition-colors group"
+                  className="bg-[#141414] border border-white/5 p-6 rounded-[1rem] flex flex-col justify-between hover:bg-white/5 transition-colors group"
                 >
-                  <div className="w-12 h-12 bg-[#EBE300]/10 border border-[#EBE300]/20 rounded-xl flex items-center justify-center mb-12 group-hover:scale-110 transition-transform">
+                  <div className="w-10 h-10 bg-[#EBE300]/10 border border-[#EBE300]/20 rounded-xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
                     <img
                       src="https://img.icons8.com/ios-filled/50/EBE300/bee.png"
                       alt="Bee"
-                      className="w-6 h-6"
+                      className="w-5 h-5"
                     />
                   </div>
-                  <h3 className="font-black text-lg md:text-xl uppercase tracking-tighter leading-none">
+                  <h3 className="font-black text-sm md:text-lg uppercase tracking-tighter leading-none">
                     {card.label}
                   </h3>
                 </div>
@@ -626,17 +640,17 @@ const App: React.FC = () => {
             </div>
 
             {/* Featured Highlight Card */}
-            <div className="bg-[#EBE300] text-black rounded-[3rem] p-10 md:p-16 flex flex-col justify-center relative overflow-hidden shadow-[0_40px_80px_-20px_rgba(235,227,0,0.3)]">
-              <div className="mb-10 relative z-10">
-                <div className="mb-8">
+            <div className="bg-[#EBE300] text-black rounded-[2rem] p-8 md:p-12 flex flex-col justify-center relative overflow-hidden shadow-[0_40px_80px_-20px_rgba(235,227,0,0.3)]">
+              <div className="mb-8 relative z-10">
+                <div className="mb-6">
                   <span className="inline-block px-5 py-2 bg-black text-[#EBE300] font-black text-[10px] uppercase tracking-widest rounded-full">
                     NUESTRO VALOR
                   </span>
                 </div>
-                <div className="flex items-center gap-3 mb-10">
+                <div className="flex items-center gap-3 mb-8">
                   <LogoText className="w-48 text-black" />
                 </div>
-                <p className="text-2xl md:text-3xl lg:text-4xl font-[900] uppercase tracking-tighter leading-[1.1] mb-12">
+                <p className="text-xl md:text-2xl lg:text-3xl font-[900] uppercase tracking-tighter leading-[1.1] mb-8">
                   ESCALAMOS TUS RESULTADOS SIN LAS COMPLICACIONES DE AGENCIAS
                   TRADICIONALES.
                 </p>
@@ -652,7 +666,7 @@ const App: React.FC = () => {
                       });
                     }
                   }}
-                  className="inline-flex items-center gap-4 px-10 py-5 bg-black text-white font-black text-base uppercase tracking-widest rounded-full hover:scale-105 transition-transform group shadow-xl"
+                  className="inline-flex items-center gap-4 px-8 py-4 bg-black text-white font-black text-sm uppercase tracking-widest rounded-full hover:scale-105 transition-transform group shadow-xl"
                 >
                   Saber más{" "}
                   <ArrowRight
@@ -666,7 +680,7 @@ const App: React.FC = () => {
                 <img
                   src="https://img.icons8.com/ios-filled/200/000000/bee.png"
                   alt=""
-                  className="w-64 h-64"
+                  className="w-48 h-48"
                 />
               </div>
             </div>
