@@ -244,32 +244,38 @@ const ProjectCard: React.FC<{
 }> = ({ project, onOpenProject }) => (
   <button
     onClick={() => onOpenProject(project)}
-    className="group relative w-full sm:w-[48%] lg:w-[31%] max-w-[400px] aspect-[14/11] overflow-hidden rounded-[2.5rem] border-[5px] border-black shadow-xl text-left transition-all hover:-translate-y-3 hover:shadow-[0_30px_50px_-15px_rgba(0,0,0,0.3)] isolate"
+    // CAMBIOS AQUÍ: Reducimos max-w de 400px a 340px y ajustamos porcentajes
+    className="group relative w-full sm:w-[45%] lg:w-[28%] max-w-[340px] aspect-[14/11] overflow-hidden rounded-[2.5rem] border-[5px] border-black shadow-xl text-left transition-all hover:-translate-y-3 hover:shadow-[0_30px_50px_-15px_rgba(0,0,0,0.3)] isolate"
     style={{ transform: "translateZ(0)" }}
   >
     <div className="absolute inset-0 w-full h-full overflow-hidden rounded-[2.3rem] z-0">
       <img
         src={project.image}
         alt={project.title}
+        // grayscale por defecto, color al hover
         className="w-full h-full object-cover grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-105 will-change-transform"
       />
     </div>
-    <div className="absolute top-7 right-7 z-20 w-12 h-12 md:w-16 md:h-16 bg-[#EBE300] border-[2.5px] border-black rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+    
+    {/* Icono de abeja - Ajustado un poco más pequeño */}
+    <div className="absolute top-5 right-5 z-20 w-10 h-10 md:w-12 md:h-12 bg-[#EBE300] border-[2px] border-black rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
       <img
         src="https://img.icons8.com/ios-filled/50/000000/bee.png"
         alt="Bee"
-        className="w-6 h-6 md:w-8 md:h-8"
+        className="w-5 h-5 md:w-6 md:h-6"
       />
     </div>
-    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent flex flex-col justify-end p-8 md:p-10 z-10">
-      <span className="text-[#EBE300] text-xs md:text-sm font-black uppercase mb-1 tracking-[0.2em] drop-shadow-md">
+
+    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent flex flex-col justify-end p-6 md:p-8 z-10">
+      <span className="text-[#EBE300] text-[10px] md:text-xs font-black uppercase mb-1 tracking-[0.2em] drop-shadow-md">
         {project.category}
       </span>
-      <h3 className="text-white text-2xl md:text-3xl lg:text-4xl font-[900] uppercase tracking-tighter leading-[0.9] mb-6 drop-shadow-lg">
+      {/* Reducimos un poco el tamaño de la fuente del título */}
+      <h3 className="text-white text-xl md:text-2xl lg:text-3xl font-[900] uppercase tracking-tighter leading-[0.9] mb-4 drop-shadow-lg">
         {project.title}
       </h3>
-      <div className="inline-flex items-center gap-3 px-6 py-2.5 bg-white/15 backdrop-blur-md border border-white/40 text-white font-black uppercase text-[10px] md:text-xs tracking-widest rounded-full transition-all group-hover:bg-[#EBE300] group-hover:text-black group-hover:border-black group-active:scale-95 w-fit">
-        Ver Campaña <ArrowRight size={14} />
+      <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/15 backdrop-blur-md border border-white/40 text-white font-black uppercase text-[9px] md:text-[10px] tracking-widest rounded-full transition-all group-hover:bg-[#EBE300] group-hover:text-black group-hover:border-black group-active:scale-95 w-fit">
+        Ver Campaña <ArrowRight size={12} />
       </div>
     </div>
   </button>
@@ -540,9 +546,9 @@ const App: React.FC = () => {
       {/* About */}
       <section
         id="about"
-        className="py-24 bg-[#FDFCE6] px-4 overflow-hidden mb-24 mb-24  "
+        className="relative min-h-screen flex flex-col justify-center bg-[#FDFCE6] py-24 overflow-hidden"
       >
-        <div className="container mx-auto max-w-6xl">
+        <div className="container mx-auto px-4 relative z-10 max-w-7xl">
           <div className="grid md:grid-cols-2 gap-16 items-center">
             <div className="group">
               <span className="inline-block px-4 py-1 bg-black text-[#EBE300] font-black text-xs uppercase mb-6 rounded-full tracking-widest">
@@ -575,26 +581,24 @@ const App: React.FC = () => {
         </div>
       </section>
 
-      {/* Works */}
-      <section id="works" className="py-24 bg-white px-4">
-        <div className="container mx-auto max-w-7xl">
-          <div className="text-center mb-20">
-            <SectionTitle className="text-3xl md:text-4xl lg:text-5xl font-[800] tracking-tight leading-[1.1] text-[#1A1A1A] max-w-[18ch]">
-              PROYECTOS
-            </SectionTitle>
-          </div>
-          <div className="flex flex-wrap lg:flex-nowrap justify-center gap-6 md:gap-8 lg:gap-10">
-            {PROJECTS.map((project) => (
-              <ProjectCard
-                key={project.id}
-                project={project}
-                onOpenProject={setSelectedProject}
-                className="w-full max-w-[280px] md:max-w-[350px] p-4" // Ajuste del tamaño de las tarjetas
-              />
-            ))}
-          </div>
-        </div>
-      </section>
+{/* Works */}
+
+<section 
+  id="works" 
+  className="min-h-screen w-full bg-white flex flex-col justify-center py-20"
+>
+  <div className="container mx-auto max-w-7xl px-4">
+    <div className="text-center mb-16">
+      <SectionTitle>Proyectos</SectionTitle>
+    </div>
+
+    <div className="flex flex-wrap justify-center gap-10">
+      {PROJECTS.map((project) => (
+        <ProjectCard key={project.id} project={project} onOpenProject={setSelectedProject} />
+      ))}
+    </div>
+  </div>
+</section>
 
       {/* NEW Section: Team Extension */}
       <section id="extension" className="py-24 bg-black text-white px-4">
@@ -688,7 +692,8 @@ const App: React.FC = () => {
       </section>
 
       {/* Services */}
-      <section id="services" className="py-20 md:py-24 bg-[#FDFCE6] px-4">
+      <section id="services" 
+      className="py-20 md:py-24 bg-[#FDFCE6] px-4">
         <div className="container mx-auto max-w-7xl">
           <div className="mb-14 md:mb-20 text-center">
             <SectionTitle>CAPACIDADES</SectionTitle>
@@ -762,15 +767,15 @@ const App: React.FC = () => {
       {/* Clients */}
       <section
         id="clients"
-        className="py-24 bg-black text-white overflow-hidden relative"
+        className="w-full bg-[#1A1A1A] py-16 flex flex-col justify-center border-y border-white/10"
       >
-        <div className="container mx-auto max-w-7xl px-4 mb-16 text-center md:text-left">
-          <h2 className="text-5xl md:text-7xl font-[900] uppercase tracking-tighter text-[#EBE300]">
-            MARCAS EN LA COLMENA
-          </h2>
-        </div>
-        <div className="relative z-10 bg-[#141414] py-16 border-y-2 border-white/5">
-          <div className="flex animate-scroll-right gap-20 md:gap-32 items-center">
+        <div className="container mx-auto px-4 mb-10">
+    <h2 className="text-center text-[#EBE300] text-3xl md:text-5xl font-black uppercase tracking-tighter">
+      MARCAS EN LA COLMENA
+    </h2>
+  </div>
+        <div className="bg-[#121212] py-8 overflow-hidden"> 
+    <div className="flex items-center gap-12 animate-scroll">
             {[...CLIENTS_LIST, ...CLIENTS_LIST].map((client, i) => (
               <div
                 key={i}
