@@ -543,53 +543,43 @@ const App: React.FC = () => {
         </div>
       </section>
 
-   {/* About */}
-<section
-  id="about"
-  className="relative min-h-screen flex flex-col justify-center bg-[#FDFCE6] py-24 overflow-hidden"
->
-  <div className="container mx-auto px-4 relative z-10 max-w-7xl">
-    <div className="grid md:grid-cols-2 gap-12 lg:gap-24 items-center">
-      
-      {/* Columna Izquierda: Texto */}
-      <div className="order-2 md:order-1">
-        <span className="inline-block px-4 py-1 bg-black text-[#EBE300] font-black text-xs uppercase mb-6 rounded-full tracking-widest">
-          NOSOTROS
-        </span>
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-[800] tracking-tight leading-[1.1] text-[#1A1A1A] max-w-[18ch]">
-          EN PINTA CONTAMOS
-          <br />
-          CON UN EQUIPO
-        </h2>
-        <p className="text-lg md:text-xl text-gray-700 font-[800] mb-6 uppercase mt-6">
-          ÁGIL, FLEXIBLE Y ESTRATÉGICO
-        </p>
-        <div className="bg-white p-6 border-[3px] border-black rounded-[2rem] shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] transition-all duration-500">
-          <p className="text-lg md:text-xl font-bold leading-relaxed text-gray-800 italic">
-            "Donde otros venden ruido, nosotros entregamos resultados
-            reales. Sinergia pura."
-          </p>
+      {/* About */}
+      <section
+        id="about"
+        className="relative min-h-screen flex flex-col justify-center bg-[#FDFCE6] py-24 overflow-hidden"
+      >
+        <div className="container mx-auto px-4 relative z-10 max-w-7xl">
+          <div className="grid md:grid-cols-2 gap-16 items-center">
+            <div className="group">
+              <span className="inline-block px-4 py-1 bg-black text-[#EBE300] font-black text-xs uppercase mb-6 rounded-full tracking-widest">
+                NOSOTROS
+              </span>
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-[800] tracking-tight leading-[1.1] text-[#1A1A1A] max-w-[18ch] whitespace-nowrap">
+                EN PINTA CONTAMOS
+                <br />
+                CON UN EQUIPO
+              </h2>
+              <p className="text-lg md:text-xl text-gray-700 font-[800] mb-6 uppercase mt-6">
+                ÁGIL, FLEXIBLE Y ESTRATEGICO
+              </p>
+              <div className="bg-white p-6 border-4 border-black rounded-[2rem] shadow-xl hover:scale-100 hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] transition-all duration-500">
+                <p className="text-lg md:text-xl font-bold leading-relaxed text-gray-800 italic">
+                  "Donde otros venden ruido, nosotros entregamos resultados
+                  reales. Sinergia pura."
+                </p>
+              </div>
+            </div>
+            <div className="relative group">
+              <div className="absolute -inset-4 bg-[#EBE300] rounded-[3.5rem] opacity-0 group-hover:opacity-30 transition-all duration-700 scale-90 group-hover:scale-110 rotate-6" />
+              <img
+                src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=800"
+                className="relative rounded-[3rem] border-4 border-black w-full max-w-[400px] md:max-w-[500px] aspect-auto object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 shadow-2xl z-10"
+                alt="Equipo Pinta MKT"
+              />
+            </div>
+          </div>
         </div>
-      </div>
-
-      {/* Columna Derecha: Imagen con Margen y Glow Suave */}
-      <div className="relative group order-1 md:order-2 flex justify-center md:justify-end lg:pr-16"> 
-        
-        {/* Glow Amarillo: Sutil, centrado y expansivo */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[110%] h-[110%] bg-[#EBE300] rounded-full blur-[60px] opacity-0 group-hover:opacity-40 transition-opacity duration-700" />
-        
-        {/* Contenedor de la imagen para asegurar el recorte suave */}
-        <div className="relative overflow-hidden rounded-[3rem] border-[3px] border-black shadow-2xl z-10 transition-transform duration-500 group-hover:scale-[1.02]">
-          <img
-            src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=800"
-            className="w-full max-w-[400px] md:max-w-[480px] aspect-square object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
-            alt="Equipo Pinta MKT"
-          />
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+      </section>
 
       {/* Works */}
 
@@ -894,104 +884,345 @@ const App: React.FC = () => {
       </section>
 
       {/* Contact */}
-   {/* Contact Section */}
-<section id="contact" className="py-16 md:py-20 bg-[#FDFCE6] px-4">
-  <div className="container mx-auto max-w-6xl">
-    <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-center">
-      
-      {/* Columna Izquierda: Información Reducida */}
-      <div className="w-full lg:w-[40%]">
-        <h2 className="text-5xl md:text-6xl font-[900] uppercase tracking-tighter leading-none mb-6 text-black">
-          HABLEMOS
-        </h2>
+      <section id="contact" className="py-16 md:py-24 bg-[#FDFCE6] px-4"> {/*Reducimos el padding: py-24 md:py-32 bg-[#FDFCE6] px-4*/}
         
-        <div className="mb-8">
-          <p className="text-sm md:text-base font-black uppercase tracking-tight leading-snug">
-            <span className="bg-[#EBE300] text-black px-2 py-0.5 inline-block mb-1">
-              ¿ESTÁS LISTO PARA TRANSFORMAR TU MARCA?
-            </span>
-            <br />
-            <span className="bg-[#EBE300] text-black px-2 py-0.5 inline-block">
-              CONECTEMOS Y HAGAMOS CRECER TU COLMENA
-            </span>
-          </p>
-        </div>
+        <div className="container mx-auto max-w-6xl"> {/*Cambiamos de 7x1 a 6x1*/}
+          <div className="flex flex-col lg:flex-row gap-10 lg:gap-16 items-start"> {/*Cambiamos gap:12 y lg gap:24*/}
+            <div className="w-full lg:w-[55%]">
+              <h2 className="text-[10vw] lg:text-[5.5rem] font-[900] uppercase tracking-tighter leading-[0.85] mb-8 text-black">
+                {/*"text-[12vw] lg:text-[7rem] font-[900] uppercase tracking-tighter leading-[0.8] mb-12 text-black*/}
+                HABLEMOS
+              </h2>
+              <p className="text-2xl font-[900] text-gray-500 uppercase tracking-[0.6px] mb-10 italic drop-shadow-sm">
+                <span className="block">
+                  ¿ESTÁS LISTO PARA TRANSFORMAR TU MARCA?
+                </span>
+                <span className="block mt-">
+                  CONECTEMOS Y HAGAMOS CRECER TU COLMENA
+                </span>
+              </p>
 
-        <div className="flex flex-col gap-3">
-          {/* WhatsApp Compacto */}
-          <a href="https://wa.me/5492617007256" target="_blank" rel="noreferrer"
-            className="group bg-white border-[3px] border-black rounded-[1.5rem] shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] p-3 flex items-center justify-between transition-all hover:-translate-y-1"
-          >
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-[#EBE300] border-[2px] border-black rounded-lg flex items-center justify-center group-hover:rotate-6 transition-transform">
-                <MessageCircle size={20} className="text-black" />
-              </div>
-              <div className="leading-tight">
-                <div className="text-[8px] font-black uppercase opacity-50">WhatsApp</div>
-                <div className="font-[900] text-sm md:text-base uppercase tracking-tighter">+54 9 261 700 7256</div>
+              <div className="flex flex-col gap-8">
+                {/* Contact Cards: WhatsApp destacado + IG/LinkedIn prolijos */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                  {/* WhatsApp (destacado, horizontal, ocupa todo) */}
+                  <a
+                    href="https://wa.me/5492617007256"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="
+      min-h-[110px]
+      sm:col-span-2
+      group
+      bg-white
+      border-[4px] border-black
+      rounded-[2.5rem]
+      shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]
+      p-6 md:p-7
+      flex items-center justify-between gap-6
+      transition-all
+      hover:-translate-y-1
+      active:scale-[0.99]
+    "
+                  >
+                    <div className="flex items-center gap-5">
+                      <div
+                        className="
+          w-16 h-16
+          bg-[#EBE300]
+          border-[4px] border-black
+          rounded-2xl
+          flex items-center justify-center
+          shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]
+          group-hover:rotate-6 transition-transform
+          flex-shrink-0
+        "
+                      >
+                        <MessageCircle size={30} className="text-black" />
+                      </div>
+
+                      <div className="leading-tight">
+                        <div className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-500">
+                          WhatsApp Directo
+                        </div>
+                        <div className="font-[900] text-xl md:text-2xl uppercase tracking-tighter text-black">
+                          +54 9 261 700 7256
+                        </div>
+                      </div>
+                    </div>
+
+                    <div
+                      className="
+        hidden md:flex
+        items-center gap-3
+        px-6 py-3
+        bg-black text-[#EBE300]
+        rounded-full
+        font-black uppercase text-xs tracking-widest
+        group-hover:bg-[#EBE300] group-hover:text-black
+        border-2 border-black
+        transition-all
+        flex-shrink-0
+      "
+                    >
+                      Abrir WhatsApp <ArrowRight size={16} />
+                    </div>
+                  </a>
+                  {/* Email Highlight */}
+                  <a
+                    href="mailto:PINTAMKT@GMAIL.COM"
+                    className="
+    min-h-[110px]
+    sm:col-span-2
+    group
+    bg-white
+    border-[4px] border-black
+    rounded-[2.5rem]
+    shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]
+    p-6 md:p-7
+    flex items-center gap-6
+    transition-all
+    hover:-translate-y-1
+    active:scale-[0.99]
+  "
+                  >
+                    <div
+                      className="
+      w-16 h-16
+      bg-[#EBE300]
+      border-[4px] border-black
+      rounded-2xl
+      flex items-center justify-center
+      shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]
+      flex-shrink-0
+    "
+                    >
+                      <Mail size={30} className="text-black" />
+                    </div>
+
+                    <div className="font-[900] text-xl md:text-2xl uppercase tracking-tighter text-black">
+                      PINTAMKT@GMAIL.COM
+                    </div>
+                  </a>
+                  {/* Instagram (mini card) */}
+                  <a
+                    href="https://www.instagram.com/pintamkt/"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="
+      h-full min-h-[92px]
+      group
+      bg-black text-[#FFFFFF]
+      border-[4px] border-black
+      rounded-[2rem]
+      p-5
+      flex items-center justify-between gap-4
+      shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]
+      transition-all
+      hover:-translate-y-1
+      hover:bg-[#EBE300] hover:text-black
+      active:scale-[0.99]
+    "
+                  >
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 rounded-2xl border-2 border-black flex items-center justify-center bg-white/10 group-hover:bg-black/10">
+                        <Instagram size={22} />
+                      </div>
+                      <div className="leading-tight">
+                        <div className="text-[10px] font-black uppercase tracking-[0.2em] opacity-70">
+                          Seguinos
+                        </div>
+                        <div className="font-[900] uppercase tracking-tighter">
+                          Instagram
+                        </div>
+                      </div>
+                    </div>
+                    <ArrowRight
+                      size={18}
+                      className="opacity-80 group-hover:opacity-100"
+                    />
+                  </a>
+
+                  {/* LinkedIn (mini card) */}
+                  <a
+                    href="https://www.linkedin.com/company/pinta-marketing/?viewAsMember=true"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="
+      h-full min-h-[92px]
+      group
+      bg-black text-[#FFFFFF]
+      border-[4px] border-black
+      rounded-[2rem]
+      p-5
+      flex items-center justify-between gap-4
+      shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]
+      transition-all
+      hover:-translate-y-1
+      hover:bg-[#EBE300] hover:text-black
+      active:scale-[0.99]
+    "
+                  >
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 rounded-2xl border-2 border-black flex items-center justify-center bg-white/10 group-hover:bg-black/10">
+                        <Linkedin size={22} />
+                      </div>
+                      <div className="leading-tight">
+                        <div className="text-[10px] font-black uppercase tracking-[0.2em] opacity-70">
+                          Conectemos
+                        </div>
+                        <div className="font-[900] uppercase tracking-tighter">
+                          LinkedIn
+                        </div>
+                      </div>
+                    </div>
+                    <ArrowRight
+                      size={18}
+                      className="opacity-80 group-hover:opacity-100"
+                    />
+                  </a>
+                </div>
               </div>
             </div>
-            <div className="bg-black text-[#EBE300] px-3 py-1 rounded-full text-[9px] font-black uppercase">ABRIR</div>
-          </a>
 
-          {/* Email Compacto */}
-          <a href="mailto:PINTAMKT@GMAIL.COM" 
-            className="group bg-white border-[3px] border-black rounded-[1.5rem] shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] p-3 flex items-center gap-3 transition-all hover:-translate-y-1"
-          >
-            <div className="w-10 h-10 bg-[#EBE300] border-[2px] border-black rounded-lg flex items-center justify-center">
-              <Mail size={20} className="text-black" />
+            <div className="w-full lg:w-[45%]">
+              {submitted ? (
+                <div className="bg-white border-4 border-black p-12 rounded-[3rem] text-center shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] animate-in zoom-in duration-500">
+                  <CheckCircle
+                    className="mx-auto mb-6 text-[#EBE300]"
+                    size={64}
+                  />
+                  <h3 className="text-3xl font-[900] uppercase mb-4 tracking-tighter">
+                    ¡RECIBIDO!
+                  </h3>
+                  <p className="text-lg font-bold italic text-gray-700">
+                    "{aiAnalysis}"
+                  </p>
+                </div>
+              ) : (
+                // ✅ CONTENEDOR “PIEZA GRÁFICA” (refinado)
+                <div
+                  className="
+        relative
+        bg-[#EBE300]
+        border-[4px] border-black
+        rounded-[3.5rem]
+        p-10 md:p-12
+        shadow-[10px_10px_0px_0px_rgba(0,0,0,1)]
+        overflow-hidden
+      "
+                >
+                  {/* overlay sutil para profundidad */}
+                  <div className="pointer-events-none absolute inset-0 bg-black/5 rounded-[3.5rem]" />
+
+                  <div className="relative">
+                    {/* tag superior (estructura editorial) */}
+                    <span className="inline-block px-4 py-1 bg-black text-[#EBE300] font-black text-xs uppercase tracking-widest rounded-full mb-6">
+                      FORMULARIO
+                    </span>
+
+                    <form
+                      onSubmit={handleSubmit}
+                      className="flex flex-col gap-6"
+                    >
+                      <input
+                        type="text"
+                        placeholder="TU NOMBRE"
+                        required
+                        className="
+              w-full px-10 py-5
+              bg-[#FDFCE6]
+              border-[4px] border-black
+              rounded-full
+              font-[900] text-lg uppercase
+              outline-none
+              shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]
+              transition-all
+              focus:-translate-y-1
+              focus:shadow-[10px_10px_0px_0px_rgba(0,0,0,1)]
+            "
+                        onChange={(e) =>
+                          setFormState({ ...formState, name: e.target.value })
+                        }
+                      />
+
+                      <input
+                        type="email"
+                        placeholder="TU EMAIL"
+                        required
+                        className="
+              w-full px-10 py-5
+              bg-[#FDFCE6]
+              border-[4px] border-black
+              rounded-full
+              font-[900] text-lg uppercase
+              outline-none
+              shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]
+              transition-all
+              focus:-translate-y-1
+              focus:shadow-[10px_10px_0px_0px_rgba(0,0,0,1)]
+            "
+                        onChange={(e) =>
+                          setFormState({ ...formState, email: e.target.value })
+                        }
+                      />
+
+                      <textarea
+                        placeholder="CONTANOS TU VISIÓN..."
+                        required
+                        rows={4}
+                        className="
+              w-full px-10 py-8
+              bg-[#FDFCE6]
+              border-[4px] border-black
+              rounded-[2.5rem]
+              font-[900] text-lg uppercase
+              outline-none resize-none
+              shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]
+              transition-all
+              focus:-translate-y-1
+              focus:shadow-[10px_10px_0px_0px_rgba(0,0,0,1)]
+            "
+                        onChange={(e) =>
+                          setFormState({
+                            ...formState,
+                            message: e.target.value,
+                          })
+                        }
+                      />
+
+                      <button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className="
+              group w-full py-7
+              bg-black text-[#EBE300]
+              font-[900] text-3xl uppercase
+              rounded-full
+              transition-all
+              flex items-center justify-center gap-6
+              shadow-[10px_10px_0px_0px_rgba(0,0,0,1)]
+              hover:-translate-y-1
+              hover:shadow-[14px_14px_0px_0px_rgba(0,0,0,1)]
+              hover:bg-white hover:text-black
+              active:scale-95
+              disabled:opacity-50 disabled:cursor-not-allowed
+            "
+                      >
+                        {isSubmitting ? "ENVIANDO..." : "ENVIAR MENSAJE"}{" "}
+                        <Send
+                          size={36}
+                          className="group-hover:translate-x-2 group-hover:-translate-y-1 transition-transform"
+                        />
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              )}
             </div>
-            <div className="font-[900] text-sm md:text-base uppercase tracking-tighter">PINTAMKT@GMAIL.COM</div>
-          </a>
-
-          {/* Redes en una sola fila */}
-          <div className="grid grid-cols-2 gap-3 mt-1">
-            <a href="https://instagram.com/pintamkt" target="_blank" rel="noreferrer"
-              className="bg-black text-white border-[2px] border-black rounded-xl p-3 flex items-center justify-center gap-2 hover:bg-[#EBE300] hover:text-black transition-all"
-            >
-              <Instagram size={16} />
-              <span className="font-black uppercase text-[10px]">Instagram</span>
-            </a>
-            <a href="https://linkedin.com/..." target="_blank" rel="noreferrer"
-              className="bg-black text-white border-[2px] border-black rounded-xl p-3 flex items-center justify-center gap-2 hover:bg-[#EBE300] hover:text-black transition-all"
-            >
-              <Linkedin size={16} />
-              <span className="font-black uppercase text-[10px]">LinkedIn</span>
-            </a>
           </div>
         </div>
-      </div>
-
-      {/* Columna Derecha: El Formulario Protagonista */}
-      <div className="w-full lg:w-[50%]">
-        <div className="relative bg-[#EBE300] border-[4px] border-black rounded-[3rem] p-6 md:p-8 shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]">
-          <span className="inline-block px-4 py-1 bg-black text-[#EBE300] font-black text-xs uppercase tracking-widest rounded-full mb-8">
-            FORMULARIO
-          </span>
-
-          <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-            <input type="text" placeholder="TU NOMBRE" required
-              className="w-full px-6 py-5 bg-[#FDFCE6] border-[3px] border-black rounded-full font-[900] text-lg uppercase outline-none shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] focus:-translate-y-1 transition-all"
-            />
-            <input type="email" placeholder="TU EMAIL" required
-              className="w-full px-6 py-5 bg-[#FDFCE6] border-[3px] border-black rounded-full font-[900] text-lg uppercase outline-none shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] focus:-translate-y-1 transition-all"
-            />
-            <textarea placeholder="CONTANOS TU VISIÓN..." required rows={4}
-              className="w-full px-6 py-5 bg-[#FDFCE6] border-[3px] border-black rounded-[2rem] font-[900] text-lg uppercase outline-none resize-none shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] focus:-translate-y-1 transition-all"
-            />
-            <button type="submit" disabled={isSubmitting}
-              className="group w-full py-4 bg-black text-[#EBE300] font-[900] text-xl uppercase rounded-full transition-all flex items-center justify-center gap-4 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:bg-white hover:text-black active:scale-95"
-            >
-              {isSubmitting ? "ENVIANDO..." : "ENVIAR MENSAJE"}
-              <Send size={28} className="group-hover:translate-x-2 transition-transform" />
-            </button>
-          </form>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
+      </section>
 
       <footer className="py-12 bg-black text-white px-4 border-t border-white/10">
         <div className="container mx-auto max-w-7xl flex flex-col md:flex-row justify-between items-center gap-8 text-center">
