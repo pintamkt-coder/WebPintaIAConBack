@@ -275,8 +275,12 @@ const ProjectCard: React.FC<{
       <h3 className="text-white text-xl md:text-2xl lg:text-3xl font-[900] uppercase tracking-tighter leading-[0.9] mb-4 drop-shadow-lg">
         {project.title}
       </h3>
-      <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/15 backdrop-blur-md border border-white/40 text-white font-black uppercase text-[9px] md:text-[10px] tracking-widest rounded-full transition-all group-hover:bg-[#EBE300] group-hover:text-black group-hover:border-black group-active:scale-95 w-fit">
-        Ver Campaña <ArrowRight size={12} />
+      <div className="inline-flex items-center gap-2 px-5 py-2 bg-white/10 backdrop-blur-md border border-white/30 text-white font-medium text-sm tracking-wide rounded-full transition-all duration-300 group-hover:bg-[#EBE300] group-hover:text-black group-hover:border-black group-hover:gap-4 w-fit">
+        Ver campaña{" "}
+        <ArrowRight
+          size={14}
+          className="transition-transform group-hover:translate-x-1"
+        />
       </div>
     </div>
   </button>
@@ -553,21 +557,25 @@ const App: React.FC = () => {
           <div className="grid md:grid-cols-2 gap-12 lg:gap-24 items-center">
             {/* Columna Izquierda: Texto */}
             <div className="order-2 md:order-1">
-              <span className="inline-block px-4 py-1 bg-black text-[#EBE300] font-black text-xs uppercase mb-6 rounded-full tracking-widest">
-                NOSOTROS
+              <span className="inline-block px-4 py-1 bg-black text-[#EBE300] font-semibold text-xs mb-6 rounded-full">
+                Nosotros
               </span>
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-[800] tracking-tight leading-[1.1] text-[#1A1A1A] max-w-[18ch]">
                 EN PINTA CONTAMOS
                 <br />
                 CON UN EQUIPO
               </h2>
-              <p className="text-lg md:text-xl text-gray-700 font-[800] mb-6 uppercase mt-6">
+              <p className="text-2xl md:text-3xl text-gray-700 font-[900] mb-8 uppercase mt-3 tracking-tighter leading-tight">
                 ÁGIL, FLEXIBLE Y ESTRATÉGICO
               </p>
               <div className="bg-white p-6 border-[3px] border-black rounded-[2rem] shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] transition-all duration-500">
-                <p className="text-lg md:text-xl font-bold leading-relaxed text-gray-800 italic">
-                  Donde otros venden ruido, nosotros entregamos resultados
-                  reales. Sinergia pura.
+                <p className="text-lg md:text-xl leading-relaxed text-gray-800">
+                  <span className="font-medium">
+                    Donde otros venden ruido,{" "}
+                  </span>
+                  <span className="font-bold italic">
+                    nosotros entregamos resultados reales. Sinergia pura.
+                  </span>
                 </p>
               </div>
             </div>
@@ -634,20 +642,34 @@ const App: React.FC = () => {
             {/* 2x2 Grid with info cards */}
             <div className="grid grid-cols-2 gap-4 md:gap-6">
               {[
-                { label: "EQUIPO IN-HOUSE" },
-                { label: "CREATIVIDAD" },
-                { label: "CONSULTORÍA" },
-                { label: "RESULTADOS" },
+                {
+                  label: "EQUIPO IN-HOUSE",
+                  icon: "/icons/ICONOS WEB_EQUIPO INHOUSE.svg",
+                },
+                {
+                  label: "CREATIVIDAD",
+                  icon: "/icons/ICONOS WEB_CREATIVIDAD.svg",
+                },
+                {
+                  label: "CONSULTORÍA",
+                  icon: "/icons/ICONOS WEB_consultoria.svg",
+                },
+                {
+                  label: "RESULTADOS",
+                  icon: "/icons/ICONOS WEB_RESULTADOS.svg",
+                },
               ].map((card, i) => (
                 <div
                   key={i}
                   className="bg-[#141414] border border-white/5 p-6 rounded-[1rem] flex flex-col justify-between hover:bg-white/5 transition-colors group"
                 >
-                  <div className="w-10 h-10 bg-[#EBE300]/10 border border-[#EBE300]/20 rounded-xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
+                  <div className="w-12 h-12 bg-[#EBE300]/10 border border-[#EBE300]/20 rounded-xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
                     <img
-                      src="https://img.icons8.com/ios-filled/50/EBE300/bee.png"
-                      alt="Bee"
-                      className="w-5 h-5"
+                      src={card.icon}
+                      alt={card.label}
+                      // Subimos de w-6 a w-8 para compensar el margen interno del SVG
+                      className="w-8 h-8 object-contain"
+                      style={{ filter: "brightness(1.1)" }} // Un toque de brillo extra para el amarillo
                     />
                   </div>
                   <h3 className="font-black text-sm md:text-lg uppercase tracking-tighter leading-none">
@@ -661,8 +683,8 @@ const App: React.FC = () => {
             <div className="bg-[#EBE300] text-black rounded-[2rem] p-8 md:p-12 flex flex-col justify-center relative overflow-hidden shadow-[0_40px_80px_-20px_rgba(235,227,0,0.3)]">
               <div className="mb-8 relative z-10">
                 <div className="mb-6">
-                  <span className="inline-block px-5 py-2 bg-black text-[#EBE300] font-black text-[10px] uppercase tracking-widest rounded-full">
-                    NUESTRO VALOR
+                  <span className="inline-block px-5 py-1.5 bg-black text-[#EBE300] font-black text-[13px] mb-6 rounded-full tracking-tight">
+                    Nuestro valor
                   </span>
                 </div>
                 <div className="flex items-center gap-3 mb-8">
@@ -908,14 +930,14 @@ href="https://www.linkedin.com/company/pinta-marketing/?viewAsMember=true"*/}
                 HABLEMOS
               </h2>
 
-              <div className="mb-6">
-                <p className="text-[11px] md:text-xs font-black uppercase tracking-widest leading-tight">
-                  <span className="bg-[#EBE300] text-black px-1.5 py-0.5 inline-block mb-1">
-                    ¿ESTÁS LISTO PARA TRANSFORMAR TU MARCA?
+              <div className="mb-8">
+                <p className="leading-[1.9] inline">
+                  <span className="bg-[#EBE300] text-black px-1.5 py-1 font-black uppercase tracking-widest text-[14px] md:text-[15px]">
+                    ¿ESTÁS LISTO PARA TRANSFORMAR TU MARCA?{" "}
                   </span>
                   <br />
-                  <span className="bg-[#EBE300] text-black px-1.5 py-0.5 inline-block">
-                    CONECTEMOS Y HAGAMOS CRECER TU COLMENA
+                  <span className="bg-[#EBE300] text-black px-1.5 py-1 font-medium italic text-[15px] md:text-[17px]">
+                    Conectemos y hagamos crecer tu colmena
                   </span>
                 </p>
               </div>
@@ -1039,8 +1061,8 @@ href="https://www.linkedin.com/company/pinta-marketing/?viewAsMember=true"*/}
 
                   <div className="relative">
                     {/* tag superior (estructura editorial) */}
-                    <span className="inline-block px-4 py-1 bg-black text-[#EBE300] font-black text-xs uppercase tracking-widest rounded-full mb-6">
-                      FORMULARIO
+                    <span className="inline-block px-5 py-1.5 bg-black text-[#EBE300] font-black text-[13px] mb-6 rounded-full tracking-tight">
+                      Formulario
                     </span>
 
                     <form
