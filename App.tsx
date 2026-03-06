@@ -151,7 +151,7 @@ const PROJECTS: Project[] = [
     id: 1,
     title: "BERMÚDEZ MOYA",
     category: "MARKETING INMOBILIARIO",
-    image: "/projects/PORTADAS_BERMUDEZ.webp", // Ruta al archivo en public
+    image: "/proyects/PORTADAS_BERMUDEZ.webp", // Ruta al archivo en public
     description:
       "Estrategia de marketing inmobiliario para Bermúdez Moya en San Juan: contenidos, pauta en Meta Ads y generación de leads calificados para compra, venta y alquiler.",
     results: [
@@ -164,7 +164,7 @@ const PROJECTS: Project[] = [
     id: 2,
     title: "SAMACO",
     category: "MARKETING & PERFORMANCE",
-    image: "/projects/PORTADAS_SAMACO.webp",
+    image: "/proyects/PORTADAS_SAMACO.webp",
     description:
       "Campañas de performance para Samaco en Mendoza: Meta Ads y Google Ads, creatividad y optimización del embudo para aumentar consultas y ventas en múltiples canales.",
     results: [
@@ -177,7 +177,7 @@ const PROJECTS: Project[] = [
     id: 3,
     title: "ACTIVACIÓN FÚTBOL / STREAMING",
     category: "PRODUCCIÓN AV",
-    image: "/projects/PORTADAS_STREAMING.webp",
+    image: "/proyects/PORTADAS_STREAMING.webp",
     description:
       "Cobertura y producción audiovisual para activación deportiva: reels, contenido en vivo y piezas de alto impacto para aumentar alcance, comunidad y recordación de marca.",
     results: [
