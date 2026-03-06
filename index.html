@@ -72,6 +72,29 @@
         -ms-overflow-style: none;
         scrollbar-width: none;
       }
+      /*Respiracion o ladito smoth */
+      @keyframes breathe {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.03);
+        }
+      }
+
+      .animate-breathe {
+        animation: breathe 4s ease-in-out infinite;
+      }
+      /*Animacion para el boton CTA que redirige a el formulario*/
+      @keyframes shine {
+        100% {
+          left: 125%;
+        }
+      }
+      .animate-shine {
+        animation: shine 0.8s;
+      }
 
       .bee-path {
         stroke-dasharray: 8 8;
@@ -181,9 +204,6 @@
         }
       }
 
-
-
-      
       /* Animación para llamar la atención en CTAs */
       @keyframes cta-attention {
         0% {

@@ -1182,8 +1182,63 @@ href="https://www.linkedin.com/company/pinta-marketing/?viewAsMember=true"*/}
           </div>
         </div>
       )}
+{/* BOTÓN FLOTANTE DEFINITIVO - CLEAN & GLOW */}
+      <a 
+        href="#contact" 
+        aria-label="Contactar con Pinta MKT"
+        title="Contactar"
+        onClick={(e) => {
+          e.preventDefault();
+          const el = document.getElementById("contact");
+          if (el) window.scrollTo({ top: el.offsetTop - 80, behavior: "smooth" });
+        }}
+        className="
+          fixed bottom-5 right-5 md:bottom-8 md:right-8 z-[90]
+          group flex items-center gap-4 bg-[#EBE300] 
+          border-[2px] border-black rounded-full 
+          px-4 py-2 md:px-5 md:py-2.5
+          shadow-lg
+          transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)]
+          
+          /* HOVER: Escala equilibrada y Glow Amarillo */
+          hover:scale-[1.05]
+          hover:shadow-[0_0_25px_5px_rgba(235,227,0,0.6)]
+          active:scale-95
+          cursor-pointer
+        "
+      >
+        {/* Texto: Mantenemos el peso visual fuerte */}
+        <div className="relative z-10 flex flex-col leading-tight text-left pl-1">
+          <span className="text-[10px] md:text-[11px] font-[900] uppercase text-black tracking-tight select-none">
+            NOT PINTA <br /> NOT MKT
+          </span>
+        </div>
+
+        {/* Círculo Icono: Se mantiene estático y centrado */}
+        <div className="
+          relative z-10 flex-shrink-0
+          w-7 h-7 md:w-8 md:h-8 bg-black rounded-full flex items-center justify-center
+          transition-transform duration-500 group-hover:rotate-[12deg]
+        ">
+          <MessageCircle 
+            size={14} 
+            className="text-[#EBE300] transition-transform duration-500 group-hover:scale-110" 
+          />
+        </div>
+
+        {/* Brillo de barrido (Shine) */}
+        <div className="absolute inset-0 overflow-hidden rounded-full pointer-events-none z-0">
+          <div className="
+            absolute -inset-full top-0 block h-full w-1/2 
+            -skew-x-12 bg-gradient-to-r from-transparent via-white/40 to-transparent 
+            opacity-0 group-hover:opacity-100 group-hover:animate-shine
+          " />
+        </div>
+      </a>
     </div>
+    
   );
+  
 };
 
 export default App;
