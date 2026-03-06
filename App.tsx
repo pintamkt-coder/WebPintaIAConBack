@@ -207,7 +207,7 @@ const CLIENTS_LIST: Client[] = [
 
 // --- Helpers ---
 const analyzeLeadWithAI = async () => {
-  return "Tu visión tiene un potencial increíble. En Pinta MKT estamos listos para transformarla en resultados reales.";
+  return "Ya recibimos tu consulta.";
 };
 
 const notifyBackend = async (data: any) => {
@@ -565,8 +565,8 @@ const App: React.FC = () => {
               </p>
               <div className="bg-white p-6 border-[3px] border-black rounded-[2rem] shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] transition-all duration-500">
                 <p className="text-lg md:text-xl font-bold leading-relaxed text-gray-800 italic">
-                  "Donde otros venden ruido, nosotros entregamos resultados
-                  reales. Sinergia pura."
+                  Donde otros venden ruido, nosotros entregamos resultados
+                  reales. Sinergia pura.
                 </p>
               </div>
             </div>
@@ -625,8 +625,7 @@ const App: React.FC = () => {
               EQUIPO?
             </h2>
             <p className="text-sm md:text-base font-black text-white/50 uppercase tracking-[0.2em] max-w-2xl mx-auto">
-              OLVÍDATE DEL OUTSOURCING TRADICIONAL. <br />
-              SOMOS PINTA MKT, TU ALIADO ESTRATÉGICO DIARIO.
+              SOMOS PINTA MKT, TU ALIADO ESTRATÉGICO.
             </p>
           </div>
 
@@ -973,21 +972,53 @@ href="https://www.linkedin.com/company/pinta-marketing/?viewAsMember=true"*/}
 
             {/* Columna Derecha: Formulario Compacto */}
 
-            <div className="w-full lg:w-[55%]">
-              {submitted ? (
-                <div className="relative bg-[#EBE300] border-[3px] border-black rounded-[2rem] p-6 md:p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
-                  <CheckCircle
-                    className="mx-auto mb-6 text-[#EBE300]"
-                    size={64}
-                  />
-                  <h3 className="text-3xl font-[900] uppercase mb-4 tracking-tighter">
-                    ¡RECIBIDO!
-                  </h3>
-                  <p className="text-lg font-bold italic text-gray-700">
-                    "{aiAnalysis}"
-                  </p>
-                </div>
-              ) : (
+          <div className="w-full lg:w-[55%]">
+  {submitted ? (
+    /* ✅ MENSAJE DE ÉXITO: COHERENCIA TOTAL CON LA PIEZA GRÁFICA */
+    <div className="
+      relative
+      bg-[#EBE300]
+      border-[4px] border-black
+      rounded-[3.5rem]
+      p-10 md:p-12
+      shadow-[10px_10px_0px_0px_rgba(0,0,0,1)]
+      overflow-hidden
+      flex flex-col items-center text-center
+      min-h-[450px] justify-center
+      animate-in fade-in zoom-in duration-500
+    ">
+      {/* Overlay sutil para profundidad (igual al formulario) */}
+      <div className="pointer-events-none absolute inset-0 bg-black/5 rounded-[3.5rem]" />
+
+      <div className="relative flex flex-col items-center">
+        {/* Tag superior (estructura editorial) */}
+        <span className="inline-block px-4 py-1 bg-black text-[#EBE300] font-black text-xs uppercase tracking-widest rounded-full mb-8">
+          ESTADO: ENVIADO
+        </span>
+
+        {/* Icono con fondo negro para contraste neobrutalista */}
+        <div className="w-20 h-20 bg-black rounded-full flex items-center justify-center mb-6 shadow-[5px_5px_0px_0px_rgba(0,0,0,0.2)]">
+          <CheckCircle size={40} className="text-[#EBE300]" />
+        </div>
+
+        <h3 className="text-4xl md:text-5xl font-[900] uppercase mb-4 tracking-tighter leading-none text-black">
+          ¡RECIBIDO!
+        </h3>
+
+        <p className="text-lg md:text-xl font-bold italic text-black/80 max-w-[280px] md:max-w-md leading-tight">
+          "{aiAnalysis}"
+        </p>
+
+        {/* Botón para resetear (opcional, por si quieren mandar otro) */}
+        <button 
+          onClick={() => setSubmitted(false)}
+          className="mt-10 text-xs font-black uppercase tracking-widest text-black/40 hover:text-black transition-colors underline"
+        >
+          Enviar otro mensaje
+        </button>
+      </div>
+    </div>
+  ) : (
                 // ✅ CONTENEDOR “PIEZA GRÁFICA” (refinado)
                 <div
                   className="
