@@ -206,8 +206,9 @@ const CLIENTS_LIST: Client[] = [
 ];
 
 // --- Helpers ---
-const analyzeLeadWithAI = async () => {
-  return "Ya recibimos tu consulta.";
+const analyzeLeadWithAI = async (name: string, message: string) => {
+  // Aquí podrías usar el name o message para personalizar, pero por ahora:
+  return "Tu visión tiene un potencial increíble. En Pinta MKT estamos listos para transformarla en resultados reales.";
 };
 
 const notifyBackend = async (data: any) => {
@@ -378,7 +379,7 @@ const App: React.FC = () => {
   useEffect(() => {
     if (!showRecaptcha) return;
 
-    const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
+    const siteKey = (import.meta as any).env.VITE_RECAPTCHA_SITE_KEY;
     if (!siteKey) {
       alert("Falta VITE_RECAPTCHA_SITE_KEY en el entorno.");
       setShowRecaptcha(false);
@@ -972,10 +973,11 @@ href="https://www.linkedin.com/company/pinta-marketing/?viewAsMember=true"*/}
 
             {/* Columna Derecha: Formulario Compacto */}
 
-          <div className="w-full lg:w-[55%]">
-  {submitted ? (
-    /* ✅ MENSAJE DE ÉXITO: COHERENCIA TOTAL CON LA PIEZA GRÁFICA */
-    <div className="
+            <div className="w-full lg:w-[55%]">
+              {submitted ? (
+                /* ✅ MENSAJE DE ÉXITO: COHERENCIA TOTAL CON LA PIEZA GRÁFICA */
+                <div
+                  className="
       relative
       bg-[#EBE300]
       border-[4px] border-black
@@ -986,39 +988,40 @@ href="https://www.linkedin.com/company/pinta-marketing/?viewAsMember=true"*/}
       flex flex-col items-center text-center
       min-h-[450px] justify-center
       animate-in fade-in zoom-in duration-500
-    ">
-      {/* Overlay sutil para profundidad (igual al formulario) */}
-      <div className="pointer-events-none absolute inset-0 bg-black/5 rounded-[3.5rem]" />
+    "
+                >
+                  {/* Overlay sutil para profundidad (igual al formulario) */}
+                  <div className="pointer-events-none absolute inset-0 bg-black/5 rounded-[3.5rem]" />
 
-      <div className="relative flex flex-col items-center">
-        {/* Tag superior (estructura editorial) */}
-        <span className="inline-block px-4 py-1 bg-black text-[#EBE300] font-black text-xs uppercase tracking-widest rounded-full mb-8">
-          ESTADO: ENVIADO
-        </span>
+                  <div className="relative flex flex-col items-center">
+                    {/* Tag superior (estructura editorial) */}
+                    <span className="inline-block px-4 py-1 bg-black text-[#EBE300] font-black text-xs uppercase tracking-widest rounded-full mb-8">
+                      ESTADO: ENVIADO
+                    </span>
 
-        {/* Icono con fondo negro para contraste neobrutalista */}
-        <div className="w-20 h-20 bg-black rounded-full flex items-center justify-center mb-6 shadow-[5px_5px_0px_0px_rgba(0,0,0,0.2)]">
-          <CheckCircle size={40} className="text-[#EBE300]" />
-        </div>
+                    {/* Icono con fondo negro para contraste neobrutalista */}
+                    <div className="w-20 h-20 bg-black rounded-full flex items-center justify-center mb-6 shadow-[5px_5px_0px_0px_rgba(0,0,0,0.2)]">
+                      <CheckCircle size={40} className="text-[#EBE300]" />
+                    </div>
 
-        <h3 className="text-4xl md:text-5xl font-[900] uppercase mb-4 tracking-tighter leading-none text-black">
-          ¡RECIBIDO!
-        </h3>
+                    <h3 className="text-4xl md:text-5xl font-[900] uppercase mb-4 tracking-tighter leading-none text-black">
+                      ¡RECIBIDO!
+                    </h3>
 
-        <p className="text-lg md:text-xl font-bold italic text-black/80 max-w-[280px] md:max-w-md leading-tight">
-          "{aiAnalysis}"
-        </p>
+                    <p className="text-lg md:text-xl font-bold italic text-black/80 max-w-[280px] md:max-w-md leading-tight">
+                      "{aiAnalysis}"
+                    </p>
 
-        {/* Botón para resetear (opcional, por si quieren mandar otro) */}
-        <button 
-          onClick={() => setSubmitted(false)}
-          className="mt-10 text-xs font-black uppercase tracking-widest text-black/40 hover:text-black transition-colors underline"
-        >
-          Enviar otro mensaje
-        </button>
-      </div>
-    </div>
-  ) : (
+                    {/* Botón para resetear (opcional, por si quieren mandar otro) */}
+                    <button
+                      onClick={() => setSubmitted(false)}
+                      className="mt-10 text-xs font-black uppercase tracking-widest text-black/40 hover:text-black transition-colors underline"
+                    >
+                      Enviar otro mensaje
+                    </button>
+                  </div>
+                </div>
+              ) : (
                 // ✅ CONTENEDOR “PIEZA GRÁFICA” (refinado)
                 <div
                   className="
@@ -1213,15 +1216,16 @@ href="https://www.linkedin.com/company/pinta-marketing/?viewAsMember=true"*/}
           </div>
         </div>
       )}
-{/* BOTÓN FLOTANTE DEFINITIVO - CLEAN & GLOW */}
-      <a 
-        href="#contact" 
+      {/* BOTÓN FLOTANTE DEFINITIVO - CLEAN & GLOW */}
+      <a
+        href="#contact"
         aria-label="Contactar con Pinta MKT"
         title="Contactar"
         onClick={(e) => {
           e.preventDefault();
           const el = document.getElementById("contact");
-          if (el) window.scrollTo({ top: el.offsetTop - 80, behavior: "smooth" });
+          if (el)
+            window.scrollTo({ top: el.offsetTop - 80, behavior: "smooth" });
         }}
         className="
           fixed bottom-5 right-5 md:bottom-8 md:right-8 z-[90]
@@ -1246,30 +1250,32 @@ href="https://www.linkedin.com/company/pinta-marketing/?viewAsMember=true"*/}
         </div>
 
         {/* Círculo Icono: Se mantiene estático y centrado */}
-        <div className="
+        <div
+          className="
           relative z-10 flex-shrink-0
           w-7 h-7 md:w-8 md:h-8 bg-black rounded-full flex items-center justify-center
           transition-transform duration-500 group-hover:rotate-[12deg]
-        ">
-          <MessageCircle 
-            size={14} 
-            className="text-[#EBE300] transition-transform duration-500 group-hover:scale-110" 
+        "
+        >
+          <MessageCircle
+            size={14}
+            className="text-[#EBE300] transition-transform duration-500 group-hover:scale-110"
           />
         </div>
 
         {/* Brillo de barrido (Shine) */}
         <div className="absolute inset-0 overflow-hidden rounded-full pointer-events-none z-0">
-          <div className="
+          <div
+            className="
             absolute -inset-full top-0 block h-full w-1/2 
             -skew-x-12 bg-gradient-to-r from-transparent via-white/40 to-transparent 
             opacity-0 group-hover:opacity-100 group-hover:animate-shine
-          " />
+          "
+          />
         </div>
       </a>
     </div>
-    
   );
-  
 };
 
 export default App;
