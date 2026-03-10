@@ -41,7 +41,8 @@ if (!$RECAPTCHA_SECRET || !$SMTP_HOST || !$SMTP_USER || !$SMTP_PASS) {
 // ===== CORS =====
 $allowed_origins = [
   "https://pintamkt.online",
-  "https://www.pintamkt.online"
+  "https://www.pintamkt.online",
+  'https://pintamkt.com'
 ];
 
 $origin = $_SERVER['HTTP_ORIGIN'] ?? '';
