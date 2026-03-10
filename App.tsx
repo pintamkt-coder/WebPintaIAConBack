@@ -21,7 +21,7 @@ import {
 } from "lucide-react";
 
 // import { GoogleGenAI } from "@google/genai";
-
+//Configuracion de la app
 // --- Configuration & API ---
 const API_ENDPOINT = "/api/contact.php";
 
