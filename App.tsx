@@ -193,7 +193,7 @@ const PROJECTS: Project[] = [
   },
   {
     id: 4,
-    title: "GRAND BAR",
+    title: "GRANDBAR",
     category: "Rebranding · RRSS · Catálogos.",
     image: "/clients/GrandBar.png",
     description:
