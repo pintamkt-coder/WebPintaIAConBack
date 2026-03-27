@@ -632,7 +632,53 @@ const App: React.FC = () => {
       </section>
 
       {/*Nueva seccion --- Metodologia*/}
-      
+      <section id="metodologia" className="py-20 bg-[#1A1A1A] px-4">
+  <div className="container mx-auto max-w-4xl">
+    <span className="inline-block px-4 py-1 bg-[#EBE300] text-black font-black text-xs uppercase tracking-widest rounded-full mb-7">
+      Nuestra metodología
+    </span>
+    <h2 className="text-4xl md:text-5xl lg:text-6xl font-[900] uppercase tracking-tighter leading-none text-white mb-14">
+      Nuestro equipo<br />se define por
+      <span className="text-[#EBE300]">...</span>
+    </h2>
+
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      {[
+        { num: "1", title: "Resultados reales y medibles", desc: "Cada acción tiene métricas claras. Sin humo, solo datos." },
+        { num: "2", title: "Trabajo en equipo y colaboración", desc: "Nos integramos como parte de tu empresa, no como externos." },
+        { num: "3", title: "Creatividad con estrategia", desc: "Las ideas tienen que funcionar. Las ideas bonitas que no convierten no sirven." },
+        { num: "4", title: "Cercanía y autenticidad", desc: "Comunicación directa, sin vueltas, sin burocracia." },
+      ].map((item) => (
+        <div
+          key={item.num}
+          className="bg-[#111] border-[2px] border-white/5 rounded-[1.25rem] p-7 flex items-start gap-5 hover:border-[#EBE300] hover:-translate-y-1 transition-all duration-300"
+        >
+          <div className="flex-shrink-0 w-9 h-9 bg-[#EBE300] rounded-[10px] flex items-center justify-center font-[900] text-[15px] text-black">
+            {item.num}
+          </div>
+          <div>
+            <h3 className="font-[900] uppercase text-[13px] tracking-wide text-white mb-1.5 leading-tight">
+              {item.title}
+            </h3>
+            <p className="text-[12px] text-white/45 leading-relaxed font-medium">
+              {item.desc}
+            </p>
+          </div>
+        </div>
+      ))}
+
+      {/* Card #5 destacada */}
+      <div className="sm:col-span-2 bg-[#EBE300] border-[2px] border-black rounded-[1.25rem] p-7 flex items-center gap-5">
+        <div className="flex-shrink-0 w-10 h-10 bg-black rounded-[12px] flex items-center justify-center">
+          <img src="https://img.icons8.com/ios-filled/50/EBE300/bee.png" className="w-5 h-5" alt="bee" />
+        </div>
+        <h3 className="font-[900] uppercase text-[15px] tracking-tight text-black leading-tight">
+          Claridad y cero humo — #5
+        </h3>
+      </div>
+    </div>
+  </div>
+</section>
 
 
 
