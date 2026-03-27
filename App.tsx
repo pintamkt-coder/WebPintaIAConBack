@@ -18,6 +18,7 @@ import {
   Award,
   Users,
   MessageCircle,
+  BarChart2,
 } from "lucide-react";
 
 // import { GoogleGenAI } from "@google/genai";
@@ -121,7 +122,7 @@ const SERVICES: Service[] = [
     id: 2,
     title: "SISTEMAS DIGITALES & AUTOMATIZACIÓN CON IA",
     tag: "AUTOMATIZACIÓN",
-    icon: <Video className="w-8 h-8 md:w-10 md:h-10" />,
+    icon: <Cpu className="w-8 h-8 md:w-10 md:h-10" />,
     items: [
       "Automatización de procesos internos",
       "Implementación y configuración de CRM",
@@ -136,7 +137,7 @@ const SERVICES: Service[] = [
     id: 3,
     title: "UNIDAD FINANCIERA & COMPLIANCE",
     tag: "FINANZAS",
-    icon: <Cpu className="w-8 h-8 md:w-10 md:h-10" />,
+    icon:<BarChart2 className="w-8 h-8 md:w-10 md:h-10" />,
     items: [
       "Diagnóstico Financiero Integral",
       "Planeamiento Financiero",
