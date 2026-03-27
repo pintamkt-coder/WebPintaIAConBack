@@ -631,50 +631,140 @@ const App: React.FC = () => {
         </div>
       </section>
 
-      {/*Nueva seccion --- Metodologia*/}
-      <section id="metodologia" className="py-20 bg-[#1A1A1A] px-4">
-  <div className="container mx-auto max-w-4xl">
-    <span className="inline-block px-4 py-1 bg-[#EBE300] text-black font-black text-xs uppercase tracking-widest rounded-full mb-7">
+{/* METODOLOGÍA / CAMINITO */}
+<section id="methodology" className="py-24 bg-[#0B0B0B] px-4 overflow-hidden">
+  <div className="container mx-auto max-w-7xl relative">
+   <div className="relative z-10 mb-14 md:mb-16">
+  <div className="mb-6">
+    <span className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm text-[#F5F1E8] text-[11px] md:text-xs font-[800] uppercase tracking-[0.18em] shadow-[0_8px_24px_rgba(0,0,0,0.25)]">
+      <span className="block w-2.5 h-2.5 rounded-full bg-[#EBE300]" />
       Nuestra metodología
     </span>
-    <h2 className="text-4xl md:text-5xl lg:text-6xl font-[900] uppercase tracking-tighter leading-none text-white mb-14">
-      Nuestro equipo<br />se define por
-      <span className="text-[#EBE300]">...</span>
-    </h2>
+  </div>
 
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-      {[
-        { num: "1", title: "Resultados reales y medibles", desc: "Cada acción tiene métricas claras. Sin humo, solo datos." },
-        { num: "2", title: "Trabajo en equipo y colaboración", desc: "Nos integramos como parte de tu empresa, no como externos." },
-        { num: "3", title: "Creatividad con estrategia", desc: "Las ideas tienen que funcionar. Las ideas bonitas que no convierten no sirven." },
-        { num: "4", title: "Cercanía y autenticidad", desc: "Comunicación directa, sin vueltas, sin burocracia." },
-      ].map((item) => (
-        <div
-          key={item.num}
-          className="bg-[#111] border-[2px] border-white/5 rounded-[1.25rem] p-7 flex items-start gap-5 hover:border-[#EBE300] hover:-translate-y-1 transition-all duration-300"
-        >
-          <div className="flex-shrink-0 w-9 h-9 bg-[#EBE300] rounded-[10px] flex items-center justify-center font-[900] text-[15px] text-black">
-            {item.num}
-          </div>
-          <div>
-            <h3 className="font-[900] uppercase text-[13px] tracking-wide text-white mb-1.5 leading-tight">
-              {item.title}
-            </h3>
-            <p className="text-[12px] text-white/45 leading-relaxed font-medium">
-              {item.desc}
-            </p>
-          </div>
-        </div>
-      ))}
+  <h2 className="max-w-[760px] text-white font-[900] uppercase tracking-[-0.045em] leading-[0.9] text-4xl md:text-6xl lg:text-7xl">
+    NUESTRO EQUIPO
+    <br />
+    <span className="text-[#F5F1E8]">SE DEFINE POR</span>
+    <span className="text-[#EBE300]">...</span>
+  </h2>
+</div>
+    <div className="relative h-[760px] md:h-[820px]">
+      {/* CAMINO */}
+      <svg
+        className="absolute inset-0 w-full h-full z-0 pointer-events-none"
+        viewBox="0 0 1200 820"
+        preserveAspectRatio="none"
+        fill="none"
+      >
+        <path
+  d="
+    M 320 120
+    H 760
+    Q 820 120 820 170
+    V 155
+    Q 820 130 900 130
+    H 1030
 
-      {/* Card #5 destacada */}
-      <div className="sm:col-span-2 bg-[#EBE300] border-[2px] border-black rounded-[1.25rem] p-7 flex items-center gap-5">
-        <div className="flex-shrink-0 w-10 h-10 bg-black rounded-[12px] flex items-center justify-center">
-          <img src="https://img.icons8.com/ios-filled/50/EBE300/bee.png" className="w-5 h-5" alt="bee" />
+    Q 1090 130 1090 210
+    V 250
+    Q 1090 320 950 320
+    H 600
+
+    Q 600 320 600 380
+    V 420
+
+    Q 600 480 800 480
+    H 1000
+
+    Q 1100 480 1100 580
+    V 650
+
+    Q 1100 740 900 740
+    H 400
+
+    Q 250 740 250 620
+    
+    
+  "
+  stroke="rgba(255,255,255,0.14)"
+  strokeWidth="2.5"
+  strokeDasharray="8 10"
+  strokeLinecap="round"
+  strokeLinejoin="round"
+/>
+      </svg>
+
+      {/* CARD #1 */}
+      <div className="absolute left-[20px] top-[70px] z-10">
+        <div className="relative bg-[#EBE300] rounded-[1.8rem] border-[4px] border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] px-8 py-7 min-w-[260px]">
+          <span className="absolute -top-5 right-[-14px] w-14 h-14 bg-white rounded-full border-[3px] border-black flex items-center justify-center text-black font-[900] text-xl shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+            #1
+          </span>
+          <h3 className="text-black font-[700] uppercase leading-[1.05] text-[20px] md:text-[22px]">
+            RESULTADOS
+            <br />
+            REALES Y MEDIBLES
+          </h3>
         </div>
-        <h3 className="font-[900] uppercase text-[15px] tracking-tight text-black leading-tight">
-          Claridad y cero humo — #5
-        </h3>
+      </div>
+
+      {/* CARD #2 */}
+      <div className="absolute right-[10px] top-[150px] z-10">
+        <div className="relative bg-[#EBE300] rounded-[1.8rem] border-[4px] border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] px-8 py-7 min-w-[300px]">
+          <span className="absolute -top-5 right-[-14px] w-14 h-14 bg-white rounded-full border-[3px] border-black flex items-center justify-center text-black font-[900] text-xl shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+            #2
+          </span>
+          <h3 className="text-black font-[700] uppercase leading-[1.05] text-[20px] md:text-[22px]">
+            TRABAJO
+            <br />
+            EN EQUIPO Y
+            <br />
+            COLABORACIÓN
+          </h3>
+        </div>
+      </div>
+
+      {/* CARD #3 */}
+      <div className="absolute left-[360px] top-[305px] z-10">
+        <div className="relative bg-[#EBE300] rounded-[1.8rem] border-[4px] border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] px-8 py-7 min-w-[300px]">
+          <span className="absolute -top-5 left-[-14px] w-14 h-14 bg-white rounded-full border-[3px] border-black flex items-center justify-center text-black font-[900] text-xl shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+            #3
+          </span>
+          <h3 className="text-black font-[700] uppercase leading-[1.05] text-[20px] md:text-[22px]">
+            CREATIVIDAD
+            <br />
+            CON ESTRATEGIA
+          </h3>
+        </div>
+      </div>
+
+      {/* CARD #4 */}
+      <div className="absolute right-[25px] bottom-[90px] z-10">
+        <div className="relative bg-[#EBE300] rounded-[1.8rem] border-[4px] border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] px-8 py-7 min-w-[290px]">
+          <span className="absolute -bottom-5 right-[18px] w-14 h-14 bg-white rounded-full border-[3px] border-black flex items-center justify-center text-black font-[900] text-xl shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+            #4
+          </span>
+          <h3 className="text-black font-[700] uppercase leading-[1.05] text-[20px] md:text-[22px]">
+            CERCANÍA Y
+            <br />
+            AUTENTICIDAD
+          </h3>
+        </div>
+      </div>
+
+      {/* CARD #5 */}
+      <div className="absolute left-[20px] bottom-[160px] z-10">
+        <div className="relative bg-[#EBE300] rounded-[1.8rem] border-[4px] border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] px-8 py-7 min-w-[260px]">
+          <span className="absolute -top-5 right-[-14px] w-14 h-14 bg-white rounded-full border-[3px] border-black flex items-center justify-center text-black font-[900] text-xl shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+            #5
+          </span>
+          <h3 className="text-black font-[700] uppercase leading-[1.05] text-[20px] md:text-[22px]">
+            CLARIDAD Y
+            <br />
+            CERO HUMO
+          </h3>
+        </div>
       </div>
     </div>
   </div>
