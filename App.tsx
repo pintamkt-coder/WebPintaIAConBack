@@ -106,12 +106,12 @@ const SERVICES: Service[] = [
     tag: "ESTRATEGIA",
     icon: <Globe className="w-8 h-8 md:w-10 md:h-10" />,
     items: [
-      "Branding y posicionamiento",
-      "Campañas pagas en meta y google ads",
-      "Campañas en medios tradicionales",
+      "Branding - Posicionamiento de marca",
+      "Campañas pagas en Meta y Google Ads",
+      "Campañas en medios tradicionales y vía publica",
       "Gestión de redes sociales",
       "Google My Business",
-      "Planificación de contenidos",
+      "WhatsApp Business",
       "Email marketing",
       "Reportes y métricas de resultados",
     ],
@@ -119,28 +119,33 @@ const SERVICES: Service[] = [
   },
   {
     id: 2,
-    title: "PRODUCCIÓN AUDIOVISUAL & STREAMING",
-    tag: "CONTENIDO",
+    title: "SISTEMAS DIGITALES & AUTOMATIZACIÓN CON IA",
+    tag: "AUTOMATIZACIÓN",
     icon: <Video className="w-8 h-8 md:w-10 md:h-10" />,
     items: [
-      "Podcasts y clips",
-      "Spots publicitarios",
-      "Documentales",
-      "Asesoría creativa y técnica",
-      "Streaming y eventos",
+      "Automatización de procesos internos",
+      "Implementación y configuración de CRM",
+      "Integración de canales (Web, WhatsApp, RRSS, etc)",
+      "Desarollo de agentes con IA",
+      "Chatbots inteligentes",
+      "Desarollo web",
     ],
-    cta: "Info Producción",
+    cta: "Automatización",
   },
   {
     id: 3,
-    title: "DESAROLLO WEB, AUTOMATIZACIÓN Y CHAT BOT",
-    tag: "TECNOLOGÍA",
+    title: "UNIDAD FINANCIERA & COMPLIANCE",
+    tag: "FINANZAS",
     icon: <Cpu className="w-8 h-8 md:w-10 md:h-10" />,
     items: [
-      "Desarrollo Web / eCommerce",
-      "Chatbots con IA",
-      "Automatización de CRM",
-      "Soporte Técnico",
+      "Diagnóstico Financiero Integral",
+      "Planeamiento Financiero",
+      "Gestión de Financiamiento",
+      "Dirección Financiera Externa",
+      "Programa de integridad",
+      "Gestión de Riesgos Corporativos",
+      "Gobierno Corporativo",
+      "Oficial de Cumplimiento Externo",
     ],
     cta: "Automatizar",
   },
@@ -150,8 +155,8 @@ const PROJECTS: Project[] = [
   {
     id: 1,
     title: "BERMÚDEZ MOYA",
-    category: "MARKETING INMOBILIARIO",
-    image: "/proyects/PORTADAS_BERMUDEZ.webp", // Ruta al archivo en public
+    category: "Branding · Performance · RRSS.",
+    image: "/clients/Bermúdez_Moya.png", // Ruta al archivo en public
     description:
       "Estrategia de marketing inmobiliario para Bermúdez Moya en San Juan: contenidos, pauta en Meta Ads y generación de leads calificados para compra, venta y alquiler.",
     results: [
@@ -163,8 +168,8 @@ const PROJECTS: Project[] = [
   {
     id: 2,
     title: "SAMACO",
-    category: "MARKETING & PERFORMANCE",
-    image: "/proyects/PORTADAS_SAMACO.webp",
+    category: "Performance · WEB · RRSS · Chatbot",
+    image: "/clients/Samaco.png",
     description:
       "Campañas de performance para Samaco en Mendoza: Meta Ads y Google Ads, creatividad y optimización del embudo para aumentar consultas y ventas en múltiples canales.",
     results: [
@@ -175,9 +180,9 @@ const PROJECTS: Project[] = [
   },
   {
     id: 3,
-    title: "ACTIVACIÓN FÚTBOL / STREAMING",
-    category: "PRODUCCIÓN AV",
-    image: "/proyects/PORTADAS_STREAMING.webp",
+    title: "CUBOS DE CHACRAS",
+    category: "Branding · Performance · RRSS.",
+    image: "/clients/Cubos_de_Chacras.png",
     description:
       "Cobertura y producción audiovisual para activación deportiva: reels, contenido en vivo y piezas de alto impacto para aumentar alcance, comunidad y recordación de marca.",
     results: [
@@ -186,6 +191,34 @@ const PROJECTS: Project[] = [
       { label: "Retención", value: "+25%", icon: <Zap size={16} /> },
     ],
   },
+  {
+    id: 4,
+    title: "GRAND BAR",
+    category: "Rebranding · RRSS · Catálogos.",
+    image: "/clients/GrandBar.png",
+    description:
+      "Cobertura y producción audiovisual para activación deportiva: reels, contenido en vivo y piezas de alto impacto para aumentar alcance, comunidad y recordación de marca.",
+    results: [
+      { label: "Views", value: "300k+", icon: <TrendingUp size={16} /> },
+      { label: "Engagement", value: "+90%", icon: <Users size={16} /> },
+      { label: "Retención", value: "+25%", icon: <Zap size={16} /> },
+    ],
+  },
+  {
+    id: 5,
+    title: "FENIKKS",
+    category: "Web · RRSS · Activaciones.",
+    image: "/clients/Fenikks.png",
+    description:
+      "Cobertura y producción audiovisual para activación deportiva: reels, contenido en vivo y piezas de alto impacto para aumentar alcance, comunidad y recordación de marca.",
+    results: [
+      { label: "Views", value: "300k+", icon: <TrendingUp size={16} /> },
+      { label: "Engagement", value: "+90%", icon: <Users size={16} /> },
+      { label: "Retención", value: "+25%", icon: <Zap size={16} /> },
+    ],
+  },
+
+
 ];
 
 const CLIENTS_LIST: Client[] = [
@@ -196,6 +229,8 @@ const CLIENTS_LIST: Client[] = [
   { name: "Burgery", logo: "/clients/Burgery.png" },
   { name: "Bermúdez Moya", logo: "/clients/Bermúdez_Moya.png" },
   { name: "GrandBar", logo: "/clients/GrandBar.png" },
+  {name: "Samaco", logo: "/clients/Samaco.png"},
+  {name: "Fenikks", logo: "/clients/Fenikks.png"},
   {
     name: "Teatro del Bicentenario",
     logo: "/clients/Teatro_del_Bicentenario.png",
@@ -264,8 +299,8 @@ const ProjectCard: React.FC<{
       />
     </div>
 
-    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent flex flex-col justify-end p-6 md:p-8 z-10">
-      <span className="text-[#EBE300] text-[10px] md:text-xs font-black uppercase mb-1 tracking-[0.2em] drop-shadow-md">
+    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/30 flex flex-col justify-end p-6 md:p-8 z-10">
+      <span className="text-[#EBE300] text-[9px] font-black uppercase mb-1 tracking-[0.15em] drop-shadow-md truncate block max-w-[85%]">
         {project.category}
       </span>
       {/* Reducimos un poco el tamaño de la fuente del título */}
@@ -519,10 +554,10 @@ const App: React.FC = () => {
   "
           >
             <span className="text-white">
-              {"COMO LAS ABEJAS TRANSFORMAN NECTAR\nEN MIEL, "}
+              {"EN PINTA POTENCIAMOS IDEAS Y TRANSFORMAMOS\n NEGOCIOS, "}
             </span>
             <span className="text-[#EBE300]">
-              {"NOSOTROS TRANSFORMAMOS\nIDEAS EN NEGOCIOS."}
+              {"CON UNA MIRADA ESTRATÉGICA,\n CREATIVA Y HUMANA."}
             </span>
           </h1>
           <a
@@ -537,10 +572,10 @@ const App: React.FC = () => {
                 });
               }
             }}
-            className="inline-flex items-center gap-4 px-8 py-5 bg-[#EBE300] text-black font-[800] text-xl uppercase tracking-tighter hover:bg-white transition-all rounded-full shadow-lg"
+            className="inline-flex items-center gap-4 px-8 py-5 bg-[#EBE300] text-black font-[600] text-xl tracking-tighter hover:bg-white transition-all rounded-full shadow-lg"
           >
             {/*inline-flex items-center gap-4 px-12 py-6 bg-[#EBE300] text-black font-[900] text-xl uppercase tracking-tighter hover:bg-white transition-all rounded-full shadow-lg"*/}
-            Descubrir <ArrowRight size={24} />
+            Contactanos <ArrowRight size={24} />
           </a>
         </div>
       </section>
@@ -568,10 +603,10 @@ const App: React.FC = () => {
               <div className="bg-white p-6 border-[3px] border-black rounded-[2rem] shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] transition-all duration-500">
                 <p className="text-lg md:text-xl leading-relaxed text-gray-800">
                   <span className="font-medium">
-                    Donde otros venden ruido,{" "}
+                    Contamos con equipos multidisciplinarios,{" "}
                   </span>
                   <span className="font-bold italic">
-                    nosotros entregamos resultados reales. Sinergia pura.
+                    a medida de las necesidades de tu empresa.
                   </span>
                 </p>
               </div>
@@ -594,6 +629,12 @@ const App: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/*Nueva seccion --- Metodologia*/}
+      
+
+
+
 
       {/* Works */}
 
@@ -618,113 +659,6 @@ const App: React.FC = () => {
         </div>
       </section>
 
-      {/* NEW Section: Team Extension */}
-      <section id="extension" className="py-24 bg-black text-white px-4">
-        <div className="container mx-auto max-w-7xl">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-[900] uppercase tracking-tighter leading-tight mb-6">
-              ¿BUSCANDO UNA{" "}
-              <span className="text-[#EBE300]">
-                <br />
-                EXTENSIÓN DE TU{" "}
-              </span>
-              EQUIPO?
-            </h2>
-            <p className="text-sm md:text-base font-black text-white/50 uppercase tracking-[0.2em] max-w-2xl mx-auto">
-              SOMOS PINTA MKT, TU ALIADO ESTRATÉGICO.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2 items-stretch">
-            {/* 2x2 Grid with info cards */}
-            <div className="grid grid-cols-2 gap-4 md:gap-6">
-              {[
-                {
-                  label: "EQUIPO IN-HOUSE",
-                  icon: "/icons/ICONOS WEB_EQUIPO INHOUSE.svg",
-                },
-                {
-                  label: "CREATIVIDAD",
-                  icon: "/icons/ICONOS WEB_CREATIVIDAD.svg",
-                },
-                {
-                  label: "CONSULTORÍA",
-                  icon: "/icons/ICONOS WEB_consultoria.svg",
-                },
-                {
-                  label: "RESULTADOS",
-                  icon: "/icons/ICONOS WEB_RESULTADOS.svg",
-                },
-              ].map((card, i) => (
-                <div
-                  key={i}
-                  className="bg-[#141414] border border-white/5 p-6 rounded-[1rem] flex flex-col justify-between hover:bg-white/5 transition-colors group"
-                >
-                  <div className="w-12 h-12 bg-[#EBE300]/10 border border-[#EBE300]/20 rounded-xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
-                    <img
-                      src={card.icon}
-                      alt={card.label}
-                      // Subimos de w-6 a w-8 para compensar el margen interno del SVG
-                      className="w-8 h-8 object-contain"
-                      style={{ filter: "brightness(1.1)" }} // Un toque de brillo extra para el amarillo
-                    />
-                  </div>
-                  <h3 className="font-black text-sm md:text-lg uppercase tracking-tighter leading-none">
-                    {card.label}
-                  </h3>
-                </div>
-              ))}
-            </div>
-
-            {/* Featured Highlight Card */}
-            <div className="bg-[#EBE300] text-black rounded-[2rem] p-8 md:p-12 flex flex-col justify-center relative overflow-hidden shadow-[0_40px_80px_-20px_rgba(235,227,0,0.3)]">
-              <div className="mb-8 relative z-10">
-                <div className="mb-6">
-                  <span className="inline-block px-5 py-1.5 bg-black text-[#EBE300] font-black text-[13px] mb-6 rounded-full tracking-tight">
-                    Nuestro valor
-                  </span>
-                </div>
-                <div className="flex items-center gap-3 mb-8">
-                  <LogoText className="w-48 text-black" />
-                </div>
-                <p className="text-xl md:text-2xl lg:text-3xl font-[900] uppercase tracking-tighter leading-[1.1] mb-8">
-                  ESCALAMOS TUS RESULTADOS SIN LAS COMPLICACIONES DE AGENCIAS
-                  TRADICIONALES.
-                </p>
-                <a
-                  href="#contact"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    const el = document.getElementById("contact");
-                    if (el) {
-                      window.scrollTo({
-                        top: el.offsetTop - 80, // altura del header
-                        behavior: "smooth",
-                      });
-                    }
-                  }}
-                  className="inline-flex items-center gap-4 px-8 py-4 bg-black text-white font-black text-sm uppercase tracking-widest rounded-full hover:scale-105 transition-transform group shadow-xl"
-                >
-                  Saber más{" "}
-                  <ArrowRight
-                    size={20}
-                    className="group-hover:translate-x-2 transition-transform"
-                  />
-                </a>
-              </div>
-              {/* Graphic background element */}
-              <div className="absolute -bottom-10 -right-10 opacity-10 rotate-12">
-                <img
-                  src="https://img.icons8.com/ios-filled/200/000000/bee.png"
-                  alt=""
-                  className="w-48 h-48"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Services */}
       <section id="services" className="py-12 md:py-16 bg-[#FDFCE6] px-4">
         {/*py-20 md:py-24 bg-[#FDFCE6] px-4*/}
@@ -733,7 +667,7 @@ const App: React.FC = () => {
           <div className="mb-10 md:mb-12 text-center">
             {/*mb-14 md:mb-20 text-center*/}
             <SectionTitle className="text-4xl md:text-5xl lg:text-6xl">
-              CAPACIDADES
+              SERVICIOS
             </SectionTitle>
           </div>
 
@@ -767,7 +701,7 @@ const App: React.FC = () => {
                 {/* Title - Ajustado tamaño de fuente */}
                 <h3
                   className="
-              font-[900] uppercase tracking-tighter leading-[0.95]
+              font-[900] uppercase tracking-tighter leading-[1.2]
               text-[22px] md:text-[26px] {/* Reducido tamaño de fuente */}
               mb-4 md:mb-6
               break-words
@@ -803,75 +737,6 @@ const App: React.FC = () => {
         </div>
       </section>
 
-      {/*<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-10">
-            {SERVICES.map((service) => (
-              <div
-                key={service.id}
-                className="
-            bg-white
-            border-[5px] md:border-[6px] border-black
-            rounded-[2.5rem] md:rounded-[3.5rem]
-            p-7 md:p-10
-            shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] md:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]
-            flex flex-col
-            min-h-[520px] md:min-h-[560px]
-            transition-all
-            hover:-translate-y-2
-            group
-            max-w-[520px] mx-auto
-            w-full
-          "
-              >*/}
-
-      {/* Icon 
-            
-             <div className="mb-6 md:mb-8 w-16 h-16 md:w-20 md:h-20 bg-[#EBE300] border-4 border-black rounded-2xl flex items-center justify-center group-hover:rotate-6 transition-transform">
-                  {React.cloneElement(service.icon as any, {
-                    className: "w-8 h-8 md:w-10 md:h-10 text-black",
-                  })}
-                </div>  
-                */}
-      {/* Title 
-           
-             <h3
-                  className="
-              font-[900] uppercase tracking-tighter leading-[0.95]
-              text-[26px] md:text-3xl
-              mb-6 md:mb-8
-              break-words
-              [text-wrap:balance]
-            "
-                >
-                  {service.title}
-                </h3>     */}
-
-      {/* Items
-             
-              <ul className="flex-grow space-y-3 md:space-y-4 mb-0">
-                  {service.items.map((item, i) => (
-                    <li
-                      key={i}
-                      className="
-                  flex items-start gap-3 md:gap-4
-                  font-black uppercase
-                  text-[11px] md:text-sm
-                  tracking-wide md:tracking-wider
-                  text-gray-800
-                "
-                    >
-                      <span className="mt-[6px] md:mt-[7px] w-2.5 h-2.5 bg-[#EBE300] rounded-full border border-black flex-shrink-0" />
-                      <span className="leading-snug md:leading-normal">
-                        {item}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-*/}
 
       {/* Clients */}
       <section
@@ -893,11 +758,11 @@ const App: React.FC = () => {
           <div className="absolute inset-y-0 right-0 w-32 md:w-64 bg-gradient-to-l from-[#121212] to-transparent z-10 pointer-events-none" />
 
           {/* El carrusel se mantiene igual */}
-          <div className="flex items-center gap-12 animate-scroll">
+          <div className="flex items-center gap-6 animate-scroll">
             {[...CLIENTS_LIST, ...CLIENTS_LIST].map((client, i) => (
               <div
                 key={i}
-                className="flex-shrink-0 flex items-center justify-center h-44 md:h-52 w-[480px] md:w-[640px] opacity-70 hover:opacity-100 transition-all"
+                className="flex-shrink-0 flex items-center justify-center h-44 md:h-52 w-[320px] md:w-[420px] opacity-70 hover:opacity-100 transition-all"
               >
                 <img
                   src={client.logo}
@@ -929,12 +794,12 @@ href="https://www.linkedin.com/company/pinta-marketing/?viewAsMember=true"*/}
 
               <div className="mb-8">
                 <p className="leading-[1.9] inline">
-                  <span className="bg-[#EBE300] text-black px-1.5 py-1 font-black uppercase tracking-widest text-[14px] md:text-[15px]">
-                    ¿ESTÁS LISTO PARA TRANSFORMAR TU MARCA?{" "}
+                  <span className="bg-[#EBE300] text-black px-1.5 py-1 font-black tracking-widest text-[14px] md:text-[16px]">
+                    ¿Estás listo para transformar tu marca?{" "}
                   </span>
                   <br />
                   <span className="bg-[#EBE300] text-black px-1.5 py-1 font-medium italic text-[15px] md:text-[17px]">
-                    Conectemos y hagamos crecer tu colmena
+                    Conectemos y hagamos crecer tu negocio
                   </span>
                 </p>
               </div>
@@ -966,8 +831,8 @@ href="https://www.linkedin.com/company/pinta-marketing/?viewAsMember=true"*/}
                   <div className="w-8 h-8 bg-[#EBE300] border-[2px] border-black rounded-md flex items-center justify-center">
                     <Mail size={16} className="text-black" />
                   </div>
-                  <div className="font-[900] text-xs uppercase tracking-tighter">
-                    PINTAMKT@GMAIL.COM
+                  <div className="font-[900] text-xs tracking-tighter">
+                    pintamkt@gmail.com
                   </div>
                 </a>
 
@@ -977,14 +842,14 @@ href="https://www.linkedin.com/company/pinta-marketing/?viewAsMember=true"*/}
                     className="bg-black text-white rounded-lg p-2 flex items-center justify-center gap-2 hover:bg-[#EBE300] hover:text-black transition-all"
                   >
                     <Instagram size={14} />{" "}
-                    <span className="font-black uppercase text-[9px]">IG</span>
+                    
                   </a>
                   <a
                     href="https://www.linkedin.com/company/pinta-marketing/?viewAsMember=true"
                     className="bg-black text-white rounded-lg p-2 flex items-center justify-center gap-2 hover:bg-[#EBE300] hover:text-black transition-all"
                   >
                     <Linkedin size={14} />{" "}
-                    <span className="font-black uppercase text-[9px]">IN</span>
+                    
                   </a>
                 </div>
               </div>
@@ -1058,9 +923,7 @@ href="https://www.linkedin.com/company/pinta-marketing/?viewAsMember=true"*/}
 
                   <div className="relative">
                     {/* tag superior (estructura editorial) */}
-                    <span className="inline-block px-5 py-1.5 bg-black text-[#EBE300] font-black text-[13px] mb-6 rounded-full tracking-tight">
-                      Formulario
-                    </span>
+                    
 
                     <form
                       onSubmit={handleSubmit}
@@ -1102,11 +965,11 @@ href="https://www.linkedin.com/company/pinta-marketing/?viewAsMember=true"*/}
                       <button
                         type="submit"
                         disabled={isSubmitting}
-                        className="group w-full py-4 bg-black text-[#EBE300] font-[900] text-lg uppercase rounded-full transition-all flex items-center justify-center gap-3 shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 active:scale-95"
+                        className="group w-full py-4 bg-black text-[#EBE300] font-[900] text-lg  rounded-full transition-all flex items-center justify-center gap-3 shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 active:scale-95"
                       >
-                        {isSubmitting ? "ENVIANDO..." : "ENVIAR MENSAJE"}{" "}
+                        {isSubmitting ? "ENVIANDO..." : "Enviar mensaje"}{" "}
                         <Send
-                          size={36}
+                          size={24}
                           className="group-hover:translate-x-2 group-hover:-translate-y-1 transition-transform"
                         />
                       </button>
