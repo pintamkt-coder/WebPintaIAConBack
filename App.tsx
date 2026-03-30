@@ -106,7 +106,7 @@ const SERVICES: Service[] = [
     id: 1,
     title: "MARKETING DIGITAL Y TRADICIONAL",
     tag: "ESTRATEGIA",
-    icon: <img src="/icons/iconos_pinta_mkt.svg" className="w-8 h-8 md:w-10 md:h-10" alt="Mkt" />,
+    icon: <img src="/icons/iconos_pinta_mkt.svg"   className="w-full h-full object-contain scale-125" alt="Mkt" />,
     items: [
       "Branding - Posicionamiento de marca",
       "Campañas pagas en Meta y Google Ads",
@@ -123,7 +123,7 @@ const SERVICES: Service[] = [
     id: 2,
     title: "SISTEMAS DIGITALES & AUTOMATIZACIÓN CON IA",
     tag: "AUTOMATIZACIÓN",
-    icon: <img src="/icons/iconos_pinta_chatbot_IA.svg" className="w-8 h-8 md:w-10 md:h-10 " alt="Chat_Bot" />,
+    icon: <img src="/icons/iconos_pinta_chatbot_IA.svg"   className="w-full h-full object-contain scale-125" alt="Chat_Bot" />,
     items: [
       "Automatización de procesos internos",
       "Implementación y configuración de CRM",
@@ -138,7 +138,7 @@ const SERVICES: Service[] = [
     id: 3,
     title: "UNIDAD FINANCIERA & COMPLIANCE",
     tag: "FINANZAS",
-    icon:<img src="/icons/iconos_pinta_compilance.svg" className="w-8 h-8 md:w-10 md:h-10" alt="Compilance" />,
+    icon:<img src="/icons/iconos_pinta_compilance.svg"   className="w-full h-full object-contain scale-125" alt="Compilance" />,
     items: [
       "Diagnóstico Financiero Integral",
       "Planeamiento Financiero",
@@ -900,7 +900,7 @@ const App: React.FC = () => {
                 {/* Icon - Más pequeño */}
                 <div className="mb-5 md:mb-6 w-12 h-12 md:w-14 md:h-14 bg-[#EBE300] border-[3px] border-black rounded-xl flex items-center justify-center group-hover:rotate-6 transition-transform">
                   {React.cloneElement(service.icon as any, {
-                    className: "w-6 h-6 md:w-7 md:h-7 text-black", // Icono más pequeño
+                    className: "w-full h-full object-contain scale-125", // Icono más pequeño
                   })}
                 </div>
 
