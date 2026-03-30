@@ -1,6 +1,7 @@
 // App.tsx (COMPLETO)
 
 import React, { useState, useEffect, useRef } from "react";
+
 import {
   Menu,
   X,
@@ -105,7 +106,7 @@ const SERVICES: Service[] = [
     id: 1,
     title: "MARKETING DIGITAL Y TRADICIONAL",
     tag: "ESTRATEGIA",
-    icon: <Globe className="w-8 h-8 md:w-10 md:h-10" />,
+    icon: <img src="/icons/iconos_pinta_mkt.svg" className="w-8 h-8 md:w-10 md:h-10" alt="Mkt" />,
     items: [
       "Branding - Posicionamiento de marca",
       "Campañas pagas en Meta y Google Ads",
@@ -122,7 +123,7 @@ const SERVICES: Service[] = [
     id: 2,
     title: "SISTEMAS DIGITALES & AUTOMATIZACIÓN CON IA",
     tag: "AUTOMATIZACIÓN",
-    icon: <Cpu className="w-8 h-8 md:w-10 md:h-10" />,
+    icon: <img src="/icons/iconos_pinta_chatbot_IA.svg" className="w-8 h-8 md:w-10 md:h-10 " alt="Chat_Bot" />,
     items: [
       "Automatización de procesos internos",
       "Implementación y configuración de CRM",
@@ -137,7 +138,7 @@ const SERVICES: Service[] = [
     id: 3,
     title: "UNIDAD FINANCIERA & COMPLIANCE",
     tag: "FINANZAS",
-    icon:<BarChart2 className="w-8 h-8 md:w-10 md:h-10" />,
+    icon:<img src="/icons/iconos_pinta_compilance.svg" className="w-8 h-8 md:w-10 md:h-10" alt="Compilance" />,
     items: [
       "Diagnóstico Financiero Integral",
       "Planeamiento Financiero",
