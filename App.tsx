@@ -632,169 +632,211 @@ const App: React.FC = () => {
       </section>
 
 {/* METODOLOGÍA / CAMINITO */}
-<section id="methodology" className="py-24 bg-[#0B0B0B] px-4 overflow-hidden tactical-dot-bg">
+<section id="methodology" className="py-24 bg-[#0B0B0B] px-4 overflow-hidden">
   <div className="container mx-auto max-w-7xl relative">
-    
+
     <div className="relative z-10 mb-14 md:mb-16 space-y-5">
-      
-      
-{/* Burbujita 1: "Nuestra metodología" con el Logo PNG integrado (estilo cut-out) */}
-<div className="flex justify-start">
-  <span className="inline-flex items-center gap-4 px-5 py-2.5 bg-[#FDFCE6] rounded-full border-[3px] border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] táctico">
-    
-    {/* Contenedor del Logo: Ahora es transparente y sin fondo ni bordes extra */}
-    {/* Cambios: w-12 h-12 (más grande), p-1 (ajustado), bg-transparent */}
-    <div className="flex items-center justify-center bg-transparent w-12 h-12 p-1">
-      <img 
-        src="/icons/icono_pinta.png" // *** IMPORTANTE: Cambia esta ruta por la ubicación real de tu archivo PNG ***
-        alt="Logo Pinta MKT"
-        // object-contain es clave para que no se deforme.
-        // drop-shadow opcional para resaltar si la P es muy oscura sobre el fondo negro de la sección.
-        className="w-full h-auto object-contain drop-shadow-[0_2px_3px_rgba(255,255,255,0.1)]" 
-      />
-    </div>
 
-    {/* Texto en negro, ajustado a font-black y tracking-[0.2em] para máxima fidelidad con el slide */}
-    <span className="text-black text-[11px] md:text-xs font-[900] uppercase tracking-[0.2em]">
-      Nuestra metodología
-    </span>
-  </span>
-</div>
+      {/* Tag superior */}
+      <div className="flex justify-start">
+        <span className="inline-flex items-center px-5 py-2 bg-[#1A1A1A] border border-white/10 rounded-full">
+          <span className="text-white/60 text-[11px] font-[900] uppercase tracking-[0.3em]">
+            Nuestra metodología
+          </span>
+        </span>
+      </div>
 
-      {/* Burbujita 2: "NUESTRO EQUIPO..." */}
-     <div className="flex justify-start">
-  <div className="bg-[#FDFCE6] p-6 md:p-8 rounded-[2rem] border-[3px] border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
-    <h2 className="max-w-[600px] text-black font-[900] leading-[0.95] tracking-[-0.045em] text-2xl md:text-4xl lg:text-5xl">
-      <span className="uppercase block mb-1">NUESTRO EQUIPO</span>
-      <span className="normal-case font-[700] text-[0.8em] tracking-tight">
-        se define por...
-      </span>
-    </h2>
-  </div>
-</div>
+      {/* Titular principal */}
+      <div className="flex justify-start">
+        <div>
+          <h2 className="font-[900] uppercase tracking-tighter leading-none text-white">
+            <span className="block text-5xl md:text-7xl lg:text-8xl">Nuestro</span>
+            <span className="block text-5xl md:text-7xl lg:text-8xl">equipo</span>
+            <span className="block text-5xl md:text-7xl lg:text-8xl text-[#EBE300]">se define</span>
+            <span className="block text-3xl md:text-4xl lg:text-5xl text-white/40 font-[700] mt-2">por...</span>
+          </h2>
+        </div>
+      </div>
 
     </div>
-    <div className="relative h-[760px] md:h-[820px]">
-      {/* CAMINO */}
+
+    {/* ── DESKTOP: layout absoluto ── */}
+    <div className="relative h-[760px] md:h-[820px] hidden md:block">
+
+      {/* CAMINO SVG */}
       <svg
-        className="absolute inset-0 w-full h-full z-0 pointer-events-none"
-        viewBox="0 0 1200 820"
-        preserveAspectRatio="none"
-        fill="none"
-      >
-        <path
-  d="
-    M 320 120
-    H 760
-    Q 820 120 820 170
-    V 155
-    Q 820 130 900 130
-    H 1030
+  className="absolute inset-0 w-full h-full z-0 pointer-events-none"
+  viewBox="0 0 1200 820"
+  preserveAspectRatio="none"
+  fill="none"
+>
+  <path
+    d="
+      M 320 120
+      H 760
+      Q 820 120 820 170
+      H 1030
 
-    Q 1090 130 1090 210
-    V 250
-    Q 1090 320 950 320
-    H 600
+      Q 1090 170 1090 240
+      V 250
 
-    Q 600 320 600 380
-    V 420
+      Q 1090 320 950 320
+      H 600
 
-    Q 600 480 800 480
-    H 1000
+      Q 600 320 600 380
+      V 420
 
-    Q 1100 480 1100 580
-    V 650
+      Q 600 480 800 480
+      H 1000
 
-    Q 1100 740 900 740
-    H 400
+      Q 1100 480 1100 580
+      V 650
 
-    Q 250 740 250 620
-    
-    
-  "
-  stroke="rgba(255,255,255,0.14)"
-  strokeWidth="2.5"
-  strokeDasharray="8 10"
-  strokeLinecap="round"
-  strokeLinejoin="round"
-/>
-      </svg>
+      Q 1100 740 900 740
+      H 400
 
-     {/* CARD #1 */}
+      Q 250 740 250 620
+    "
+    stroke="rgba(255,255,255,0.14)"
+    strokeWidth="2.5"
+    strokeDasharray="8 10"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  />
+</svg>
+      {/* CARD #1 */}
       <div className="absolute left-[20px] top-[70px] z-10 group">
-        <div className="relative bg-[#EBE300] rounded-[1.8rem] border-[1px] border-white shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] px-8 py-7 min-w-[260px] cursor-pointer transition-all duration-200 hover:-translate-y-1 hover:translate-x-1 hover:shadow-[1px_1px_0px_0px_rgba(255,255,255,1)]">
-          <span className="absolute -top-5 right-[-14px] w-12 h-12 bg-white rounded-full border-[1px] border-white flex items-center justify-center text-black font-[900] text-xl shadow-[3px_3px_0px_0px_rgba(255,255,255,1)] group-hover:scale-110 transition-transform">
+        <div className="relative bg-[#EBE300] rounded-[1.8rem] border-[1px] border-white/20
+                        shadow-[4px_4px_0px_0px_rgba(255,255,255,1)]
+                        px-8 py-7 min-w-[260px] cursor-pointer
+                        transition-all duration-300
+                        hover:-translate-y-1 hover:translate-x-1
+                        hover:shadow-[0_0_40px_8px_rgba(235,227,0,0.35),1px_1px_0px_0px_rgba(255,255,255,1)]">
+          <span className="absolute -top-5 right-[-14px] w-12 h-12 bg-white rounded-full border-[1px] border-white
+                           flex items-center justify-center text-black font-[900] text-xl
+                           shadow-[3px_3px_0px_0px_rgba(255,255,255,1)]
+                           group-hover:scale-110 transition-transform">
             #1
           </span>
           <h3 className="text-black font-[700] uppercase leading-[1.05] text-[20px] md:text-[22px]">
-            RESULTADOS
-            <br />
-            REALES Y MEDIBLES
+            RESULTADOS<br />REALES Y MEDIBLES
           </h3>
         </div>
       </div>
 
       {/* CARD #2 */}
       <div className="absolute right-[10px] top-[150px] z-10 group">
-        <div className="relative bg-[#EBE300] rounded-[1.8rem] border-[1px] border-white shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] px-8 py-7 min-w-[300px] cursor-pointer transition-all duration-200 hover:-translate-y-1 hover:translate-x-1 hover:shadow-[1px_1px_0px_0px_rgba(255,255,255,1)]">
-          <span className="absolute -top-5 right-[-14px] w-12 h-12 bg-white rounded-full border-[1px] border-white flex items-center justify-center text-black font-[900] text-xl shadow-[3px_3px_0px_0px_rgba(255,255,255,1)] group-hover:scale-110 transition-transform">
+        <div className="relative bg-[#EBE300] rounded-[1.8rem] border-[1px] border-white/20
+                        shadow-[4px_4px_0px_0px_rgba(255,255,255,1)]
+                        px-8 py-7 min-w-[300px] cursor-pointer
+                        transition-all duration-300
+                        hover:-translate-y-1 hover:translate-x-1
+                        hover:shadow-[0_0_40px_8px_rgba(235,227,0,0.35),1px_1px_0px_0px_rgba(255,255,255,1)]">
+          <span className="absolute -top-5 right-[-14px] w-12 h-12 bg-white rounded-full border-[1px] border-white
+                           flex items-center justify-center text-black font-[900] text-xl
+                           shadow-[3px_3px_0px_0px_rgba(255,255,255,1)]
+                           group-hover:scale-110 transition-transform">
             #2
           </span>
           <h3 className="text-black font-[700] uppercase leading-[1.05] text-[20px] md:text-[22px]">
-            TRABAJO
-            <br />
-            EN EQUIPO Y
-            <br />
-            COLABORACIÓN
+            TRABAJO<br />EN EQUIPO Y<br />COLABORACIÓN
           </h3>
         </div>
       </div>
 
       {/* CARD #3 */}
       <div className="absolute left-[360px] top-[305px] z-10 group">
-        <div className="relative bg-[#EBE300] rounded-[1.8rem] border-[1px] border-white shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] px-8 py-7 min-w-[300px] cursor-pointer transition-all duration-200 hover:-translate-y-1 hover:translate-x-1 hover:shadow-[1px_1px_0px_0px_rgba(255,255,255,1)]">
-          <span className="absolute -top-5 left-[-14px] w-12 h-12 bg-white rounded-full border-[1px] border-white flex items-center justify-center text-black font-[900] text-xl shadow-[3px_3px_0px_0px_rgba(255,255,255,1)] group-hover:scale-110 transition-transform">
+        <div className="relative bg-[#EBE300] rounded-[1.8rem] border-[1px] border-white/20
+                        shadow-[4px_4px_0px_0px_rgba(255,255,255,1)]
+                        px-8 py-7 min-w-[300px] cursor-pointer
+                        transition-all duration-300
+                        hover:-translate-y-1 hover:translate-x-1
+                        hover:shadow-[0_0_40px_8px_rgba(235,227,0,0.35),1px_1px_0px_0px_rgba(255,255,255,1)]">
+          <span className="absolute -top-5 left-[-14px] w-12 h-12 bg-white rounded-full border-[1px] border-white
+                           flex items-center justify-center text-black font-[900] text-xl
+                           shadow-[3px_3px_0px_0px_rgba(255,255,255,1)]
+                           group-hover:scale-110 transition-transform">
             #3
           </span>
           <h3 className="text-black font-[700] uppercase leading-[1.05] text-[20px] md:text-[22px]">
-            CREATIVIDAD
-            <br />
-            CON ESTRATEGIA
+            CREATIVIDAD<br />CON ESTRATEGIA
           </h3>
         </div>
       </div>
 
       {/* CARD #4 */}
       <div className="absolute right-[25px] bottom-[90px] z-10 group">
-        <div className="relative bg-[#EBE300] rounded-[1.8rem] border-[1px] border-white shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] px-8 py-7 min-w-[290px] cursor-pointer transition-all duration-200 hover:-translate-y-1 hover:translate-x-1 hover:shadow-[1px_1px_0px_0px_rgba(255,255,255,1)]">
-          <span className="absolute -bottom-5 right-[18px] w-12 h-12 bg-white rounded-full border-[1px] border-white flex items-center justify-center text-black font-[900] text-xl shadow-[3px_3px_0px_0px_rgba(255,255,255,1)] group-hover:scale-110 transition-transform">
+        <div className="relative bg-[#EBE300] rounded-[1.8rem] border-[1px] border-white/20
+                        shadow-[4px_4px_0px_0px_rgba(255,255,255,1)]
+                        px-8 py-7 min-w-[290px] cursor-pointer
+                        transition-all duration-300
+                        hover:-translate-y-1 hover:translate-x-1
+                        hover:shadow-[0_0_40px_8px_rgba(235,227,0,0.35),1px_1px_0px_0px_rgba(255,255,255,1)]">
+          <span className="absolute -bottom-5 right-[18px] w-12 h-12 bg-white rounded-full border-[1px] border-white
+                           flex items-center justify-center text-black font-[900] text-xl
+                           shadow-[3px_3px_0px_0px_rgba(255,255,255,1)]
+                           group-hover:scale-110 transition-transform">
             #4
           </span>
           <h3 className="text-black font-[700] uppercase leading-[1.05] text-[20px] md:text-[22px]">
-            CERCANÍA Y
-            <br />
-            AUTENTICIDAD
+            CERCANÍA Y<br />AUTENTICIDAD
           </h3>
         </div>
       </div>
 
       {/* CARD #5 */}
       <div className="absolute left-[20px] bottom-[160px] z-10 group">
-        <div className="relative bg-[#EBE300] rounded-[1.8rem] border-[1px] border-white shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] px-8 py-7 min-w-[260px] cursor-pointer transition-all duration-200 hover:-translate-y-1 hover:translate-x-1 hover:shadow-[1px_1px_0px_0px_rgba(255,255,255,1)]">
-          <span className="absolute -top-5 right-[-14px] w-12 h-12 bg-white rounded-full border-[1px] border-white flex items-center justify-center text-black font-[900] text-xl shadow-[3px_3px_0px_0px_rgba(255,255,255,1)] group-hover:scale-110 transition-transform">
+        <div className="relative bg-[#EBE300] rounded-[1.8rem] border-[1px] border-white/20
+                        shadow-[4px_4px_0px_0px_rgba(255,255,255,1)]
+                        px-8 py-7 min-w-[260px] cursor-pointer
+                        transition-all duration-300
+                        hover:-translate-y-1 hover:translate-x-1
+                        hover:shadow-[0_0_40px_8px_rgba(235,227,0,0.35),1px_1px_0px_0px_rgba(255,255,255,1)]">
+          <span className="absolute -top-5 right-[-14px] w-12 h-12 bg-white rounded-full border-[1px] border-white
+                           flex items-center justify-center text-black font-[900] text-xl
+                           shadow-[3px_3px_0px_0px_rgba(255,255,255,1)]
+                           group-hover:scale-110 transition-transform">
             #5
           </span>
           <h3 className="text-black font-[700] uppercase leading-[1.05] text-[20px] md:text-[22px]">
-            CLARIDAD Y
-            <br />
-            CERO HUMO
+            CLARIDAD Y<br />CERO HUMO
           </h3>
         </div>
       </div>
+
     </div>
+
+    {/* ── MOBILE: lista vertical ── */}
+    <div className="flex flex-col gap-6 md:hidden">
+      {[
+        { num: "#1", title: "RESULTADOS\nREALES Y MEDIBLES" },
+        { num: "#2", title: "TRABAJO\nEN EQUIPO Y\nCOLABORACIÓN" },
+        { num: "#3", title: "CREATIVIDAD\nCON ESTRATEGIA" },
+        { num: "#4", title: "CERCANÍA Y\nAUTENTICIDAD" },
+        { num: "#5", title: "CLARIDAD Y\nCERO HUMO" },
+      ].map((card) => (
+        <div key={card.num} className="group relative">
+          <div className="relative bg-[#EBE300] rounded-[1.8rem] border-[1px] border-white/20
+                          shadow-[4px_4px_0px_0px_rgba(255,255,255,1)]
+                          px-8 py-7 cursor-pointer
+                          transition-all duration-300
+                          hover:shadow-[0_0_40px_8px_rgba(235,227,0,0.35),1px_1px_0px_0px_rgba(255,255,255,1)]">
+            <span className="absolute -top-5 right-4 w-12 h-12 bg-white rounded-full
+                             flex items-center justify-center text-black font-[900] text-xl
+                             shadow-[3px_3px_0px_0px_rgba(255,255,255,1)]
+                             group-hover:scale-110 transition-transform">
+              {card.num}
+            </span>
+            <h3 className="text-black font-[700] uppercase leading-[1.05] text-[20px] whitespace-pre-line">
+              {card.title}
+            </h3>
+          </div>
+        </div>
+      ))}
+    </div>
+
   </div>
 </section>
-
 
 
 
@@ -1089,7 +1131,7 @@ href="https://www.linkedin.com/company/pinta-marketing/?viewAsMember=true"*/}
 
                     <form
                       onSubmit={handleSubmit}
-                      className="flex flex-col gap-3"
+                      className="flex flex-col gap-6"
                     >
                       <input
                         type="text"
