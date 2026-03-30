@@ -634,6 +634,7 @@ const App: React.FC = () => {
 
 {/* METODOLOGÍA / CAMINITO */}
 <section id="methodology" className="py-24 bg-[#0B0B0B] px-4 overflow-hidden">
+  
   <div className="container mx-auto max-w-7xl relative">
 
     <div className="relative z-10 mb-14 md:mb-16 space-y-5">
