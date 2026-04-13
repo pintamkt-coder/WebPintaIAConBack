@@ -76,10 +76,10 @@ interface Client {
 
 // --- Data ---
 const NAV_LINKS: NavLink[] = [
-  { label: "Servicios", href: "#services" },
-  { label: "Proyectos", href: "#works" },
-  { label: "Clientes", href: "#clients" },
   { label: "Nosotros", href: "#about" },
+  { label: "Proyectos", href: "#works" },
+  { label: "Servicios", href: "#services" },
+  { label: "Clientes", href: "#clients" },
   { label: "Contacto", href: "#contact" },
 ];
 
